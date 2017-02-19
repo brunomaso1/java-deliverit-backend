@@ -45,17 +45,21 @@ public class Restaurant implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "rut")
     private int rut;
+    
     @Size(max = 50)
     @Column(name = "razon_social")
     private String razonSocial;
+    
     @JoinColumn(name = "usuario", referencedColumnName = "id")
     @ManyToOne
     private Usuario usuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant1")
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
     private Collection<Sucursal> sucursalCollection;
 
     public Restaurant() {

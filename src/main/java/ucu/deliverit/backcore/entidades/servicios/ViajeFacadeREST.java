@@ -152,7 +152,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
                     
                     Double[] origen = {d.getUbicacion().getLatitud(), d.getUbicacion().getLongitud()};
                     Double[] destino = {viaje.getSucursal().getDireccion().getLatitud(),
-                        viaje.getSucursal().getDireccion().getLatitud()};
+                        viaje.getSucursal().getDireccion().getLongitud()};
                     Double distancia = null;
                     try {
                         distancia = Utiles.distancia(origen, destino, d.getVehiculo());
