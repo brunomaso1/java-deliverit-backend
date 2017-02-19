@@ -35,17 +35,22 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Sucursal implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @EmbeddedId
     protected SucursalPK sucursalPK;
+    
     @Size(max = 20)
     @Column(name = "nombre")
     private String nombre;
+    
     @JoinColumn(name = "restaurant", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Restaurant restaurant1;
+    private Restaurant restaurant;
+    
     @JoinColumn(name = "direccion", referencedColumnName = "id")
     @ManyToOne
     private Direccion direccion;
+    
     @OneToMany(mappedBy = "sucursal")
     private Collection<Viaje> viajeCollection;
 
@@ -76,12 +81,12 @@ public class Sucursal implements Serializable {
         this.nombre = nombre;
     }
 
-    public Restaurant getRestaurant1() {
-        return restaurant1;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestaurant1(Restaurant restaurant1) {
-        this.restaurant1 = restaurant1;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public Direccion getDireccion() {

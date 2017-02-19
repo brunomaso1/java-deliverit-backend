@@ -1,7 +1,6 @@
 ucu\deliverit\backcore\entidades\PedidoPK.class
 ucu\deliverit\backcore\entidades\servicios\ApplicationConfig.class
 ucu\deliverit\backcore\entidades\SucursalPK.class
-ucu\deliverit\backcore\entidades\Delivery.class
 ucu\deliverit\backcore\entidades\Sucursal.class
 ucu\deliverit\backcore\entidades\Direccion_.class
 ucu\deliverit\backcore\entidades\Restaurant_.class
@@ -25,9 +24,7 @@ ucu\deliverit\backcore\entidades\Transaccion_.class
 ucu\deliverit\backcore\entidades\UsuarioTelefonoPK_.class
 ucu\deliverit\backcore\entidades\Pedido.class
 ucu\deliverit\backcore\entidades\Restaurant.class
-ucu\deliverit\backcore\entidades\servicios\UbicacionFacadeREST.class
 ucu\deliverit\backcore\entidades\PedidoPK_.class
-ucu\deliverit\backcore\entidades\Delivery_.class
 ucu\deliverit\backcore\entidades\EstadoViaje_.class
 ucu\deliverit\backcore\entidades\Viaje.class
 ucu\deliverit\backcore\entidades\servicios\ConfiguracionFacadeREST.class
@@ -39,9 +36,6 @@ ucu\deliverit\backcore\entidades\servicios\UsuarioTelefonoFacadeREST.class
 ucu\deliverit\backcore\entidades\Configuracion.class
 ucu\deliverit\backcore\entidades\servicios\UsuarioFacadeREST.class
 ucu\deliverit\backcore\entidades\Usuario.class
-ucu\deliverit\backcore\entidades\Ubicacion_.class
-ucu\deliverit\backcore\entidades\servicios\ViajeFacadeREST.class
-ucu\deliverit\backcore\entidades\Ubicacion.class
 ucu\deliverit\backcore\entidades\servicios\DireccionFacadeREST.class
 ucu\deliverit\backcore\entidades\servicios\SucursalFacadeREST.class
 ucu\deliverit\backcore\entidades\Viaje_.class

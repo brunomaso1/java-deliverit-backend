@@ -8,7 +8,7 @@ import ucu.deliverit.backcore.entidades.ClienteTelefono;
 import ucu.deliverit.backcore.entidades.Direccion;
 import ucu.deliverit.backcore.entidades.Pedido;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-02-18T18:46:17")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-02-19T17:39:08")
 @StaticMetamodel(Cliente.class)
 public class Cliente_ { 
 

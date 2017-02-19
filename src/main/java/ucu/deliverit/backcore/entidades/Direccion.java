@@ -45,25 +45,32 @@ public class Direccion implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "calle")
     private String calle;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "nro_puerta")
     private short nroPuerta;
+    
     @Size(max = 20)
     @Column(name = "esquina")
     private String esquina;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "latitud")
     private Double latitud;
+    
     @Column(name = "longitud")
     private Double longitud;
+    
     @OneToMany(mappedBy = "direccion")
     private Collection<Cliente> clienteCollection;
+    
     @OneToMany(mappedBy = "direccion")
     private Collection<Sucursal> sucursalCollection;
 

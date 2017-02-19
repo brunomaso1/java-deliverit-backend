@@ -45,16 +45,19 @@ public class Viaje implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Column(name = "calificacion")
     private Short calificacion;
     @Basic(optional = false)
     @NotNull
     @Column(name = "precio")
     private short precio;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
     private Collection<Transaccion> transaccionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje1")
     private Collection<Pedido> pedidoCollection;
+    
     @JoinColumn(name = "delivery", referencedColumnName = "id")
     @ManyToOne
     private Delivery delivery;

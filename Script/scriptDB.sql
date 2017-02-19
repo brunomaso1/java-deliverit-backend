@@ -7,7 +7,7 @@ create table deliverit.vehiculo (
 
 insert into deliverit.vehiculo (descripcion) values ('Automotor');
 insert into deliverit.vehiculo (descripcion) values ('Ciclomotor');
-insert into deliverit.vehiculo (descripcion) values ('Bicicubicacionleta');
+insert into deliverit.vehiculo (descripcion) values ('Bicileta');
 insert into deliverit.vehiculo (descripcion) values ('Skate');
 insert into deliverit.vehiculo (descripcion) values ('Rollers');
 insert into deliverit.vehiculo (descripcion) values ('Ninguno');
@@ -68,6 +68,11 @@ create table deliverit.restaurant (
     razon_social varchar(50),
     foreign key (usuario) references deliverit.usuario (id)
 );
+create table deliverit.ubicacion (
+	id smallint primary key,
+    latitud double,
+    longitud double
+);
 
 create table deliverit.delivery (
 	id integer auto_increment primary key,
@@ -75,16 +80,10 @@ create table deliverit.delivery (
     calificacion smallint,
     vehiculo smallint,
 	token varchar(200),
+    ubicacion smallint,
     foreign key (vehiculo) references deliverit.vehiculo (id),
-    foreign key (usuario) references deliverit.usuario (id)
-);
-
-create table deliverit.ubicacion (
-	id smallint primary key,
-    latitud double,
-    longitud double,
-    delivery integer,
-    foreign key (delivery) references deliverit.delivery (id)
+    foreign key (usuario) references deliverit.usuario (id),
+    foreign key (ubicacion) references deliverit.ubicacion(id)
 );
 
 create table deliverit.sucursal (
@@ -130,11 +129,6 @@ create table deliverit.pedido (
     foreign key (cliente) references deliverit.cliente(id)
 );
 
-insert into deliverit.usuario (id, nombre, password, mail, cuenta_red_pagos) values (1, 'juan', 'a12345678.', 
-	'juanmartegoytia@gmail.com', 2020);
-insert into deliverit.usuario_telefono (usuario, telefono) values (1, 099994974);
-insert into deliverit.delivery (id, usuario, vehiculo, token) values (1, 1, 3, 'dOdgcCmYW04:APA91bHhFbeNJMfiw4IJx12JI42msPhaIRXv-HRjMWaJBI3ktzNKDOvrgMVKi9kTsZC4mD5epQTH7oJKPoWti2lC36B_JipqB93eBDEMHzL606yH0f2ng7b29fHkO5m_1DkvTkhMrhr6');
-
 create table deliverit.configuracion (
 	id integer auto_increment primary key,
     descripcion varchar(20) not null unique,
@@ -142,5 +136,3 @@ create table deliverit.configuracion (
 );
 
 insert into deliverit.configuracion (descripcion, valor) values ('API_KEY_GOOGLE', 'AIzaSyA2NCnQBRCbuXHbNeUY7mW-lvP-v4V3x8A');
-
-SELECT DISTINCT d.id, d.usuario, d.calificacion, d.vehiculo, d.token FROM deliverit.delivery d JOIN deliverit.viaje v ON d.id = v.delivery WHERE v.estado <> 3

@@ -27,6 +27,8 @@ public class Utiles {
     public static Double distancia(Double[] coordenadasOrigen, Double[] coordenadasDestino, Vehiculo vehiculo)
             throws IOException, JSONException {
         
+        System.out.println("***** Va a calcular la distancia entre el delivery y la sucursal *****");
+        
         String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Montevideo+Uruguay" 
                 + URLEncoder.encode("|", "UTF-8") + coordenadasOrigen[0] + "," + coordenadasOrigen[1]
                 + "&"
@@ -43,6 +45,8 @@ public class Utiles {
          
         url = url + "&key=AIzaSyA2NCnQBRCbuXHbNeUY7mW-lvP-v4V3x8A";      
         
+        System.out.println("***** URL: " + url + " *****");
+        
         Double distancia = null;
         
         OkHttpClient client = new OkHttpClient();
@@ -54,6 +58,8 @@ public class Utiles {
         Response response = client.newCall(request).execute();
         String jsonData = response.body().string();
         
+        System.out.println("***** respuesta: " + jsonData + " *****");
+        
         JSONObject jsonResponse = new JSONObject(jsonData);
         
         if (jsonResponse.getString("status").equals("OK")) {
@@ -64,6 +70,8 @@ public class Utiles {
             JSONObject distanceO = (JSONObject)elemento.get("distance");
             distancia = Double.parseDouble(distanceO.getString("text").split(" ")[0]);
         } 
+        
+        System.out.println("***** Distancia: " + distancia + "km *****");
         
         return distancia;
     }
