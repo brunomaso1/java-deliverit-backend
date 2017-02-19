@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -51,11 +52,15 @@ public class Delivery implements Serializable {
     @JoinColumn(name = "vehiculo", referencedColumnName = "id")
     @ManyToOne
     private Vehiculo vehiculo;
+    
     @JoinColumn(name = "usuario", referencedColumnName = "id")
     @ManyToOne
     private Usuario usuario;
-    @OneToMany(mappedBy = "delivery")
-    private Collection<Ubicacion> ubicacionCollection;
+    
+    @OneToOne(mappedBy = "delivery")
+    @JoinColumn(name = "delivery", referencedColumnName = "id")
+    private Ubicacion ubicacion;
+    
     @OneToMany(mappedBy = "delivery")
     private Collection<Viaje> viajeCollection;
 
@@ -105,14 +110,13 @@ public class Delivery implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
-    @XmlTransient
-    public Collection<Ubicacion> getUbicacionCollection() {
-        return ubicacionCollection;
+    
+    public Ubicacion getUbicacion() {
+        return ubicacion;
     }
 
-    public void setUbicacionCollection(Collection<Ubicacion> ubicacionCollection) {
-        this.ubicacionCollection = ubicacionCollection;
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
     @XmlTransient

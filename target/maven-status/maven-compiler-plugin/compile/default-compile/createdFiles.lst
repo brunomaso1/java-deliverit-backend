@@ -10,6 +10,7 @@ ucu\deliverit\backcore\entidades\ClienteTelefonoPK_.class
 ucu\deliverit\backcore\entidades\Cliente_.class
 ucu\deliverit\backcore\entidades\servicios\EstadoViajeFacadeREST.class
 ucu\deliverit\backcore\entidades\ClienteTelefono.class
+ucu\deliverit\backcore\entidades\utiles\Utiles.class
 ucu\deliverit\backcore\entidades\servicios\VehiculoFacadeREST.class
 ucu\deliverit\backcore\entidades\servicios\TransaccionFacadeREST.class
 ucu\deliverit\backcore\entidades\Usuario_.class
@@ -29,11 +30,13 @@ ucu\deliverit\backcore\entidades\PedidoPK_.class
 ucu\deliverit\backcore\entidades\Delivery_.class
 ucu\deliverit\backcore\entidades\EstadoViaje_.class
 ucu\deliverit\backcore\entidades\Viaje.class
+ucu\deliverit\backcore\entidades\servicios\ConfiguracionFacadeREST.class
 ucu\deliverit\backcore\entidades\servicios\DeliveryFacadeREST.class
 ucu\deliverit\backcore\entidades\servicios\AbstractFacade.class
 ucu\deliverit\backcore\entidades\Sucursal_.class
 ucu\deliverit\backcore\entidades\ClienteTelefono_.class
 ucu\deliverit\backcore\entidades\servicios\UsuarioTelefonoFacadeREST.class
+ucu\deliverit\backcore\entidades\Configuracion.class
 ucu\deliverit\backcore\entidades\servicios\UsuarioFacadeREST.class
 ucu\deliverit\backcore\entidades\Usuario.class
 ucu\deliverit\backcore\entidades\Ubicacion_.class

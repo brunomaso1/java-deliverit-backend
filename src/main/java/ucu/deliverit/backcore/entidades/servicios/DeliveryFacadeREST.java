@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -67,6 +68,18 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Delivery> findAll() {
         return super.findAll();
+    }
+    
+    @GET
+    @Path("findAllSinViajesEnProceso")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Delivery> findAllSinViajesEnProceso() {
+        String consulta = "SELECT DISTINCT d.id, d.usuario, d.calificacion, d.vehiculo, d.token"
+                + " FROM Viaje v INNER JOIN v.delivery d"
+                + " WHERE v.estado.id <> 3";
+        TypedQuery<Delivery> query = em.createQuery(consulta, Delivery.class);
+        List<Delivery> results = query.getResultList();
+        return results;
     }
 
     @GET

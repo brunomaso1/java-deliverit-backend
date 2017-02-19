@@ -79,51 +79,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Usuario> findAll() {
-        ClassLoader classLoader = getClass().getClassLoader();
-	
-        
-         ///////////////////////////////////////
-        FirebaseOptions options = null;
-        InputStream file = this.getClass().getClassLoader()
-                .getResourceAsStream("META-INF/BackCoreFireBase-8a740a7a84f3.json");
-
-        options = new FirebaseOptions.Builder()
-                .setServiceAccount(file)
-                .setDatabaseUrl("https://backcorefirebase.firebaseio.com")
-                .build();
-        FirebaseApp.initializeApp(options);
-        
-        String message_url = new String("https://fcm.googleapis.com/fcm/send");
-        String to = new String("dOdgcCmYW04:APA91bHhFbeNJMfiw4IJx12JI42msPhaIRXv-HRjMWaJBI3ktzNKDOvrgMVKi9kTsZC4mD5epQTH7oJKPoWti2lC36B_JipqB93eBDEMHzL606yH0f2ng7b29fHkO5m_1DkvTkhMrhr6");
-        String message_key = new String("key=AAAA_mhFqRM:APA91bG-RTlllJMlQ3s9iI3LjXf9KxiW82kXpzhfJ4XyBx2GxrW94NQai7qVRILE8CA62Ye8xrdViNxInMh0kw3fMOJPCvi4lKsby-9zv8Jqy3H-9rvPmrl3qMIfcGNPmXns2mzg6fSV");
-
-        // Generating a JSONObject for the content of the message
-        JSONObject message = new JSONObject();
-        message.put("message", "TEXT");
-        JSONObject protocol = new JSONObject();
-        protocol.put("to", to);
-        protocol.put("data", message);
-
-        try {
-            
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpPost request = new HttpPost(message_url);
-            request.addHeader("content-type", "application/json");
-            request.addHeader("Authorization", message_key);
-
-            StringEntity params = new StringEntity(protocol.toString());
-            request.setEntity(params);
-            System.out.println(params);
-
-            HttpResponse response = httpClient.execute(request);
-            System.out.println(response.toString());
-        } catch (Exception e) {
-        }
-        ///////////////////////////////////////
-        
-        
-        
+    public List<Usuario> findAll() {             
         return super.findAll();
     }
 

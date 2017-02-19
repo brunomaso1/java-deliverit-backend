@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,8 +44,7 @@ public class Ubicacion implements Serializable {
     private Double latitud;
     @Column(name = "longitud")
     private Double longitud;
-    @JoinColumn(name = "delivery", referencedColumnName = "id")
-    @ManyToOne
+
     private Delivery delivery;
 
     public Ubicacion() {
