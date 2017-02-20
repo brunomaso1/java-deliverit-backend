@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import ucu.deliverit.backcore.entidades.Viaje;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-02-19T17:39:08")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-02-20T20:05:16")
 @StaticMetamodel(EstadoViaje.class)
 public class EstadoViaje_ { 
 

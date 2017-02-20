@@ -5,6 +5,7 @@
  */
 package ucu.deliverit.backcore.entidades.servicios;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -41,6 +44,8 @@ import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.Vehiculo;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.entidades.utiles.Utiles;
+import ucu.deliverit.backcore.tasks.TimerObject;
+import static ucu.deliverit.backcore.tasks.TimerObject.IS_RUNNING;
 
 /**
  *
@@ -50,7 +55,9 @@ import ucu.deliverit.backcore.entidades.utiles.Utiles;
 @Path("viaje")
 public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     
-    private static int DISTANCIA_BUSQUEDA_KM = 2;
+    public static int DISTANCIA_BUSQUEDA_KM = 2;
+    
+    private boolean TIMER_RUNNING;
 
     @EJB
     private DeliveryFacadeREST deliveryFacadeREST;
@@ -64,14 +71,14 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
 
     @POST
     @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.APPLICATION_JSON)
     public void create(Viaje entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.APPLICATION_JSON)
     public void edit(@PathParam("id") Integer id, Viaje entity) {
         super.edit(entity);
     }
@@ -84,21 +91,21 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public Viaje find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Viaje> findAll() {
-        return super.findAll();
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Viaje> findAll() {            
+       return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Viaje> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
@@ -144,90 +151,95 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         List<Delivery> deliverysSinViajes = deliveryFacadeREST.findAllSinViajesEnProceso();
         
         List<Delivery> deliverysNotificados = new ArrayList<>();
-        
+                
         if (deliverysSinViajes.size() > 0) {
-            while (DISTANCIA_BUSQUEDA_KM <= 10) {            
-                for (Delivery d : deliverysSinViajes) {
-                    System.out.println("***** Delivery: " + d.getUsuario().getNombre() + " *****");
-                    
-                    Double[] origen = {d.getUbicacion().getLatitud(), d.getUbicacion().getLongitud()};
-                    Double[] destino = {viaje.getSucursal().getDireccion().getLatitud(),
-                        viaje.getSucursal().getDireccion().getLongitud()};
-                    Double distancia = null;
-                    try {
-                        distancia = Utiles.distancia(origen, destino, d.getVehiculo());
+            
+            
+            try {
+                notificarDeliverys(deliverysSinViajes.get(0));
+            } catch (IOException e) {
+            
+            }
+            
+            
+            
+            
+            while (DISTANCIA_BUSQUEDA_KM <= 10) {  
+                if (!TIMER_RUNNING) {
+                    for (Delivery d : deliverysSinViajes) {
+                        System.out.println("***** Delivery: " + d.getUsuario().getNombre() + " *****");
 
-                        if (distancia <= DISTANCIA_BUSQUEDA_KM) {
-                            boolean notificar = true;
+                        Double[] origen = {d.getUbicacion().getLatitud(), d.getUbicacion().getLongitud()};
+                        Double[] destino = {viaje.getSucursal().getDireccion().getLatitud(),
+                            viaje.getSucursal().getDireccion().getLongitud()};
+                        Double distancia = null;
+                        try {
+                            distancia = Utiles.distancia(origen, destino, d.getVehiculo());
 
-                            // Antes de notificar al delivery me fijo que no esté en la lista de notificados
-                            if (deliverysNotificados.size() > 0) {
-                                for (int i = 0; i < deliverysNotificados.size(); i++) {
-                                    if (d.getId() == deliverysNotificados.get(i).getId()) {
-                                        notificar = false;
-                                        break;
+                            if (distancia <= DISTANCIA_BUSQUEDA_KM) {
+                                boolean notificar = true;
+
+                                // Antes de notificar al delivery me fijo que no esté en la lista de notificados
+                                if (deliverysNotificados.size() > 0) {
+                                    for (int i = 0; i < deliverysNotificados.size(); i++) {
+                                        if (d.getId() == deliverysNotificados.get(i).getId()) {
+                                            notificar = false;
+                                            break;
+                                        }
                                     }
                                 }
+
+                                System.out.println("***** notificar? " + notificar + " *****");
+
+                                if (notificar) {
+                                    // notificarDeliverys(d);
+                                    deliverysNotificados.add(d);
+                                }
                             }
-                            
-                            System.out.println("***** notificar? " + notificar + " *****");
-                            
-                            if (notificar) {
-                               // notificarDeliverys(d);
-                                deliverysNotificados.add(d);
-                            }                        
-                        }                    
 
-                    } catch (IOException e) {
-                        System.out.println("***** IOException = " + e + " *****");
-                    } catch (JSONException e) {
-                        System.out.println("***** JSONException = " + e + " *****");
-                    }  catch (Exception e) {
-                        System.out.println("***** Exception = " + e + " *****");
-                    }
-                }
-
-                // Se crea un timerTask que consulta cada 30 segundos si el viaje
-                // tiene un delivery asociado
-                final Timer timer = new Timer();
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        System.out.println("***** Comenzó a ejecutarse el timerTask *****");
-                        
-                        Viaje viajeANotificar = find(viaje.getId());;
-                        // Alguien tomó el viaje, terminar este proceso
-                        if (viajeANotificar.getDelivery().getId() != 0) {
-                            System.out.println("***** Viaje asignado a un delivery *****");
-                            
-                            DISTANCIA_BUSQUEDA_KM = 10;
-                            timer.cancel();
-                            timer.purge();
-                            return;
+                        } catch (IOException e) {
+                            System.out.println("***** IOException = " + e + " *****");
+                        } catch (JSONException e) {
+                            System.out.println("***** JSONException = " + e + " *****");
+                        }  catch (Exception e) {
+                            System.out.println("***** Exception = " + e + " *****");
                         }
-                    }                  
-                };
-                // Comienza a ejecutarse el timerTask y luego lanzamos la tarea cada 30 segundos
-                timer.schedule(task, 0, 30000);   
-                
-                // Termina de ejecutarse el timerTask y verifico si el viaje fue asignado
-                // Si el viaje fue asignado entonces DISTANCIA_BUSQUEDA_KM debe ser igual a 10
-                // SINO aumentar el valor de DISTANCIA_BUSQUEDA_KM
-                if (DISTANCIA_BUSQUEDA_KM != 10) {
-                    System.out.println("***** Viaje NO asignado a ningún delivery *****");
-                    DISTANCIA_BUSQUEDA_KM ++;
+                    }
+                   // TimerObject timer = new TimerObject(this, viaje);   
+                   
+                    final Timer timer = new Timer();
+
+                    TimerTask task = new TimerTask() {
+
+                        @Override
+                        public void run() {
+                            TIMER_RUNNING = true;
+                            
+                            System.out.println("***** RUN *****");
+                            ViajeFacadeREST v = new ViajeFacadeREST();
+                            Viaje viajeANotificar = v.find(viaje.getId());
+                            System.out.println("***** id = " + viajeANotificar.getId());
+                            // Alguien tomó el viaje, terminar este proceso
+                          /*  if (viajeANotificar.getDelivery() != null) {
+                                DISTANCIA_BUSQUEDA_KM = 10;
+                                TIMER_RUNNING = false;
+                                timer.cancel();
+                                timer.purge();
+                                return;
+                            }  */
+                        }
+                    };
+                    // Empezamos dentro de 10ms y luego lanzamos la tarea cada 1000ms
+                    timer.schedule(task, 0, 10000);
+                    }
                 } 
-            } 
-        } 
-        if (DISTANCIA_BUSQUEDA_KM == 10) {
-            DISTANCIA_BUSQUEDA_KM = 2;
-            // LLAMAR A WS DE MASO PARA NOTIFICAR QUE EL VIAJE HA SIDO ASIGNADO A UN DELIVERY
-        } 
+            }
+        
     }
     
     private void notificarDeliverys(Delivery delivery) throws IOException {    
         String message_url = "https://fcm.googleapis.com/fcm/send";
-        String to = delivery.getToken();
+        String to = "dNlPKcCLyEc:APA91bHXtyB6RHVqDgdu0TK6E1jxwmCSh-pMZC9gLpvTZegfnPDCK2ZyUgVTJbyHYqc4Wl-AMKeLCaDnfHBO0yMcYJQ_0HB1nkDb4rfb7dJLx3Vi6lUwJkV6LjtysJzF7-1-apftQDKB";
         String message_key = "key=AAAAXNmpFoo:APA91bFF5e1i3mZHE3APivYcHlnkS2ng7_quGr1ecuspOP68gjEnA13OIVUiPgKxVuqvCmnmDU_ZmcOl6OxJ1sEWQSjVYWB_wspNIx8lc0NjFYylx-uMPzfi-xnJhcPb2nVc852lMbZ5";
 
         JSONObject message = new JSONObject();

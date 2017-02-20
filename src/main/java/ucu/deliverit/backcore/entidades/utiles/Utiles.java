@@ -5,12 +5,10 @@
  */
 package ucu.deliverit.backcore.entidades.utiles;
 
-import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import java.io.IOException;
-import java.net.URL;
 import java.net.URLEncoder;
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -7,13 +7,13 @@ import ucu.deliverit.backcore.entidades.Cliente;
 import ucu.deliverit.backcore.entidades.PedidoPK;
 import ucu.deliverit.backcore.entidades.Viaje;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-02-19T17:39:08")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-02-20T20:05:16")
 @StaticMetamodel(Pedido.class)
 public class Pedido_ { 
 
     public static volatile SingularAttribute<Pedido, Cliente> cliente;
     public static volatile SingularAttribute<Pedido, PedidoPK> pedidoPK;
-    public static volatile SingularAttribute<Pedido, Viaje> viaje1;
+    public static volatile SingularAttribute<Pedido, Viaje> viaje;
     public static volatile SingularAttribute<Pedido, String> formaPago;
     public static volatile SingularAttribute<Pedido, String> detalle;
 

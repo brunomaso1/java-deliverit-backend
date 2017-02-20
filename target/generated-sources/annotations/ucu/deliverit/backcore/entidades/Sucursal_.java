@@ -9,14 +9,14 @@ import ucu.deliverit.backcore.entidades.Restaurant;
 import ucu.deliverit.backcore.entidades.SucursalPK;
 import ucu.deliverit.backcore.entidades.Viaje;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-02-19T17:39:08")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-02-20T20:05:16")
 @StaticMetamodel(Sucursal.class)
 public class Sucursal_ { 
 
     public static volatile SingularAttribute<Sucursal, SucursalPK> sucursalPK;
+    public static volatile SingularAttribute<Sucursal, Restaurant> restaurant;
     public static volatile CollectionAttribute<Sucursal, Viaje> viajeCollection;
     public static volatile SingularAttribute<Sucursal, Direccion> direccion;
-    public static volatile SingularAttribute<Sucursal, Restaurant> restaurant1;
     public static volatile SingularAttribute<Sucursal, String> nombre;
 
 }

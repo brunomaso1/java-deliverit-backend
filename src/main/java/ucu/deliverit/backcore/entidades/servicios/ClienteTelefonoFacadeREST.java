@@ -60,14 +60,14 @@ public class ClienteTelefonoFacadeREST extends AbstractFacade<ClienteTelefono> {
 
     @POST
     @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.APPLICATION_JSON)
     public void create(ClienteTelefono entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.APPLICATION_JSON)
     public void edit(@PathParam("id") PathSegment id, ClienteTelefono entity) {
         super.edit(entity);
     }
@@ -81,7 +81,7 @@ public class ClienteTelefonoFacadeREST extends AbstractFacade<ClienteTelefono> {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public ClienteTelefono find(@PathParam("id") PathSegment id) {
         ucu.deliverit.backcore.entidades.ClienteTelefonoPK key = getPrimaryKey(id);
         return super.find(key);
@@ -89,14 +89,14 @@ public class ClienteTelefonoFacadeREST extends AbstractFacade<ClienteTelefono> {
 
     @GET
     @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public List<ClienteTelefono> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public List<ClienteTelefono> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }

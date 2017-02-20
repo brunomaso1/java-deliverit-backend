@@ -35,15 +35,19 @@ public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected PedidoPK pedidoPK;
+    
     @Size(max = 100)
     @Column(name = "detalle")
     private String detalle;
+    
     @Size(max = 1)
     @Column(name = "forma_pago")
     private String formaPago;
+    
     @JoinColumn(name = "viaje", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Viaje viaje1;
+    private Viaje viaje;
+    
     @JoinColumn(name = "cliente", referencedColumnName = "id")
     @ManyToOne
     private Cliente cliente;
@@ -83,12 +87,12 @@ public class Pedido implements Serializable {
         this.formaPago = formaPago;
     }
 
-    public Viaje getViaje1() {
-        return viaje1;
+    public Viaje getViaje() {
+        return viaje;
     }
 
-    public void setViaje1(Viaje viaje1) {
-        this.viaje1 = viaje1;
+    public void setViaje(Viaje viaje) {
+        this.viaje = viaje;
     }
 
     public Cliente getCliente() {

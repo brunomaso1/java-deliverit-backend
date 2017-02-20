@@ -55,7 +55,8 @@ public class Viaje implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
     private Collection<Transaccion> transaccionCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje1")
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
     private Collection<Pedido> pedidoCollection;
     
     @JoinColumn(name = "delivery", referencedColumnName = "id")
