@@ -21,6 +21,7 @@ public class SucursalPK implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private short id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "restaurant")

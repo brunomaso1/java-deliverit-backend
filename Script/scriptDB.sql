@@ -136,3 +136,6 @@ create table deliverit.configuracion (
 );
 
 insert into deliverit.configuracion (descripcion, valor) values ('API_KEY_GOOGLE', 'AIzaSyA2NCnQBRCbuXHbNeUY7mW-lvP-v4V3x8A');
+select * from deliverit.viaje
+
+select * from deliverit.pedido

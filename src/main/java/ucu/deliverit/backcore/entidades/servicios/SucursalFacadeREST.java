@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,6 +20,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
+import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.SucursalPK;
 
@@ -92,6 +94,24 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Sucursal> findAll() {
         return super.findAll();
+    }
+    
+    @GET
+    @Path("findPedidos/{restaurant}/{sucursal}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Pedido> findPedidos(@PathParam("restaurant") Integer restaurant,
+            @PathParam("sucursal") Integer sucursal) {
+        String consulta = "SELECT p FROM Pedido p"
+                + " JOIN p.viaje v"
+                + " WHERE v.sucursal.sucursalPK.id = :sucursal"
+                + " AND v.sucursal.sucursalPK.restaurant = :restaurant";
+        TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);     
+        query.setParameter("sucursal", sucursal);
+        query.setParameter("restaurant", restaurant);
+        
+        List<Pedido> results = query.getResultList();
+        
+        return results;
     }
 
     @GET

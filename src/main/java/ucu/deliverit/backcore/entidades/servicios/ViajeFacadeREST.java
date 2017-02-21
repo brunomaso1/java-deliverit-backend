@@ -156,7 +156,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             
             
             try {
-                notificarDeliverys(deliverysSinViajes.get(0));
+                notificarDeliverys(deliverysSinViajes.get(0), viaje);
             } catch (IOException e) {
             
             }
@@ -237,13 +237,17 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         
     }
     
-    private void notificarDeliverys(Delivery delivery) throws IOException {    
+    private void notificarDeliverys(Delivery delivery, Viaje viaje) throws IOException {    
         String message_url = "https://fcm.googleapis.com/fcm/send";
-        String to = "dNlPKcCLyEc:APA91bHXtyB6RHVqDgdu0TK6E1jxwmCSh-pMZC9gLpvTZegfnPDCK2ZyUgVTJbyHYqc4Wl-AMKeLCaDnfHBO0yMcYJQ_0HB1nkDb4rfb7dJLx3Vi6lUwJkV6LjtysJzF7-1-apftQDKB";
+        String to = "fjofp_7-Tec:APA91bGxusT_eSKtorm4joIDz5MWW9cq6p-YMs7kfMB14OsjqSde53aa0kqF4ugFKty0yT1NfmKVdIK3MDHwxCsVJWz1c99iNcZ8CroqnFAOAsdYoAJX3ONCXL4wQofZ3Yi-vPii-rNi";
         String message_key = "key=AAAAXNmpFoo:APA91bFF5e1i3mZHE3APivYcHlnkS2ng7_quGr1ecuspOP68gjEnA13OIVUiPgKxVuqvCmnmDU_ZmcOl6OxJ1sEWQSjVYWB_wspNIx8lc0NjFYylx-uMPzfi-xnJhcPb2nVc852lMbZ5";
 
         JSONObject message = new JSONObject();
-        message.put("message", "PUTO");
+        
+        Gson gson = new Gson();
+        String viajeString = gson.toJson(viaje);
+        
+        message.put("viaje", viajeString);
         JSONObject protocol = new JSONObject();
         protocol.put("to", to);
         protocol.put("data", message);

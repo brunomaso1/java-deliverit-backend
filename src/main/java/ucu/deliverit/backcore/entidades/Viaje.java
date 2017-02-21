@@ -48,6 +48,7 @@ public class Viaje implements Serializable {
     
     @Column(name = "calificacion")
     private Short calificacion;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "precio")
