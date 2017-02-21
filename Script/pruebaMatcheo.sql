@@ -25,10 +25,12 @@ insert into deliverit.viaje (precio, sucursal, restaurant, estado) values (200, 
 insert into deliverit.viaje (precio, sucursal, restaurant, estado) values (1200, 2, 1, 1);
 
 
-insert into deliverit.pedido (id, viaje, detalle, forma_pago) values (2, 1, 'cuidado con el perro', 'O')
-insert into deliverit.pedido (id, viaje, detalle, forma_pago) values (45, 3, 'cuidado con el gato', 'O')
+insert into deliverit.pedido (id, viaje, detalle, forma_pago) values (2, 1, 'cuidado con el perro', 'O');
+insert into deliverit.pedido (id, viaje, detalle, forma_pago) values (45, 3, 'cuidado con el gato', 'O');
 
-insert into deliverit.direccion (calle, nro_puerta, esquina, latitud, longitud) values ('José Ellauri', 2085, 'Francisco Aguilar', -34.9166122, -56.1568794)
-insert into deliverit.cliente (nombre, direccion)  values ('Joaquin Galletto', 2)
+insert into deliverit.direccion (calle, nro_puerta, esquina, apartamento, latitud, longitud) values ('José Ellauri', 2085, 'Francisco Aguilar', 803, -34.9166122, -56.1568794);
+insert into deliverit.cliente (nombre, direccion)  values ('Joaquin Galletto', 2);
 
-update deliverit.pedido set cliente = 1 where id <> 0
+update deliverit.pedido set cliente = 1 where id <> 0;
+
+insert into deliverit.cliente_telefono (cliente, telefono) values (1, '098756990');

@@ -49,7 +49,7 @@ public class Pedido implements Serializable {
     private Viaje viaje;
     
     @JoinColumn(name = "cliente", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Cliente cliente;
 
     public Pedido() {

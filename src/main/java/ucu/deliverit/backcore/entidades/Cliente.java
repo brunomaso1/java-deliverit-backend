@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,20 +39,25 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Size(max = 50)
     @Column(name = "nombre")
     private String nombre;
+    
     @JoinColumn(name = "direccion", referencedColumnName = "id")
     @ManyToOne
     private Direccion direccion;
+    
     @OneToMany(mappedBy = "cliente")
     private Collection<Pedido> pedidoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente1")
+    
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     private Collection<ClienteTelefono> clienteTelefonoCollection;
 
     public Cliente() {

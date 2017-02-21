@@ -27,6 +27,7 @@ create table deliverit.direccion (
     calle varchar(20) not null,
     nro_puerta smallint not null,
     esquina varchar(20),
+    apartamento smallint,
     latitud double,
     longitud double
 );
@@ -68,6 +69,7 @@ create table deliverit.restaurant (
     razon_social varchar(50),
     foreign key (usuario) references deliverit.usuario (id)
 );
+
 create table deliverit.ubicacion (
 	id smallint primary key,
     latitud double,
@@ -136,6 +138,3 @@ create table deliverit.configuracion (
 );
 
 insert into deliverit.configuracion (descripcion, valor) values ('API_KEY_GOOGLE', 'AIzaSyA2NCnQBRCbuXHbNeUY7mW-lvP-v4V3x8A');
-select * from deliverit.viaje
-
-select * from deliverit.pedido

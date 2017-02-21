@@ -29,11 +29,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ClienteTelefono implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @EmbeddedId
     protected ClienteTelefonoPK clienteTelefonoPK;
+    
     @JoinColumn(name = "cliente", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Cliente cliente1;
+    private Cliente cliente;
 
     public ClienteTelefono() {
     }
@@ -54,12 +56,12 @@ public class ClienteTelefono implements Serializable {
         this.clienteTelefonoPK = clienteTelefonoPK;
     }
 
-    public Cliente getCliente1() {
-        return cliente1;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setCliente1(Cliente cliente1) {
-        this.cliente1 = cliente1;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     @Override
