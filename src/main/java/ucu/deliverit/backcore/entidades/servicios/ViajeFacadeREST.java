@@ -41,6 +41,7 @@ import ucu.deliverit.backcore.entidades.Direccion;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
 import ucu.deliverit.backcore.entidades.Restaurant;
 import ucu.deliverit.backcore.entidades.Sucursal;
+import ucu.deliverit.backcore.entidades.SucursalPK;
 import ucu.deliverit.backcore.entidades.Vehiculo;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.entidades.utiles.Utiles;
@@ -128,15 +129,23 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     public void matchearDelivery (@QueryParam("viaje") final Viaje v) { 
         Direccion dir = new Direccion();
         dir.setId(1);
+        dir.setCalle("Bv. España");
+        dir.setEsquina("Joaquín de Salterain");
+        dir.setNroPuerta(Short.parseShort("2094"));
         dir.setLatitud(-34.908865);
         dir.setLongitud(-56.1717083);
         
         Restaurant r = new Restaurant();
-        r.setId(1);        
+        r.setId(1);  
+        r.setRut(2151622);
+        r.setRazonSocial("Pancho Va");
         
         Sucursal sucursal = new Sucursal();
         sucursal.setDireccion(dir);
         sucursal.setRestaurant(r);
+        SucursalPK sucPK = new SucursalPK();
+        sucPK.setId(Short.parseShort("1"));
+        sucursal.setSucursalPK(sucPK);
         
         EstadoViaje estado = new EstadoViaje();
         estado.setId(Short.parseShort("1"));
@@ -164,7 +173,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             
             
             
-            while (DISTANCIA_BUSQUEDA_KM <= 10) {  
+          /*  while (DISTANCIA_BUSQUEDA_KM <= 10) {  
                 if (!TIMER_RUNNING) {
                     for (Delivery d : deliverysSinViajes) {
                         System.out.println("***** Delivery: " + d.getUsuario().getNombre() + " *****");
@@ -226,20 +235,22 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
                                 timer.cancel();
                                 timer.purge();
                                 return;
-                            }  */
+                            }  
                         }
                     };
                     // Empezamos dentro de 10ms y luego lanzamos la tarea cada 1000ms
                     timer.schedule(task, 0, 10000);
                     }
-                } 
+                } */
             }
         
     }
     
-    private void notificarDeliverys(Delivery delivery, Viaje viaje) throws IOException {    
+    private void notificarDeliverys(Delivery delivery, Viaje viaje) throws IOException {  
+        System.out.println("***** va a enviar la notificación *****");
         String message_url = "https://fcm.googleapis.com/fcm/send";
-        String to = "fjofp_7-Tec:APA91bGxusT_eSKtorm4joIDz5MWW9cq6p-YMs7kfMB14OsjqSde53aa0kqF4ugFKty0yT1NfmKVdIK3MDHwxCsVJWz1c99iNcZ8CroqnFAOAsdYoAJX3ONCXL4wQofZ3Yi-vPii-rNi";
+        String to = "dOdgcCmYW04:APA91bHhFbeNJMfiw4IJx12JI42msPhaIRXv-HRjMWaJBI3ktzNKDOvrgMVKi9kTsZC4mD5epQTH7oJKPoWti2lC36B_JipqB93eBDEMHzL606yH0f2ng7b29fHkO5m_1DkvTkhMrhr6";       
+        
         String message_key = "key=AAAAXNmpFoo:APA91bFF5e1i3mZHE3APivYcHlnkS2ng7_quGr1ecuspOP68gjEnA13OIVUiPgKxVuqvCmnmDU_ZmcOl6OxJ1sEWQSjVYWB_wspNIx8lc0NjFYylx-uMPzfi-xnJhcPb2nVc852lMbZ5";
 
         JSONObject message = new JSONObject();
@@ -263,5 +274,6 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
 
         HttpResponse response = httpClient.execute(request);
         System.out.println(response.toString());
+        System.out.println("***** envió la notificación *****");
     }
 }
