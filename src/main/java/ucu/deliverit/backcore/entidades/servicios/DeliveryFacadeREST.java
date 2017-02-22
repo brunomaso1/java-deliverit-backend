@@ -39,8 +39,15 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Delivery entity) {
-        super.create(entity);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Delivery create(Delivery entity) {
+        try {
+            Delivery d = super.create(entity);
+            return d;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @PUT

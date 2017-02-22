@@ -44,7 +44,6 @@ ucu\deliverit\backcore\entidades\Ubicacion_.class
 ucu\deliverit\backcore\entidades\servicios\ViajeFacadeREST.class
 ucu\deliverit\backcore\entidades\Ubicacion.class
 ucu\deliverit\backcore\entidades\servicios\DireccionFacadeREST.class
-ucu\deliverit\backcore\entidades\servicios\ViajeFacadeREST$1.class
 ucu\deliverit\backcore\entidades\servicios\SucursalFacadeREST.class
 ucu\deliverit\backcore\entidades\Viaje_.class
 ucu\deliverit\backcore\entidades\servicios\ClienteFacadeREST.class

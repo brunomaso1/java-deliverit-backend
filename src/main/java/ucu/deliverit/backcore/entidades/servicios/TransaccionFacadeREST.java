@@ -38,8 +38,15 @@ public class TransaccionFacadeREST extends AbstractFacade<Transaccion> {
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Transaccion entity) {
-        super.create(entity);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Transaccion create(Transaccion entity) {
+        try {
+            Transaccion t = super.create(entity);
+            return t;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @PUT

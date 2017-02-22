@@ -38,8 +38,15 @@ public class DireccionFacadeREST extends AbstractFacade<Direccion> {
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Direccion entity) {
-        super.create(entity);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Direccion create(Direccion entity) {
+        try {
+            Direccion d = super.create(entity);
+            return d;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @PUT

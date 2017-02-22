@@ -63,8 +63,15 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Sucursal entity) {
-        super.create(entity);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Sucursal create(Sucursal entity) {
+        try {
+            Sucursal s = super.create(entity);
+            return s;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @PUT

@@ -38,8 +38,15 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Usuario entity) {
-        super.create(entity);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Usuario create(Usuario entity) {
+        try {
+            Usuario u = super.create(entity);
+            return u;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @PUT

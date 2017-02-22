@@ -38,8 +38,15 @@ public class EstadoViajeFacadeREST extends AbstractFacade<EstadoViaje> {
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(EstadoViaje entity) {
-        super.create(entity);
+    @Produces(MediaType.APPLICATION_JSON)
+    public EstadoViaje create(EstadoViaje entity) {
+        try {
+            EstadoViaje ev = super.create(entity);
+            return ev;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @PUT

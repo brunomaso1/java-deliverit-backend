@@ -38,8 +38,15 @@ public class VehiculoFacadeREST extends AbstractFacade<Vehiculo> {
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Vehiculo entity) {
-        super.create(entity);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Vehiculo create(Vehiculo entity) {
+        try {
+            Vehiculo v = super.create(entity);
+            return v;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @PUT

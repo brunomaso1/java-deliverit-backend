@@ -61,8 +61,15 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Pedido entity) {
-        super.create(entity);
+    @Produces(MediaType.TEXT_PLAIN)
+    public Pedido create(Pedido entity) {
+        try {
+            Pedido p = super.create(entity);
+            return p;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @PUT

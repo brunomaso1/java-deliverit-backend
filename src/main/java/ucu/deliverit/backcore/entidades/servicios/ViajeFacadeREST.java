@@ -19,6 +19,8 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -62,6 +64,9 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
 
     @EJB
     private DeliveryFacadeREST deliveryFacadeREST;
+    
+    @EJB
+    private EstadoViajeFacadeREST estadoFacadeREST;
 
     @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
     private EntityManager em;
@@ -73,8 +78,15 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Viaje entity) {
-        super.create(entity);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Viaje create(Viaje entity) {
+        try {
+            Viaje v = super.create(entity);
+            return v;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @PUT
@@ -82,6 +94,26 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @Consumes(MediaType.APPLICATION_JSON)
     public void edit(@PathParam("id") Integer id, Viaje entity) {
         super.edit(entity);
+    }
+    
+    @POST
+    @Path("aceptarViaje/{idViaje}/{idDelivery}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Integer aceptarViaje(@PathParam("idViaje") Integer idViaje, 
+            @PathParam("idDelivery") Integer idDelivery) {
+        Viaje viaje = find(idViaje);
+        
+        if (viaje.getEstado().getId() != 3) {
+            Delivery delivery = deliveryFacadeREST.find(idDelivery);
+            EstadoViaje estado = estadoFacadeREST.find((short) 3);
+            viaje.setEstado(estado);
+            viaje.setDelivery(delivery);
+            em.persist(viaje);
+            
+            return 0;
+        } else {
+            return -1;
+        }
     }
 
     @DELETE

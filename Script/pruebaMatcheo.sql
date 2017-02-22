@@ -34,3 +34,7 @@ insert into deliverit.cliente (nombre, direccion)  values ('Joaquin Galletto', 2
 update deliverit.pedido set cliente = 1 where id <> 0;
 
 insert into deliverit.cliente_telefono (cliente, telefono) values (1, '098756990');
+
+
+select * from deliverit.viaje
+

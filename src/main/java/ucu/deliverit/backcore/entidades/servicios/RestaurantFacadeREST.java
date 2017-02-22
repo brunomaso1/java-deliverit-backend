@@ -38,8 +38,15 @@ public class RestaurantFacadeREST extends AbstractFacade<Restaurant> {
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Restaurant entity) {
-        super.create(entity);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Restaurant create(Restaurant entity) {
+        try {
+            Restaurant r = super.create(entity);
+            return r;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @PUT

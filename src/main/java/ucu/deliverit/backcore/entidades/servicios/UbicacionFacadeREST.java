@@ -38,8 +38,15 @@ public class UbicacionFacadeREST extends AbstractFacade<Ubicacion> {
     @POST
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Ubicacion entity) {
-        super.create(entity);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Ubicacion create(Ubicacion entity) {
+        try {
+            Ubicacion u = super.create(entity);
+            return u;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @PUT
