@@ -101,11 +101,12 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @Produces(MediaType.TEXT_PLAIN)
     public Integer aceptarViaje(@PathParam("idViaje") Integer idViaje, 
             @PathParam("idDelivery") Integer idDelivery) {
-        Viaje viaje = find(idViaje);
+        Viaje viaje = find(idViaje);   
         
-        if (viaje.getEstado().getId() != 3) {
+        if (viaje.getEstado().getId() != estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO)) {
             Delivery delivery = deliveryFacadeREST.find(idDelivery);
-            EstadoViaje estado = estadoFacadeREST.find((short) 3);
+            EstadoViaje estado = estadoFacadeREST
+                    .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO));
             viaje.setEstado(estado);
             viaje.setDelivery(delivery);
             em.persist(viaje);

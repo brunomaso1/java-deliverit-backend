@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -67,6 +68,20 @@ public class EstadoViajeFacadeREST extends AbstractFacade<EstadoViaje> {
     @Produces(MediaType.APPLICATION_JSON)
     public EstadoViaje find(@PathParam("id") Short id) {
         return super.find(id);
+    }
+    
+    @GET
+    @Path("findIdByDescripcion/{descripcion}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Short findIdByDescripcion(@PathParam("descripcion") String descripcion) {
+        String consulta = "SELECT e.id FROM EstadoViaje e WHERE e.descripcion = :descripcion";
+
+        TypedQuery<Short> query = em.createQuery(consulta, Short.class);     
+        query.setParameter("descripcion", descripcion);
+        
+        Short result = query.getSingleResult();
+        
+        return result;
     }
 
     @GET

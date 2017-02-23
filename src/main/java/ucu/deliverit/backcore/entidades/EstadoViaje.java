@@ -35,14 +35,22 @@ import javax.xml.bind.annotation.XmlTransient;
 public class EstadoViaje implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    public static final String PENDIENTE = "Pendiente";
+    public static final String PUBLICADO = "Publicado";
+    public static final String EN_PROCESO = "En proceso";
+    public static final String FINALIZADO = "Finalizado";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Short id;
+    
     @Size(max = 10)
     @Column(name = "descripcion")
     private String descripcion;
+    
     @OneToMany(mappedBy = "estado")
     private Collection<Viaje> viajeCollection;
 

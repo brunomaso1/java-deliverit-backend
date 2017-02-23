@@ -25,7 +25,6 @@ public abstract class AbstractFacade<T> {
     public T create(T entity) {
         try {
             getEntityManager().persist(entity);
-            entity = find(entity);
             return entity;
         } catch (Exception e) {
             return null;
