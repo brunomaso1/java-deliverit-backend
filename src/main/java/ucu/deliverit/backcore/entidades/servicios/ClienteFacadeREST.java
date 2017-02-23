@@ -6,6 +6,7 @@
 package ucu.deliverit.backcore.entidades.servicios;
 
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Cliente;
+import ucu.deliverit.backcore.entidades.Direccion;
 
 /**
  *
@@ -27,6 +29,8 @@ import ucu.deliverit.backcore.entidades.Cliente;
 @Stateless
 @Path("cliente")
 public class ClienteFacadeREST extends AbstractFacade<Cliente> {
+    @EJB 
+    private DireccionFacadeREST direccionREST;
 
     @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
     private EntityManager em;

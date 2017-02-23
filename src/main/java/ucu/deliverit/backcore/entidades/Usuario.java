@@ -41,37 +41,48 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "nombre")
     private String nombre;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "password")
     private String password;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 9)
+    @Column(name = "telefono")
+    private String telefono;
+    
     @Size(max = 50)
     @Column(name = "mail")
     private String mail;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "cuenta_red_pagos")
     private int cuentaRedPagos;
+    
     @Lob
     @Column(name = "foto")
     private byte[] foto;
     @OneToMany(mappedBy = "usuario")
     private Collection<Delivery> deliveryCollection;
+    
     @OneToMany(mappedBy = "usuario")
     private Collection<Restaurant> restaurantCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario1")
-    private Collection<UsuarioTelefono> usuarioTelefonoCollection;
 
     public Usuario() {
     }
@@ -80,11 +91,12 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public Usuario(Integer id, String nombre, String password, int cuentaRedPagos) {
+    public Usuario(Integer id, String nombre, String password, int cuentaRedPagos, String telefono) {
         this.id = id;
         this.nombre = nombre;
         this.password = password;
         this.cuentaRedPagos = cuentaRedPagos;
+        this.telefono = telefono;
     }
 
     public Integer getId() {
@@ -135,6 +147,14 @@ public class Usuario implements Serializable {
         this.foto = foto;
     }
 
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
     @XmlTransient
     public Collection<Delivery> getDeliveryCollection() {
         return deliveryCollection;
@@ -151,15 +171,6 @@ public class Usuario implements Serializable {
 
     public void setRestaurantCollection(Collection<Restaurant> restaurantCollection) {
         this.restaurantCollection = restaurantCollection;
-    }
-
-    @XmlTransient
-    public Collection<UsuarioTelefono> getUsuarioTelefonoCollection() {
-        return usuarioTelefonoCollection;
-    }
-
-    public void setUsuarioTelefonoCollection(Collection<UsuarioTelefono> usuarioTelefonoCollection) {
-        this.usuarioTelefonoCollection = usuarioTelefonoCollection;
     }
 
     @Override

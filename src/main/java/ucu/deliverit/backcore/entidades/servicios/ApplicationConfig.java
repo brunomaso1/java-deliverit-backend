@@ -30,7 +30,6 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ucu.deliverit.backcore.entidades.servicios.ClienteFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.ClienteTelefonoFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.DeliveryFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.DireccionFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.EstadoViajeFacadeREST.class);
@@ -40,7 +39,6 @@ public class ApplicationConfig extends Application {
         resources.add(ucu.deliverit.backcore.entidades.servicios.TransaccionFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.UbicacionFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.UsuarioFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.UsuarioTelefonoFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.VehiculoFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.ViajeFacadeREST.class);
     }

@@ -1,14 +1,11 @@
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Transaccion.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Usuario.java
-C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\ClienteTelefono.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\DireccionFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Direccion.java
-C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\ClienteTelefonoFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\DeliveryFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Vehiculo.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Viaje.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Configuracion.java
-C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\ClienteTelefonoPK.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Sucursal.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\PedidoFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\ConfiguracionFacadeREST.java
@@ -19,7 +16,6 @@ C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliv
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\EstadoViaje.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Restaurant.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\SucursalFacadeREST.java
-C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\UsuarioTelefono.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\utiles\Utiles.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\RestaurantFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\tasks\TimerObject.java
@@ -28,11 +24,9 @@ C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliv
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\UbicacionFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Pedido.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\AbstractFacade.java
-C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\UsuarioTelefonoPK.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\ViajeFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Delivery.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\UsuarioFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\SucursalPK.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Ubicacion.java
 C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\Cliente.java
-C:\Users\JMArtegoytia\Desktop\UCU\Nueva carpeta\BackCore\src\main\java\ucu\deliverit\backcore\entidades\servicios\UsuarioTelefonoFacadeREST.java

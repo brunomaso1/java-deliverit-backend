@@ -133,8 +133,8 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @GET
     @Override
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Viaje> findAll() {            
-       return super.findAll();
+    public List<Viaje> findAll() {    
+        return super.findAll();            
     }
 
     @GET

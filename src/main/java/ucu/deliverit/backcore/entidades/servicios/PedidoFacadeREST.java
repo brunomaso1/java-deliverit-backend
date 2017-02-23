@@ -99,7 +99,6 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @Override
     @Produces(MediaType.APPLICATION_JSON)
     public List<Pedido> findAll() {
-        System.out.println("***** NO TIENE QUE ENTRAR *****");
         return super.findAll();
     }
 

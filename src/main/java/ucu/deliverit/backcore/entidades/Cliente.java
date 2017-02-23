@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -57,8 +58,11 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente")
     private Collection<Pedido> pedidoCollection;
     
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
-    private Collection<ClienteTelefono> clienteTelefonoCollection;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 8, max = 9)
+    @Column(name = "telefono")
+    private String telefono;
 
     public Cliente() {
     }
@@ -99,16 +103,21 @@ public class Cliente implements Serializable {
     public void setPedidoCollection(Collection<Pedido> pedidoCollection) {
         this.pedidoCollection = pedidoCollection;
     }
-
-    @XmlTransient
-    public Collection<ClienteTelefono> getClienteTelefonoCollection() {
-        return clienteTelefonoCollection;
+    
+        /**
+     * @return the telefono
+     */
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setClienteTelefonoCollection(Collection<ClienteTelefono> clienteTelefonoCollection) {
-        this.clienteTelefonoCollection = clienteTelefonoCollection;
+    /**
+     * @param telefono the telefono to set
+     */
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -1,3 +1,5 @@
+drop database deliverit;
+
 create database deliverit;
 
 create table deliverit.vehiculo (
@@ -36,14 +38,8 @@ create table deliverit.cliente (
 	id integer auto_increment primary key,
     nombre varchar (50),
     direccion integer,
+    telefono varchar(9) not null,
     foreign key (direccion) references deliverit.direccion (id)
-);
-
-create table deliverit.cliente_telefono (
-	cliente integer,
-    telefono varchar(9),
-    primary key (cliente, telefono),
-    foreign key (cliente) references deliverit.cliente (id)
 );
 
 create table deliverit.usuario (
@@ -51,21 +47,15 @@ create table deliverit.usuario (
     nombre varchar(20) unique not null,
     password varchar(100) not null,
     mail varchar(50),
+    telefono varchar(9) not null,
     cuenta_red_pagos integer not null,
     foto blob
-);
-
-create table deliverit.usuario_telefono (
-	usuario integer,
-    telefono varchar(9),
-    primary key (usuario, telefono),
-    foreign key (usuario) references deliverit.usuario (id)
 );
 
 create table deliverit.restaurant (
 	id integer auto_increment primary key,
 	usuario integer,
-    rut integer unique not null,
+    rut bigint unique not null,
     razon_social varchar(50),
     foreign key (usuario) references deliverit.usuario (id)
 );
