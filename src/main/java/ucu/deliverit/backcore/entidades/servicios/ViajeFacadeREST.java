@@ -42,6 +42,7 @@ import org.json.JSONObject;
 import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.entidades.Direccion;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
+import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Restaurant;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.SucursalPK;
@@ -83,6 +84,10 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     public Viaje create(Viaje entity) {
         try {
             Viaje v = super.create(entity);
+            
+            if (v.getEstado().getDescripcion().equals(EstadoViaje.PUBLICADO)) {
+                matchearDelivery(v);
+            }
             return v;
         } catch (Exception e) {
             return null;
@@ -157,6 +162,20 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         return em;
     }
     
+    @GET
+    @Path("findPedidosPorViaje/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Pedido> findPedidosPorViaje(@PathParam("id") Integer idViaje) {
+        String consulta = "SELECT p FROM Pedido p"
+                + " WHERE p.viaje.id = :idViaje";
+        TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);     
+        query.setParameter("idViaje", idViaje);
+        
+        List<Pedido> results = query.getResultList();
+        
+        return results;
+    }
+    
     @POST
     @Path("matchearDelivery")
     @Produces(MediaType.APPLICATION_JSON)
@@ -164,6 +183,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         Direccion dir = new Direccion();
         dir.setId(1);
         dir.setCalle("Bv. España");
+        dir.setNroPuerta((short)1234);
         dir.setEsquina("Joaquín de Salterain");
         dir.setNroPuerta(Short.parseShort("2094"));
         dir.setLatitud(-34.908865);
@@ -190,6 +210,8 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         viaje.setSucursal(sucursal);
         viaje.setEstado(estado);
         viaje.setPrecio(Short.parseShort("100"));
+        
+        List<Pedido> pedidos = findPedidosPorViaje(viaje.getId());
         
         List<Delivery> deliverysSinViajes = deliveryFacadeREST.findAllSinViajesEnProceso();
         
@@ -283,7 +305,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     private void notificarDeliverys(Delivery delivery, Viaje viaje) throws IOException {  
         System.out.println("***** va a enviar la notificación *****");
         String message_url = "https://fcm.googleapis.com/fcm/send";
-        String to = "dOdgcCmYW04:APA91bHhFbeNJMfiw4IJx12JI42msPhaIRXv-HRjMWaJBI3ktzNKDOvrgMVKi9kTsZC4mD5epQTH7oJKPoWti2lC36B_JipqB93eBDEMHzL606yH0f2ng7b29fHkO5m_1DkvTkhMrhr6";       
+        String to = "cGAdEQelHgw:APA91bEeGdm8QyYE0PajHZTmkEHfQeJUZsHJL0luuzx6JD6xUtq4dOuqQd8INNr4O6J4y5ftbrQ5O3pqQSS_m2Ou_LXjyPYfvY44bx8YJqLaY-qN_Sm3JHBpNHeEHU9TnDbBx0u7tyWh";
         
         String message_key = "key=AAAAXNmpFoo:APA91bFF5e1i3mZHE3APivYcHlnkS2ng7_quGr1ecuspOP68gjEnA13OIVUiPgKxVuqvCmnmDU_ZmcOl6OxJ1sEWQSjVYWB_wspNIx8lc0NjFYylx-uMPzfi-xnJhcPb2nVc852lMbZ5";
 
@@ -293,6 +315,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         String viajeString = gson.toJson(viaje);
         
         message.put("viaje", viajeString);
+        
         JSONObject protocol = new JSONObject();
         protocol.put("to", to);
         protocol.put("data", message);
