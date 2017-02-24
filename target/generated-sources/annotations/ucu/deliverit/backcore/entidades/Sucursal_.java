@@ -9,7 +9,7 @@ import ucu.deliverit.backcore.entidades.Restaurant;
 import ucu.deliverit.backcore.entidades.SucursalPK;
 import ucu.deliverit.backcore.entidades.Viaje;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-02-23T20:24:10")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-02-23T21:11:37")
 @StaticMetamodel(Sucursal.class)
 public class Sucursal_ { 
 

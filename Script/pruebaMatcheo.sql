@@ -28,5 +28,5 @@ insert into deliverit.direccion (id, calle, nro_puerta, esquina, apartamento, la
 insert into deliverit.cliente (nombre, direccion, telefono)  values ('José Pedro Varela', 3, '098639378');
 
 insert into deliverit.pedido (id, viaje, detalle, forma_pago, cliente) values (1, 1, 'cuidado con el perro', 'O', 1);
-insert into deliverit.pedido (id, viaje, detalle, forma_pago) values (2, 2, 'cuidado con el gato', 'O');
+insert into deliverit.pedido (id, viaje, detalle, forma_pago, cliente) values (2, 2, 'cuidado con el gato', 'O', 2);
 

@@ -115,7 +115,7 @@ create table deliverit.pedido (
     viaje integer,
     detalle varchar(100),
     forma_pago varchar(1),
-    cliente integer,
+    cliente integer not null,
     primary key (id, viaje),
     foreign key (viaje) references deliverit.viaje(id),
     foreign key (cliente) references deliverit.cliente(id)

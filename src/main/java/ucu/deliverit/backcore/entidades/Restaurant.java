@@ -6,6 +6,7 @@
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -49,7 +50,7 @@ public class Restaurant implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "rut")
-    private int rut;
+    private BigInteger rut;
     
     @Size(max = 50)
     @Column(name = "razon_social")
@@ -69,7 +70,7 @@ public class Restaurant implements Serializable {
         this.id = id;
     }
 
-    public Restaurant(Integer id, int rut) {
+    public Restaurant(Integer id, BigInteger rut) {
         this.id = id;
         this.rut = rut;
     }
@@ -82,11 +83,11 @@ public class Restaurant implements Serializable {
         this.id = id;
     }
 
-    public int getRut() {
+        public BigInteger getRut() {
         return rut;
     }
 
-    public void setRut(int rut) {
+    public void setRut(BigInteger rut) {
         this.rut = rut;
     }
 

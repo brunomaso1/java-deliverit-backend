@@ -7,6 +7,7 @@ package ucu.deliverit.backcore.entidades.servicios;
 
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -170,7 +171,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         
         Restaurant r = new Restaurant();
         r.setId(1);  
-        r.setRut(2151622);
+        r.setRut(new BigInteger("215162250011"));
         r.setRazonSocial("Pancho Va");
         
         Sucursal sucursal = new Sucursal();
