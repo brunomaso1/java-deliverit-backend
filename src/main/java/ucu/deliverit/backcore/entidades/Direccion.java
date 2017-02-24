@@ -57,6 +57,9 @@ public class Direccion implements Serializable {
     @Column(name = "nro_puerta")
     private short nroPuerta;
     
+    @Column(name = "apartamento")
+    private short apartamento;
+    
     @Size(max = 20)
     @Column(name = "esquina")
     private String esquina;
@@ -133,6 +136,20 @@ public class Direccion implements Serializable {
 
     public void setLongitud(Double longitud) {
         this.longitud = longitud;
+    }
+    
+    /**
+     * @return the apartamento
+     */
+    public short getApartamento() {
+        return apartamento;
+    }
+
+    /**
+     * @param apartamento the apartamento to set
+     */
+    public void setApartamento(short apartamento) {
+        this.apartamento = apartamento;
     }
 
     @XmlTransient
