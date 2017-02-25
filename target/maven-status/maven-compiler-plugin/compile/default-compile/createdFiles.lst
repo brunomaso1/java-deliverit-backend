@@ -44,4 +44,5 @@ ucu\deliverit\backcore\entidades\EstadoViaje.class
 ucu\deliverit\backcore\entidades\servicios\PedidoFacadeREST.class
 ucu\deliverit\backcore\tasks\TimerObject.class
 ucu\deliverit\backcore\entidades\Direccion.class
+ucu\deliverit\backcore\respuestas\RespuestaGeneral.class
 ucu\deliverit\backcore\entidades\Vehiculo_.class

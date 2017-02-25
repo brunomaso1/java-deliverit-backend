@@ -49,6 +49,7 @@ import ucu.deliverit.backcore.entidades.SucursalPK;
 import ucu.deliverit.backcore.entidades.Vehiculo;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.entidades.utiles.Utiles;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 import ucu.deliverit.backcore.tasks.TimerObject;
 import static ucu.deliverit.backcore.tasks.TimerObject.IS_RUNNING;
 
@@ -81,18 +82,26 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Viaje create(Viaje entity) {
-        try {
-            Viaje v = super.create(entity);
-            
-            if (v.getEstado().getDescripcion().equals(EstadoViaje.PUBLICADO)) {
-                matchearDelivery(v);
-            }
-            return v;
-        } catch (Exception e) {
-            return null;
-        }
+    public RespuestaGeneral create(Viaje entity) {
+        RespuestaGeneral r = new RespuestaGeneral();
         
+        if (entity.getPrecio() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Precio" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getSucursal() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Sucursal" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getEstado() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Estado de Viaje" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else {
+            r = super.create(entity);
+        }        
+
+        return r;
     }
 
     @PUT
@@ -153,7 +162,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {  
+    public String countREST() {          
         return String.valueOf(super.count());
     }
 

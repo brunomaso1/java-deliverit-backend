@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Direccion implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -55,10 +56,10 @@ public class Direccion implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "nro_puerta")
-    private short nroPuerta;
+    private Short nroPuerta;
     
     @Column(name = "apartamento")
-    private short apartamento;
+    private Short apartamento;
     
     @Size(max = 20)
     @Column(name = "esquina")
@@ -106,11 +107,11 @@ public class Direccion implements Serializable {
         this.calle = calle;
     }
 
-    public short getNroPuerta() {
+    public Short getNroPuerta() {
         return nroPuerta;
     }
 
-    public void setNroPuerta(short nroPuerta) {
+    public void setNroPuerta(Short nroPuerta) {
         this.nroPuerta = nroPuerta;
     }
 
@@ -141,14 +142,14 @@ public class Direccion implements Serializable {
     /**
      * @return the apartamento
      */
-    public short getApartamento() {
+    public Short getApartamento() {
         return apartamento;
     }
 
     /**
      * @param apartamento the apartamento to set
      */
-    public void setApartamento(short apartamento) {
+    public void setApartamento(Short apartamento) {
         this.apartamento = apartamento;
     }
 

@@ -53,6 +53,7 @@ public class Delivery implements Serializable {
     @Size(max = 200)
     @Column(name = "token")
     private String token;
+    
     @JoinColumn(name = "vehiculo", referencedColumnName = "id")
     @ManyToOne
     private Vehiculo vehiculo;

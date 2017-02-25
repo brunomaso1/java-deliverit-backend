@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Restaurant;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
@@ -39,14 +40,22 @@ public class RestaurantFacadeREST extends AbstractFacade<Restaurant> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Restaurant create(Restaurant entity) {
-        try {
-            Restaurant r = super.create(entity);
-            return r;
-        } catch (Exception e) {
-            return null;
-        }
+    public RespuestaGeneral create(Restaurant entity) {
+        RespuestaGeneral r = new RespuestaGeneral();
         
+        if (entity.getRut() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("RUT" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getUsuario() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Usuario" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else {
+            return super.create(entity);
+        }
+            
+        return r;
     }
 
     @PUT

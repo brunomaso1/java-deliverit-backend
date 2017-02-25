@@ -53,7 +53,7 @@ public class Viaje implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "precio")
-    private short precio;
+    private Short precio;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
     private Collection<Transaccion> transaccionCollection;
@@ -104,11 +104,11 @@ public class Viaje implements Serializable {
         this.calificacion = calificacion;
     }
 
-    public short getPrecio() {
+    public Short getPrecio() {
         return precio;
     }
 
-    public void setPrecio(short precio) {
+    public void setPrecio(Short precio) {
         this.precio = precio;
     }
 

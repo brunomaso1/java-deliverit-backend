@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Usuario;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
@@ -39,14 +40,34 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario create(Usuario entity) {
-        try {
-            Usuario u = super.create(entity);
-            return u;
-        } catch (Exception e) {
-            return null;
-        }
+    public RespuestaGeneral create(Usuario entity) {
+        RespuestaGeneral r = new RespuestaGeneral();
         
+        if (entity.getNombre() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Nombre usuario" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getPassword() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Contraseña" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getTelefono() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Teléfono" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getTelefono().length() > 9 || entity.getTelefono().length() < 8) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_INCORRECTO);
+            r.setMensaje("Teléfono" + RespuestaGeneral.MENSAJE_VALOR_INCORRECTO);
+            r.setObjeto(null);
+        } else if (entity.getCuentaRedPagos() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Cuenta de RedPagos" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else {
+            r = super.create(entity);
+        }       
+
+        return r;
     }
 
     @PUT

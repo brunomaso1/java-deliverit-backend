@@ -20,6 +20,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
@@ -40,14 +41,16 @@ public class EstadoViajeFacadeREST extends AbstractFacade<EstadoViaje> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public EstadoViaje create(EstadoViaje entity) {
+    public RespuestaGeneral create(EstadoViaje entity) {
+        RespuestaGeneral r = new RespuestaGeneral();
         try {
-            EstadoViaje ev = super.create(entity);
-            return ev;
+            r = super.create(entity);
         } catch (Exception e) {
-            return null;
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR);
+            r.setMensaje(e.getMessage());
+            r.setObjeto(null);
         }
-        
+        return r;
     }
 
     @PUT

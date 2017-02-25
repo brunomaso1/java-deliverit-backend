@@ -23,6 +23,7 @@ import javax.ws.rs.core.PathSegment;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.SucursalPK;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
@@ -64,14 +65,22 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Sucursal create(Sucursal entity) {
-        try {
-            Sucursal s = super.create(entity);
-            return s;
-        } catch (Exception e) {
-            return null;
-        }
-        
+    public RespuestaGeneral create(Sucursal entity) {
+        RespuestaGeneral r = new RespuestaGeneral();
+  
+        if (entity.getDireccion() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Dirección" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getRestaurant() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Restaurant" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else {
+            r = super.create(entity);
+        }           
+
+        return r;
     }
 
     @PUT

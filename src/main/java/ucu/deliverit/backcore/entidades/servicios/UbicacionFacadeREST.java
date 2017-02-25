@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Ubicacion;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
@@ -39,14 +40,16 @@ public class UbicacionFacadeREST extends AbstractFacade<Ubicacion> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Ubicacion create(Ubicacion entity) {
+    public RespuestaGeneral create(Ubicacion entity) {
+        RespuestaGeneral r = new RespuestaGeneral();
         try {
-            Ubicacion u = super.create(entity);
-            return u;
+            r = super.create(entity);
         } catch (Exception e) {
-            return null;
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR);
+            r.setMensaje(e.getMessage());
+            r.setObjeto(null);
         }
-        
+        return r;
     }
 
     @PUT

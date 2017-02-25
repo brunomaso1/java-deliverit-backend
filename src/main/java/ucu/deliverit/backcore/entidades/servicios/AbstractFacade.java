@@ -5,8 +5,11 @@
  */
 package ucu.deliverit.backcore.entidades.servicios;
 
+import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.EntityManager;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
+
 
 /**
  *
@@ -22,13 +25,22 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
-    public T create(T entity) {
+    public RespuestaGeneral create(T entity) {
+       RespuestaGeneral r = new RespuestaGeneral();
         try {
-            getEntityManager().persist(entity);
-            return entity;
+            getEntityManager().persist(entity);            
+           
+            r.setCodigo(RespuestaGeneral.CODIGO_OK);
+            r.setMensaje(RespuestaGeneral.MENSAJE_OK);
+            r.setObjeto(entity);
+            
         } catch (Exception e) {
-            return null;
-        }      
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR);
+            r.setMensaje(e.getMessage());
+            System.out.println("***** causa = " + e.getCause() + " *****");
+            r.setObjeto(null);
+        }   
+        return r;
     }
 
     public void edit(T entity) {

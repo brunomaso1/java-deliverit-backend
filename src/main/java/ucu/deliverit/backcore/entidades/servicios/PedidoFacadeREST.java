@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.PedidoPK;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
@@ -62,14 +63,8 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Pedido create(Pedido entity) {
-        try {
-            Pedido p = super.create(entity);
-            return p;
-        } catch (Exception e) {
-            return null;
-        }
-        
+    public RespuestaGeneral create(Pedido entity) {
+        return super.create(entity);
     }
 
     @PUT

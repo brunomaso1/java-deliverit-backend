@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Transaccion;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
@@ -39,14 +40,16 @@ public class TransaccionFacadeREST extends AbstractFacade<Transaccion> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Transaccion create(Transaccion entity) {
+    public RespuestaGeneral create(Transaccion entity) {
+        RespuestaGeneral r = new RespuestaGeneral();
         try {
-            Transaccion t = super.create(entity);
-            return t;
+            r = super.create(entity);
         } catch (Exception e) {
-            return null;
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR);
+            r.setMensaje(e.getMessage());
+            r.setObjeto(null);
         }
-        
+        return r;
     }
 
     @PUT

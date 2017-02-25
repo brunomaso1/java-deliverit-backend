@@ -8,7 +8,6 @@ package ucu.deliverit.backcore.entidades;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -62,7 +61,7 @@ public class Usuario implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 9)
+    @Size(min = 8, max = 9)
     @Column(name = "telefono")
     private String telefono;
     
@@ -73,7 +72,7 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "cuenta_red_pagos")
-    private int cuentaRedPagos;
+    private Integer cuentaRedPagos;
     
     @Lob
     @Column(name = "foto")
@@ -131,11 +130,11 @@ public class Usuario implements Serializable {
         this.mail = mail;
     }
 
-    public int getCuentaRedPagos() {
+    public Integer getCuentaRedPagos() {
         return cuentaRedPagos;
     }
 
-    public void setCuentaRedPagos(int cuentaRedPagos) {
+    public void setCuentaRedPagos(Integer cuentaRedPagos) {
         this.cuentaRedPagos = cuentaRedPagos;
     }
 

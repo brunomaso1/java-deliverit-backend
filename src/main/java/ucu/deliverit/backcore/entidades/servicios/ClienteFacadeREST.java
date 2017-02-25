@@ -20,7 +20,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Cliente;
-import ucu.deliverit.backcore.entidades.Direccion;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
@@ -43,14 +43,23 @@ public class ClienteFacadeREST extends AbstractFacade<Cliente> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Cliente create(Cliente entity) {
-        try {
-            Cliente c = super.create(entity);
-            return c;
-        } catch (Exception e) {
-            return null;
-        }
+    public RespuestaGeneral create(Cliente entity) {
+        RespuestaGeneral r = new RespuestaGeneral();
         
+        // Valido que los parámetros cumplan con la Entidad en cuestión
+        if (entity.getTelefono() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Teléfono" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getTelefono().length() > 9 || entity.getTelefono().length() < 8) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_INCORRECTO);
+            r.setMensaje("Teléfono" + RespuestaGeneral.MENSAJE_VALOR_INCORRECTO);
+            r.setObjeto(null);
+        } else {
+            r = super.create(entity);
+        }       
+        
+        return r;
     }
 
     @PUT

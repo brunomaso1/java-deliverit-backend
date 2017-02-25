@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Direccion;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
@@ -39,14 +40,21 @@ public class DireccionFacadeREST extends AbstractFacade<Direccion> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Direccion create(Direccion entity) {
-        try {
-            Direccion d = super.create(entity);
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
+    public RespuestaGeneral create(Direccion entity) {
+        RespuestaGeneral r = new RespuestaGeneral();        
         
+        if (entity.getCalle() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Calle" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getNroPuerta() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Nº de puerta" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else {
+            r = super.create(entity);
+        }
+        return r;
     }
 
     @PUT
@@ -87,6 +95,14 @@ public class DireccionFacadeREST extends AbstractFacade<Direccion> {
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
+        Direccion dir = new Direccion();
+        dir.setEsquina("Joaquín Suárez");
+        dir.setLatitud(-31.3822146);
+        dir.setLongitud(-57.9693184);
+        
+        RespuestaGeneral r = create(dir);
+        
+        
         return String.valueOf(super.count());
     }
 

@@ -20,6 +20,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Delivery;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
@@ -40,14 +41,8 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Delivery create(Delivery entity) {
-        try {
-            Delivery d = super.create(entity);
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
-        
+    public RespuestaGeneral create(Delivery entity) {
+        return super.create(entity);
     }
 
     @PUT

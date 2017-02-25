@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Vehiculo;
+import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
@@ -39,14 +40,16 @@ public class VehiculoFacadeREST extends AbstractFacade<Vehiculo> {
     @Override
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Vehiculo create(Vehiculo entity) {
+    public RespuestaGeneral create(Vehiculo entity) {
+        RespuestaGeneral r = new RespuestaGeneral();
         try {
-            Vehiculo v = super.create(entity);
-            return v;
+            r = super.create(entity);
         } catch (Exception e) {
-            return null;
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR);
+            r.setMensaje(e.getMessage());
+            r.setObjeto(null);
         }
-        
+        return r;
     }
 
     @PUT
