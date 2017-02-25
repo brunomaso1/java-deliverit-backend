@@ -41,15 +41,7 @@ public class VehiculoFacadeREST extends AbstractFacade<Vehiculo> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaGeneral create(Vehiculo entity) {
-        RespuestaGeneral r = new RespuestaGeneral();
-        try {
-            r = super.create(entity);
-        } catch (Exception e) {
-            r.setCodigo(RespuestaGeneral.CODIGO_ERROR);
-            r.setMensaje(e.getMessage());
-            r.setObjeto(null);
-        }
-        return r;
+        return super.create(entity);
     }
 
     @PUT

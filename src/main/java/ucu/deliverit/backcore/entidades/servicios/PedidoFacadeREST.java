@@ -64,7 +64,16 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaGeneral create(Pedido entity) {
-        return super.create(entity);
+        RespuestaGeneral r = new RespuestaGeneral();
+        
+        if (entity == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Pedido" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else {
+            r = super.create(entity);
+        }
+        return r;
     }
 
     @PUT

@@ -43,7 +43,11 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     public RespuestaGeneral create(Usuario entity) {
         RespuestaGeneral r = new RespuestaGeneral();
         
-        if (entity.getNombre() == null) {
+        if (entity == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Usuario" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getNombre() == null) {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("Nombre usuario" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);

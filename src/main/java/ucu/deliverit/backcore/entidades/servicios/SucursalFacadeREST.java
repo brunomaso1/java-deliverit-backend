@@ -68,7 +68,11 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     public RespuestaGeneral create(Sucursal entity) {
         RespuestaGeneral r = new RespuestaGeneral();
   
-        if (entity.getDireccion() == null) {
+        if (entity == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Sucursal" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getDireccion() == null) {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("Dirección" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);

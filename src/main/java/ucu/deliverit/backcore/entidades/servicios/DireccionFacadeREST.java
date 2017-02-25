@@ -43,7 +43,12 @@ public class DireccionFacadeREST extends AbstractFacade<Direccion> {
     public RespuestaGeneral create(Direccion entity) {
         RespuestaGeneral r = new RespuestaGeneral();        
         
-        if (entity.getCalle() == null) {
+        // Valido que los parámetros cumplan con la Entidad en cuestión
+        if (entity == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Direccion" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getCalle() == null) {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("Calle" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);

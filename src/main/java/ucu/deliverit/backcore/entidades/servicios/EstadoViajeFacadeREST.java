@@ -43,12 +43,13 @@ public class EstadoViajeFacadeREST extends AbstractFacade<EstadoViaje> {
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaGeneral create(EstadoViaje entity) {
         RespuestaGeneral r = new RespuestaGeneral();
-        try {
-            r = super.create(entity);
-        } catch (Exception e) {
-            r.setCodigo(RespuestaGeneral.CODIGO_ERROR);
-            r.setMensaje(e.getMessage());
+        
+        if (entity == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Estado de Viaje" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);
+        } else {
+            r = super.create(entity);
         }
         return r;
     }

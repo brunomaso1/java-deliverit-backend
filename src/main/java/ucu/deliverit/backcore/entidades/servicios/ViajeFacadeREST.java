@@ -85,7 +85,11 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     public RespuestaGeneral create(Viaje entity) {
         RespuestaGeneral r = new RespuestaGeneral();
         
-        if (entity.getPrecio() == null) {
+        if (entity == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Viaje" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getPrecio() == null) {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("Precio" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);

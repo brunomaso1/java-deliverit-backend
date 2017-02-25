@@ -47,7 +47,11 @@ public class ClienteFacadeREST extends AbstractFacade<Cliente> {
         RespuestaGeneral r = new RespuestaGeneral();
         
         // Valido que los parámetros cumplan con la Entidad en cuestión
-        if (entity.getTelefono() == null) {
+        if (entity == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Cliente" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getTelefono() == null) {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("Teléfono" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);

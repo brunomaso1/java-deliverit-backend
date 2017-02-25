@@ -43,7 +43,11 @@ public class RestaurantFacadeREST extends AbstractFacade<Restaurant> {
     public RespuestaGeneral create(Restaurant entity) {
         RespuestaGeneral r = new RespuestaGeneral();
         
-        if (entity.getRut() == null) {
+        if (entity == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Restaurant" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getRut() == null) {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("RUT" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);
