@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Embeddable
 public class SucursalPK implements Serializable {

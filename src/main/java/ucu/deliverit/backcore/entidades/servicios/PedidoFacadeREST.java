@@ -25,7 +25,7 @@ import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Stateless
 @Path("pedido")
@@ -95,7 +95,6 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @Produces(MediaType.APPLICATION_JSON)
     public Pedido find(@PathParam("id") PathSegment id) {
         ucu.deliverit.backcore.entidades.PedidoPK key = getPrimaryKey(id);
-        System.out.println("**** key = " + key.getId() + " string = " + key.toString() + " *****");
         return super.find(key);
     }
 

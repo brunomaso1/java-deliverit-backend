@@ -28,16 +28,16 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Entity
 @Table(name = "delivery")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Delivery.findAll", query = "SELECT d FROM Delivery d")
-    , @NamedQuery(name = "Delivery.findById", query = "SELECT d FROM Delivery d WHERE d.id = :id")
-    , @NamedQuery(name = "Delivery.findByCalificacion", query = "SELECT d FROM Delivery d WHERE d.calificacion = :calificacion")
-    , @NamedQuery(name = "Delivery.findByToken", query = "SELECT d FROM Delivery d WHERE d.token = :token")})
+    @NamedQuery(name = "Delivery.findAll", query = "SELECT d FROM Delivery d"),
+    @NamedQuery(name = "Delivery.findById", query = "SELECT d FROM Delivery d WHERE d.id = :id"),
+    @NamedQuery(name = "Delivery.findByCalificacion", query = "SELECT d FROM Delivery d WHERE d.calificacion = :calificacion"),
+    @NamedQuery(name = "Delivery.findByToken", query = "SELECT d FROM Delivery d WHERE d.token = :token")})
 public class Delivery implements Serializable {
 
     private static final long serialVersionUID = 1L;

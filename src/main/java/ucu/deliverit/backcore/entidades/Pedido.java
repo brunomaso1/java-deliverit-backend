@@ -19,17 +19,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Entity
 @Table(name = "pedido")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p")
-    , @NamedQuery(name = "Pedido.findById", query = "SELECT p FROM Pedido p WHERE p.pedidoPK.id = :id")
-    , @NamedQuery(name = "Pedido.findByViaje", query = "SELECT p FROM Pedido p WHERE p.pedidoPK.viaje = :viaje")
-    , @NamedQuery(name = "Pedido.findByDetalle", query = "SELECT p FROM Pedido p WHERE p.detalle = :detalle")
-    , @NamedQuery(name = "Pedido.findByFormaPago", query = "SELECT p FROM Pedido p WHERE p.formaPago = :formaPago")})
+    @NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p"),
+    @NamedQuery(name = "Pedido.findById", query = "SELECT p FROM Pedido p WHERE p.pedidoPK.id = :id"),
+    @NamedQuery(name = "Pedido.findByViaje", query = "SELECT p FROM Pedido p WHERE p.pedidoPK.viaje = :viaje"),
+    @NamedQuery(name = "Pedido.findByDetalle", query = "SELECT p FROM Pedido p WHERE p.detalle = :detalle"),
+    @NamedQuery(name = "Pedido.findByFormaPago", query = "SELECT p FROM Pedido p WHERE p.formaPago = :formaPago")})
 public class Pedido implements Serializable {
 
     private static final long serialVersionUID = 1L;

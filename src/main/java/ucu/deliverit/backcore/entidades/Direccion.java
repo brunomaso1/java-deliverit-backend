@@ -24,19 +24,19 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Entity
 @Table(name = "direccion")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Direccion.findAll", query = "SELECT d FROM Direccion d")
-    , @NamedQuery(name = "Direccion.findById", query = "SELECT d FROM Direccion d WHERE d.id = :id")
-    , @NamedQuery(name = "Direccion.findByCalle", query = "SELECT d FROM Direccion d WHERE d.calle = :calle")
-    , @NamedQuery(name = "Direccion.findByNroPuerta", query = "SELECT d FROM Direccion d WHERE d.nroPuerta = :nroPuerta")
-    , @NamedQuery(name = "Direccion.findByEsquina", query = "SELECT d FROM Direccion d WHERE d.esquina = :esquina")
-    , @NamedQuery(name = "Direccion.findByLatitud", query = "SELECT d FROM Direccion d WHERE d.latitud = :latitud")
-    , @NamedQuery(name = "Direccion.findByLongitud", query = "SELECT d FROM Direccion d WHERE d.longitud = :longitud")})
+    @NamedQuery(name = "Direccion.findAll", query = "SELECT d FROM Direccion d"),
+    @NamedQuery(name = "Direccion.findById", query = "SELECT d FROM Direccion d WHERE d.id = :id"),
+    @NamedQuery(name = "Direccion.findByCalle", query = "SELECT d FROM Direccion d WHERE d.calle = :calle"),
+    @NamedQuery(name = "Direccion.findByNroPuerta", query = "SELECT d FROM Direccion d WHERE d.nroPuerta = :nroPuerta"),
+    @NamedQuery(name = "Direccion.findByEsquina", query = "SELECT d FROM Direccion d WHERE d.esquina = :esquina"),
+    @NamedQuery(name = "Direccion.findByLatitud", query = "SELECT d FROM Direccion d WHERE d.latitud = :latitud"),
+    @NamedQuery(name = "Direccion.findByLongitud", query = "SELECT d FROM Direccion d WHERE d.longitud = :longitud")})
 public class Direccion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -138,17 +138,11 @@ public class Direccion implements Serializable {
     public void setLongitud(Double longitud) {
         this.longitud = longitud;
     }
-    
-    /**
-     * @return the apartamento
-     */
+
     public Short getApartamento() {
         return apartamento;
     }
 
-    /**
-     * @param apartamento the apartamento to set
-     */
     public void setApartamento(Short apartamento) {
         this.apartamento = apartamento;
     }

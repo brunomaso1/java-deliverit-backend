@@ -5,22 +5,11 @@
  */
 package ucu.deliverit.backcore.entidades.servicios;
 
-import com.google.gson.Gson;
-import java.io.IOException;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -32,38 +21,20 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 import ucu.deliverit.backcore.entidades.Delivery;
-import ucu.deliverit.backcore.entidades.Direccion;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
 import ucu.deliverit.backcore.entidades.Pedido;
-import ucu.deliverit.backcore.entidades.Restaurant;
-import ucu.deliverit.backcore.entidades.Sucursal;
-import ucu.deliverit.backcore.entidades.SucursalPK;
-import ucu.deliverit.backcore.entidades.Vehiculo;
 import ucu.deliverit.backcore.entidades.Viaje;
-import ucu.deliverit.backcore.entidades.utiles.Utiles;
+import ucu.deliverit.backcore.helpers.ViajeHelper;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
-import ucu.deliverit.backcore.tasks.TimerObject;
-import static ucu.deliverit.backcore.tasks.TimerObject.IS_RUNNING;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Stateless
 @Path("viaje")
 public class ViajeFacadeREST extends AbstractFacade<Viaje> {
-    
-    public static int DISTANCIA_BUSQUEDA_KM = 2;
-    
-    private boolean TIMER_RUNNING;
 
     @EJB
     private DeliveryFacadeREST deliveryFacadeREST;
@@ -166,7 +137,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {          
+    public String countREST() {         
         return String.valueOf(super.count());
     }
 
@@ -191,159 +162,8 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     
     @POST
     @Path("matchearDelivery")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void matchearDelivery (@QueryParam("viaje") final Viaje v) { 
-        Direccion dir = new Direccion();
-        dir.setId(1);
-        dir.setCalle("Bv. España");
-        dir.setNroPuerta((short)1234);
-        dir.setEsquina("Joaquín de Salterain");
-        dir.setNroPuerta(Short.parseShort("2094"));
-        dir.setLatitud(-34.908865);
-        dir.setLongitud(-56.1717083);
-        
-        Restaurant r = new Restaurant();
-        r.setId(1);  
-        r.setRut(new BigInteger("215162250011"));
-        r.setRazonSocial("Pancho Va");
-        
-        Sucursal sucursal = new Sucursal();
-        sucursal.setDireccion(dir);
-        sucursal.setRestaurant(r);
-        SucursalPK sucPK = new SucursalPK();
-        sucPK.setId(Short.parseShort("1"));
-        sucursal.setSucursalPK(sucPK);
-        
-        EstadoViaje estado = new EstadoViaje();
-        estado.setId(Short.parseShort("1"));
-        estado.setDescripcion("Pendiente");
-        
-        final Viaje viaje = new Viaje();
-        viaje.setId(1);
-        viaje.setSucursal(sucursal);
-        viaje.setEstado(estado);
-        viaje.setPrecio(Short.parseShort("100"));
-        
-        List<Pedido> pedidos = findPedidosPorViaje(viaje.getId());
-        
-        List<Delivery> deliverysSinViajes = deliveryFacadeREST.findAllSinViajesEnProceso();
-        
-        List<Delivery> deliverysNotificados = new ArrayList<>();
-                
-        if (deliverysSinViajes.size() > 0) {
-            
-            
-            try {
-                notificarDeliverys(deliverysSinViajes.get(0), viaje);
-            } catch (IOException e) {
-            
-            }
-            
-            
-            
-            
-          /*  while (DISTANCIA_BUSQUEDA_KM <= 10) {  
-                if (!TIMER_RUNNING) {
-                    for (Delivery d : deliverysSinViajes) {
-                        System.out.println("***** Delivery: " + d.getUsuario().getNombre() + " *****");
-
-                        Double[] origen = {d.getUbicacion().getLatitud(), d.getUbicacion().getLongitud()};
-                        Double[] destino = {viaje.getSucursal().getDireccion().getLatitud(),
-                            viaje.getSucursal().getDireccion().getLongitud()};
-                        Double distancia = null;
-                        try {
-                            distancia = Utiles.distancia(origen, destino, d.getVehiculo());
-
-                            if (distancia <= DISTANCIA_BUSQUEDA_KM) {
-                                boolean notificar = true;
-
-                                // Antes de notificar al delivery me fijo que no esté en la lista de notificados
-                                if (deliverysNotificados.size() > 0) {
-                                    for (int i = 0; i < deliverysNotificados.size(); i++) {
-                                        if (d.getId() == deliverysNotificados.get(i).getId()) {
-                                            notificar = false;
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                System.out.println("***** notificar? " + notificar + " *****");
-
-                                if (notificar) {
-                                    // notificarDeliverys(d);
-                                    deliverysNotificados.add(d);
-                                }
-                            }
-
-                        } catch (IOException e) {
-                            System.out.println("***** IOException = " + e + " *****");
-                        } catch (JSONException e) {
-                            System.out.println("***** JSONException = " + e + " *****");
-                        }  catch (Exception e) {
-                            System.out.println("***** Exception = " + e + " *****");
-                        }
-                    }
-                   // TimerObject timer = new TimerObject(this, viaje);   
-                   
-                    final Timer timer = new Timer();
-
-                    TimerTask task = new TimerTask() {
-
-                        @Override
-                        public void run() {
-                            TIMER_RUNNING = true;
-                            
-                            System.out.println("***** RUN *****");
-                            ViajeFacadeREST v = new ViajeFacadeREST();
-                            Viaje viajeANotificar = v.find(viaje.getId());
-                            System.out.println("***** id = " + viajeANotificar.getId());
-                            // Alguien tomó el viaje, terminar este proceso
-                          /*  if (viajeANotificar.getDelivery() != null) {
-                                DISTANCIA_BUSQUEDA_KM = 10;
-                                TIMER_RUNNING = false;
-                                timer.cancel();
-                                timer.purge();
-                                return;
-                            }  
-                        }
-                    };
-                    // Empezamos dentro de 10ms y luego lanzamos la tarea cada 1000ms
-                    timer.schedule(task, 0, 10000);
-                    }
-                } */
-            }
-        
-    }
-    
-    private void notificarDeliverys(Delivery delivery, Viaje viaje) throws IOException {  
-        System.out.println("***** va a enviar la notificación *****");
-        String message_url = "https://fcm.googleapis.com/fcm/send";
-        String to = "cGAdEQelHgw:APA91bEeGdm8QyYE0PajHZTmkEHfQeJUZsHJL0luuzx6JD6xUtq4dOuqQd8INNr4O6J4y5ftbrQ5O3pqQSS_m2Ou_LXjyPYfvY44bx8YJqLaY-qN_Sm3JHBpNHeEHU9TnDbBx0u7tyWh";
-        
-        String message_key = "key=AAAAXNmpFoo:APA91bFF5e1i3mZHE3APivYcHlnkS2ng7_quGr1ecuspOP68gjEnA13OIVUiPgKxVuqvCmnmDU_ZmcOl6OxJ1sEWQSjVYWB_wspNIx8lc0NjFYylx-uMPzfi-xnJhcPb2nVc852lMbZ5";
-
-        JSONObject message = new JSONObject();
-        
-        Gson gson = new Gson();
-        String viajeString = gson.toJson(viaje);
-        
-        message.put("viaje", viajeString);
-        
-        JSONObject protocol = new JSONObject();
-        protocol.put("to", to);
-        protocol.put("data", message);
-        
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost request = new HttpPost(message_url);
-        request.addHeader("content-type", "application/json");
-        request.addHeader("Authorization", message_key);
-
-        StringEntity params = new StringEntity(protocol.toString());
-        request.setEntity(params);
-        System.out.println(params);
-
-        HttpResponse response = httpClient.execute(request);
-        System.out.println(response.toString());
-        System.out.println("***** envió la notificación *****");
+    public void matchearDelivery (@QueryParam("viaje") Viaje viaje) { 
+        ViajeHelper viajeHelper = new ViajeHelper();
+        viajeHelper.matchearDelivery(viaje);
     }
 }

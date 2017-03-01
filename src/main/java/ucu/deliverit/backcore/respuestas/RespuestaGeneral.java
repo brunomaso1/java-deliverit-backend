@@ -7,7 +7,7 @@ package ucu.deliverit.backcore.respuestas;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 public class RespuestaGeneral {
     public static final int CODIGO_OK = 0; 

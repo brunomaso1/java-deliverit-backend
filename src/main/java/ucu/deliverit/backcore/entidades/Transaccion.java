@@ -25,33 +25,37 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Entity
 @Table(name = "transaccion")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Transaccion.findAll", query = "SELECT t FROM Transaccion t")
-    , @NamedQuery(name = "Transaccion.findById", query = "SELECT t FROM Transaccion t WHERE t.id = :id")
-    , @NamedQuery(name = "Transaccion.findByFechaHora", query = "SELECT t FROM Transaccion t WHERE t.fechaHora = :fechaHora")
-    , @NamedQuery(name = "Transaccion.findByMonto", query = "SELECT t FROM Transaccion t WHERE t.monto = :monto")})
+    @NamedQuery(name = "Transaccion.findAll", query = "SELECT t FROM Transaccion t"),
+    @NamedQuery(name = "Transaccion.findById", query = "SELECT t FROM Transaccion t WHERE t.id = :id"),
+    @NamedQuery(name = "Transaccion.findByFechaHora", query = "SELECT t FROM Transaccion t WHERE t.fechaHora = :fechaHora"),
+    @NamedQuery(name = "Transaccion.findByMonto", query = "SELECT t FROM Transaccion t WHERE t.monto = :monto")})
 public class Transaccion implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_hora")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaHora;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "monto")
     private double monto;
+    
     @JoinColumn(name = "viaje", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Viaje viaje;

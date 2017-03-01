@@ -24,7 +24,7 @@ import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Stateless
 @Path("delivery")
@@ -85,15 +85,12 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
     @Path("findAllSinViajesEnProceso")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Delivery> findAllSinViajesEnProceso() {
-        System.out.println("***** Comienza a buscarse deliverys sin Viajes En Proceso *****");
         
         String consulta = "SELECT d FROM Delivery d"
                 + " WHERE d.id NOT IN (SELECT v.delivery.id FROM Viaje v WHERE v.estado.id = 3)";
         TypedQuery<Delivery> query = em.createQuery(consulta, Delivery.class);     
         
         List<Delivery> results = query.getResultList();
-        
-        System.out.println("***** Cantidad de deliverys encontrados: " + results.size() + " *****");
         
         return results;
     }

@@ -23,7 +23,7 @@ import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Stateless
 @Path("restaurant")
@@ -56,7 +56,7 @@ public class RestaurantFacadeREST extends AbstractFacade<Restaurant> {
             r.setMensaje("Usuario" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);
         } else {
-            return super.create(entity);
+            r = super.create(entity);
         }
             
         return r;
@@ -65,7 +65,7 @@ public class RestaurantFacadeREST extends AbstractFacade<Restaurant> {
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void edit(@PathParam("id") Integer id, Restaurant entity) {
+    public void edit(@PathParam("id") Integer id, Restaurant entity) {        
         super.edit(entity);
     }
 
@@ -99,7 +99,7 @@ public class RestaurantFacadeREST extends AbstractFacade<Restaurant> {
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
+    public String countREST() {        
         return String.valueOf(super.count());
     }
 

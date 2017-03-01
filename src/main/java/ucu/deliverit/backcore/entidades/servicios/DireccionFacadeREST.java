@@ -23,7 +23,7 @@ import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Stateless
 @Path("direccion")
@@ -99,15 +99,7 @@ public class DireccionFacadeREST extends AbstractFacade<Direccion> {
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        Direccion dir = new Direccion();
-        dir.setEsquina("Joaquín Suárez");
-        dir.setLatitud(-31.3822146);
-        dir.setLongitud(-57.9693184);
-        
-        RespuestaGeneral r = create(dir);
-        
-        
+    public String countREST() {   
         return String.valueOf(super.count());
     }
 

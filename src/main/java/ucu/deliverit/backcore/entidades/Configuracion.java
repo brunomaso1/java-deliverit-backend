@@ -8,18 +8,27 @@ package ucu.deliverit.backcore.entidades;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
+@Entity
+@Table(name = "configuracion")
+@XmlRootElement
 public class Configuracion implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    public static final String API_KEY_GOOGLE = "API_KEY_GOOGLE";
+    public static final String SERVIDOR_FIREBASE = "SERVIDOR_FIREBASE";
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +57,7 @@ public class Configuracion implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (getId() != null ? getId().hashCode() : 0);
         return hash;
     }
 
@@ -59,7 +68,7 @@ public class Configuracion implements Serializable {
             return false;
         }
         Configuracion other = (Configuracion) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -67,7 +76,31 @@ public class Configuracion implements Serializable {
 
     @Override
     public String toString() {
-        return "ucu.deliverit.backcore.entidades.Configuracion[ id=" + id + " ]";
+        return "ucu.deliverit.backcore.entidades.Configuracion[ id=" + getId() + " ]";
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
     }
     
 }

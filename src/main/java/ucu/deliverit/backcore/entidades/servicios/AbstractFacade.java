@@ -5,7 +5,6 @@
  */
 package ucu.deliverit.backcore.entidades.servicios;
 
-import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
@@ -13,7 +12,7 @@ import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 public abstract class AbstractFacade<T> {
 
@@ -37,7 +36,6 @@ public abstract class AbstractFacade<T> {
         } catch (Exception e) {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR);
             r.setMensaje(e.getMessage());
-            System.out.println("***** causa = " + e.getCause() + " *****");
             r.setObjeto(null);
         }   
         return r;

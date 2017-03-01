@@ -22,16 +22,16 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Entity
 @Table(name = "sucursal")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Sucursal.findAll", query = "SELECT s FROM Sucursal s")
-    , @NamedQuery(name = "Sucursal.findById", query = "SELECT s FROM Sucursal s WHERE s.sucursalPK.id = :id")
-    , @NamedQuery(name = "Sucursal.findByRestaurant", query = "SELECT s FROM Sucursal s WHERE s.sucursalPK.restaurant = :restaurant")
-    , @NamedQuery(name = "Sucursal.findByNombre", query = "SELECT s FROM Sucursal s WHERE s.nombre = :nombre")})
+    @NamedQuery(name = "Sucursal.findAll", query = "SELECT s FROM Sucursal s"),
+    @NamedQuery(name = "Sucursal.findById", query = "SELECT s FROM Sucursal s WHERE s.sucursalPK.id = :id"),
+    @NamedQuery(name = "Sucursal.findByRestaurant", query = "SELECT s FROM Sucursal s WHERE s.sucursalPK.restaurant = :restaurant"),
+    @NamedQuery(name = "Sucursal.findByNombre", query = "SELECT s FROM Sucursal s WHERE s.nombre = :nombre")})
 public class Sucursal implements Serializable {
 
     private static final long serialVersionUID = 1L;

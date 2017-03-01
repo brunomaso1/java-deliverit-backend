@@ -28,16 +28,16 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Entity
 @Table(name = "restaurant")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Restaurant.findAll", query = "SELECT r FROM Restaurant r")
-    , @NamedQuery(name = "Restaurant.findById", query = "SELECT r FROM Restaurant r WHERE r.id = :id")
-    , @NamedQuery(name = "Restaurant.findByRut", query = "SELECT r FROM Restaurant r WHERE r.rut = :rut")
-    , @NamedQuery(name = "Restaurant.findByRazonSocial", query = "SELECT r FROM Restaurant r WHERE r.razonSocial = :razonSocial")})
+    @NamedQuery(name = "Restaurant.findAll", query = "SELECT r FROM Restaurant r"),
+    @NamedQuery(name = "Restaurant.findById", query = "SELECT r FROM Restaurant r WHERE r.id = :id"),
+    @NamedQuery(name = "Restaurant.findByRut", query = "SELECT r FROM Restaurant r WHERE r.rut = :rut"),
+    @NamedQuery(name = "Restaurant.findByRazonSocial", query = "SELECT r FROM Restaurant r WHERE r.razonSocial = :razonSocial")})
 public class Restaurant implements Serializable {
 
     private static final long serialVersionUID = 1L;

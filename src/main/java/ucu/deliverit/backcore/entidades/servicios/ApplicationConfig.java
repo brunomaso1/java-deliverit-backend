@@ -10,7 +10,7 @@ import javax.ws.rs.core.Application;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @javax.ws.rs.ApplicationPath("ws")
 public class ApplicationConfig extends Application {
@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ucu.deliverit.backcore.entidades.servicios.ClienteFacadeREST.class);
+        resources.add(ucu.deliverit.backcore.entidades.servicios.ConfiguracionFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.DeliveryFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.DireccionFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.EstadoViajeFacadeREST.class);

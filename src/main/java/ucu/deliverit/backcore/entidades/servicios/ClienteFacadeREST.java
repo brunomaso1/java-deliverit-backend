@@ -24,13 +24,11 @@ import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
  *
- * @author JMArtegoytia
+ * @author DeliverIT
  */
 @Stateless
 @Path("cliente")
 public class ClienteFacadeREST extends AbstractFacade<Cliente> {
-    @EJB 
-    private DireccionFacadeREST direccionREST;
 
     @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
     private EntityManager em;

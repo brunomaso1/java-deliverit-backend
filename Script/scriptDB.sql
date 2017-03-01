@@ -124,7 +124,8 @@ create table deliverit.pedido (
 create table deliverit.configuracion (
 	id integer auto_increment primary key,
     descripcion varchar(20) not null unique,
-    valor varchar(100) not null
+    valor varchar(200) not null
 );
 
 insert into deliverit.configuracion (descripcion, valor) values ('API_KEY_GOOGLE', 'AIzaSyA2NCnQBRCbuXHbNeUY7mW-lvP-v4V3x8A');
+insert into deliverit.configuracion (descripcion, valor) values ('SERVIDOR_FIREBASE', 'cGAdEQelHgw:APA91bEeGdm8QyYE0PajHZTmkEHfQeJUZsHJL0luuzx6JD6xUtq4dOuqQd8INNr4O6J4y5ftbrQ5O3pqQSS_m2Ou_LXjyPYfvY44bx8YJqLaY-qN_Sm3JHBpNHeEHU9TnDbBx0u7tyWh');
