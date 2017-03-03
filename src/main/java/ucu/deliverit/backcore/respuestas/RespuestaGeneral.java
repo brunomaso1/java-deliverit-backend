@@ -20,46 +20,28 @@ public class RespuestaGeneral {
     
     private Integer codigo;
     private String mensaje;
-    private Object objeto;
-    
-    /**
-     * @return the mensaje
-     */
+    private String objeto;
+
     public String getMensaje() {
         return mensaje;
     }
 
-    /**
-     * @param mensaje the mensaje to set
-     */
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
 
-    /**
-     * @return the objeto
-     */
-    public Object getObjeto() {
+    public String getObjeto() {
         return objeto;
     }
 
-    /**
-     * @param objeto the objeto to set
-     */
-    public void setObjeto(Object objeto) {
+    public void setObjeto(String objeto) {
         this.objeto = objeto;
     }
-    
-    /**
-     * @return the codigo
-     */
+
     public Integer getCodigo() {
         return codigo;
     }
 
-    /**
-     * @param codigo the codigo to set
-     */
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }

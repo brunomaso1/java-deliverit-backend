@@ -5,6 +5,7 @@
  */
 package ucu.deliverit.backcore.entidades.servicios;
 
+import com.google.gson.Gson;
 import java.util.List;
 import javax.persistence.EntityManager;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
@@ -27,11 +28,18 @@ public abstract class AbstractFacade<T> {
     public RespuestaGeneral create(T entity) {
        RespuestaGeneral r = new RespuestaGeneral();
         try {
-            getEntityManager().persist(entity);            
+            
+            
+            getEntityManager().persist(entity);    
+           
+            // Se utiliza flush para obtener el Id del nuevo objeto en la base de datos.
+            getEntityManager().flush();
+            Gson gson = new Gson();
+            String jsonObject = gson.toJson(entity);
            
             r.setCodigo(RespuestaGeneral.CODIGO_OK);
             r.setMensaje(RespuestaGeneral.MENSAJE_OK);
-            r.setObjeto(entity);
+            r.setObjeto(jsonObject);
             
         } catch (Exception e) {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR);
