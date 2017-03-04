@@ -44,7 +44,7 @@ create table deliverit.cliente (
 
 create table deliverit.usuario (
 	id integer auto_increment primary key,
-    nombre varchar(20) unique not null,
+    nombre varchar(40) unique not null,
     password varchar(100) not null,
     mail varchar(50),
     telefono varchar(9) not null,
