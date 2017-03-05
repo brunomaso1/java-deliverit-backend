@@ -7,7 +7,7 @@ import ucu.deliverit.backcore.entidades.Cliente;
 import ucu.deliverit.backcore.entidades.PedidoPK;
 import ucu.deliverit.backcore.entidades.Viaje;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-03-04T22:44:26")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-03-05T15:06:41")
 @StaticMetamodel(Pedido.class)
 public class Pedido_ { 
 

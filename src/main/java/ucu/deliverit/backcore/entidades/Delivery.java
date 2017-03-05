@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -63,7 +64,6 @@ public class Delivery implements Serializable {
     @ManyToOne
     private Usuario usuario;
     
-   // @OneToOne(fetch = FetchType.LAZY, mappedBy = "delivery", cascade = CascadeType.ALL)
     @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "ubicacion")
     private Ubicacion ubicacion;
