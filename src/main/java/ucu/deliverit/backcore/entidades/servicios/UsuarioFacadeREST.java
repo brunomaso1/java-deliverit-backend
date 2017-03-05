@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -85,6 +86,26 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
+    }
+    
+    @GET
+    @Path("login/{nombreUsuario}/{password}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Usuario login(@PathParam("nombreUsuario") String nombreUsuario,
+            @PathParam("password") String password) {
+        String consulta = "SELECT u FROM Usuario u"
+                + " WHERE u.nombre = :usuario AND u.password = :password";
+        TypedQuery<Usuario> query = em.createQuery(consulta, Usuario.class);     
+        query.setParameter("usuario", nombreUsuario);
+        query.setParameter("password", password);
+        
+        Usuario usuario = null;
+        try {
+            usuario = query.getSingleResult();
+        } catch (Exception e) {
+        }
+        
+        return usuario;
     }
 
     @GET
