@@ -50,6 +50,7 @@ public class Delivery implements Serializable {
     
     @Column(name = "calificacion")
     private Short calificacion;
+    
     @Size(max = 200)
     @Column(name = "token")
     private String token;
@@ -62,7 +63,9 @@ public class Delivery implements Serializable {
     @ManyToOne
     private Usuario usuario;
     
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "delivery", cascade = CascadeType.ALL)
+   // @OneToOne(fetch = FetchType.LAZY, mappedBy = "delivery", cascade = CascadeType.ALL)
+    @OneToOne (cascade = CascadeType.ALL)
+    @JoinColumn(name = "ubicacion")
     private Ubicacion ubicacion;
     
     @OneToMany(mappedBy = "delivery")

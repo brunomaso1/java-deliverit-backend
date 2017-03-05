@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,34 +38,38 @@ public class Ubicacion implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id")
-    private Short id;
-    
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "latitud")
     private Double latitud;
     
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "longitud")
     private Double longitud;
 
-    @OneToOne(fetch = FetchType.LAZY)
+  /*  @OneToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
-    private Delivery delivery;
-
+    private Delivery delivery;*/
+    
+    
     public Ubicacion() {
     }
 
-    public Ubicacion(Short id) {
+    public Ubicacion(Integer id) {
         this.id = id;
     }
 
-    public Short getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Short id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -83,13 +89,13 @@ public class Ubicacion implements Serializable {
         this.longitud = longitud;
     }
 
-    public Delivery getDelivery() {
+   /* public Delivery getDelivery() {
         return delivery;
     }
 
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
-    }
+    }*/
 
     @Override
     public int hashCode() {

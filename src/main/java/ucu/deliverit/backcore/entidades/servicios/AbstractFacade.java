@@ -27,9 +27,7 @@ public abstract class AbstractFacade<T> {
 
     public RespuestaGeneral create(T entity) {
        RespuestaGeneral r = new RespuestaGeneral();
-        try {
-            
-            
+        try {   
             getEntityManager().persist(entity);    
            
             // Se utiliza flush para obtener el Id del nuevo objeto en la base de datos.

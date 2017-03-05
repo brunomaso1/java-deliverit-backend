@@ -61,9 +61,9 @@ create table deliverit.restaurant (
 );
 
 create table deliverit.ubicacion (
-	id smallint primary key,
-    latitud double,
-    longitud double
+	id integer auto_increment primary key,
+    latitud double not null,
+    longitud double not null
 );
 
 create table deliverit.delivery (
@@ -72,7 +72,7 @@ create table deliverit.delivery (
     calificacion smallint,
     vehiculo smallint,
 	token varchar(200),
-    ubicacion smallint,
+    ubicacion integer,
     foreign key (vehiculo) references deliverit.vehiculo (id),
     foreign key (usuario) references deliverit.usuario (id),
     foreign key (ubicacion) references deliverit.ubicacion(id)

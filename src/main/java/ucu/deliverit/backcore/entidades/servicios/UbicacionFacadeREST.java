@@ -55,20 +55,20 @@ public class UbicacionFacadeREST extends AbstractFacade<Ubicacion> {
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void edit(@PathParam("id") Short id, Ubicacion entity) {
+    public void edit(@PathParam("id") Integer id, Ubicacion entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Short id) {
+    public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Ubicacion find(@PathParam("id") Short id) {
+    public Ubicacion find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
