@@ -184,11 +184,9 @@ public class ViajeHelper {
 
     private void notificarDelivery(Delivery delivery, Viaje viaje) throws IOException {
         String message_url = Utiles.URL_FIREBASE;
-        //String to = confFacadeREST.findByDesc(Configuracion.SERVIDOR_FIREBASE).getValor();
-            
-        String to = "dOdgcCmYW04:APA91bHhFbeNJMfiw4IJx12JI42msPhaIRXv-HRjMWaJBI3ktzNKDOvrgMVKi9kTsZC4mD5epQTH7oJKPoWti2lC36B_JipqB93eBDEMHzL606yH0f2ng7b29fHkO5m_1DkvTkhMrhr6"; 
+        String to = delivery.getToken();
         
-        String message_key = Utiles.KEY_IGUAL + delivery.getToken();
+        String message_key = Utiles.KEY_IGUAL + confFacadeREST.findByDesc(Configuracion.SERVIDOR_FIREBASE).getValor();
 
         JSONObject message = new JSONObject();
 
