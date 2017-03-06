@@ -33,6 +33,7 @@ public abstract class AbstractFacade<T> {
             // Se utiliza flush para obtener el Id del nuevo objeto en la base de datos.
             getEntityManager().flush();
             Gson gson = new Gson();
+            
             String jsonObject = gson.toJson(entity);
            
             r.setCodigo(RespuestaGeneral.CODIGO_OK);

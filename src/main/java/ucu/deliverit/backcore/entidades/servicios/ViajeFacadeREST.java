@@ -41,6 +41,9 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     
     @EJB
     private EstadoViajeFacadeREST estadoFacadeREST;
+    
+    @EJB
+    private ConfiguracionFacadeREST configuracionFacadeREST;
 
     @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
     private EntityManager em;
@@ -74,7 +77,16 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             r.setObjeto(null);
         } else {
             r = super.create(entity);
-        }        
+        }    
+        
+        // Si se insertó el Viaje correctamente y el estado es Publicado
+        // Se ejecuta MatchearDelivery
+        if (r.getCodigo().equals(RespuestaGeneral.CODIGO_OK)
+                && entity.getEstado().getId() == 2) {
+            
+            ViajeHelper viajeHelper = new ViajeHelper(deliveryFacadeREST, configuracionFacadeREST);
+            viajeHelper.matchearDelivery(entity);
+        }  
 
         return r;
     }
@@ -158,12 +170,5 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         List<Pedido> results = query.getResultList();
         
         return results;
-    }
-    
-    @POST
-    @Path("matchearDelivery")
-    public void matchearDelivery (@QueryParam("viaje") Viaje viaje) { 
-        ViajeHelper viajeHelper = new ViajeHelper();
-        viajeHelper.matchearDelivery(viaje);
     }
 }

@@ -7,7 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import ucu.deliverit.backcore.entidades.Direccion;
 import ucu.deliverit.backcore.entidades.Pedido;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-03-05T15:06:42")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-03-05T20:24:53")
 @StaticMetamodel(Cliente.class)
 public class Cliente_ { 
 
