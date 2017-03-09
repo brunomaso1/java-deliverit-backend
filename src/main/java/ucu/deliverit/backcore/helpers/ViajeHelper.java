@@ -5,7 +5,6 @@
  */
 package ucu.deliverit.backcore.helpers;
 
-import javax.ejb.EJB;
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -14,8 +13,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -26,11 +23,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ucu.deliverit.backcore.entidades.Configuracion;
 import ucu.deliverit.backcore.entidades.Delivery;
-import ucu.deliverit.backcore.entidades.Vehiculo;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.entidades.servicios.ConfiguracionFacadeREST;
 import ucu.deliverit.backcore.entidades.servicios.DeliveryFacadeREST;
-import ucu.deliverit.backcore.entidades.servicios.ViajeFacadeREST;
 import ucu.deliverit.backcore.entidades.utiles.Utiles;
 
 /**
