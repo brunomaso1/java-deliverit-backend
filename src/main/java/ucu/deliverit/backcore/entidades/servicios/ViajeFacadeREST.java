@@ -171,4 +171,20 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         
         return results;
     }
+    
+    @POST
+    @Path("finalizarViaje/{idViaje}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public void finalizarViaje(@PathParam("idViaje") Integer idViaje) {
+        Viaje viaje = find(idViaje);   
+        
+        if (viaje.getEstado().getId() == estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO)) {
+            EstadoViaje estado = estadoFacadeREST
+                    .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.FINALIZADO));
+            viaje.setEstado(estado);
+            em.persist(viaje);
+        } else {
+            return;
+        }
+    }
 }
