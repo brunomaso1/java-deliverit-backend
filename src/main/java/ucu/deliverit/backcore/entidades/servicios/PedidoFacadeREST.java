@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -117,6 +118,20 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(super.count());
+    }
+    
+    @GET
+    @Path("findPedidosPorViaje/{idViaje}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Pedido> findPedidosPorViaje(@PathParam("idViaje") Integer idViaje) {
+        String consulta = "SELECT p.detalle, p.cliente FROM Pedido p"
+                + " WHERE p.viaje.id = :idViaje";
+        TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);     
+        query.setParameter("idViaje", idViaje);
+        
+        List<Pedido> results = query.getResultList();
+        
+        return results;
     }
 
     @Override
