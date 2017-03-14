@@ -77,6 +77,7 @@ public class Usuario implements Serializable {
     @Lob
     @Column(name = "foto")
     private byte[] foto;
+    
     @OneToMany(mappedBy = "usuario")
     private Collection<Delivery> deliveryCollection;
     

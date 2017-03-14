@@ -49,7 +49,7 @@ public class ViajeHelper {
         this.confFacadeREST = configuracionFacadeREST;
     }
 
-    public void matchearDelivery(Viaje viaje) {
+    public void matchearDelivery(Viaje viaje) throws IOException, JSONException, Exception {
         this.deliverysNotificados = new ArrayList<>();
 
         // El rango inicial de búsqueda de Deliverys es de 2 km
@@ -64,13 +64,9 @@ public class ViajeHelper {
                 List<Delivery> deliverys = getDeliverysDistancia(deliverysSinViaje, viaje);
                 ordenarDeliverysPorEstrella(deliverys);
                 
-                try {
-                    notificarDeliverys(deliverys5Estrellas, viaje);
-                    notificarDeliverys(deliverys4Estrellas, viaje);
-                    notificarDeliverys(deliverys3Estrellas, viaje);
-                } catch (IOException e) {
-                
-                }   
+                notificarDeliverys(deliverys5Estrellas, viaje);
+                notificarDeliverys(deliverys4Estrellas, viaje);
+                notificarDeliverys(deliverys3Estrellas, viaje); 
                 
                 if (deliverysNotificados.containsAll(deliverysSinViaje)) {
                     break;
@@ -82,7 +78,7 @@ public class ViajeHelper {
     }
 
     private List<Delivery> getDeliverysDistancia(List<Delivery> deliverysSinViaje,
-            Viaje viaje) {
+            Viaje viaje) throws JSONException, IOException, Exception {
         List<Delivery> deliverysAEstaDistancia = new ArrayList<>();
 
         for (Delivery d : deliverysSinViaje) {
@@ -90,23 +86,14 @@ public class ViajeHelper {
             Double[] destino = {viaje.getSucursal().getDireccion().getLatitud(),
                 viaje.getSucursal().getDireccion().getLongitud()};
             Double distancia = null;
-            try {
 
-                // Para cada uno de los deliverys que actualmente no tienen ningún viaje asignado
-                // Calculo la distancia entre la ubicación en la que se encuentra 
-                // y la dirección de la sucursal que dio de alta el Viaje
-                distancia = calcularDistanciaSucursalDelivery(origen, destino);
+            // Para cada uno de los deliverys que actualmente no tienen ningún viaje asignado
+            // Calculo la distancia entre la ubicación en la que se encuentra 
+            // y la dirección de la sucursal que dio de alta el Viaje
+            distancia = calcularDistanciaSucursalDelivery(origen, destino);
 
-                if (distancia <= distancia_busqueda_km) {
-                    deliverysAEstaDistancia.add(d);
-                }
-
-            } catch (IOException e) {
-                System.out.println("***** IOException = " + e + " *****");
-            } catch (JSONException e) {
-                System.out.println("***** JSONException = " + e + " *****");
-            } catch (Exception e) {
-                System.out.println("***** Exception = " + e + " *****");
+            if (distancia <= distancia_busqueda_km) {
+                deliverysAEstaDistancia.add(d);
             }
         }
         return deliverysAEstaDistancia;

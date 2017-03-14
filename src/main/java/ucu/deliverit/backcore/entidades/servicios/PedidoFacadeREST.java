@@ -124,14 +124,15 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @Path("findPedidosPorViaje/{idViaje}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Pedido> findPedidosPorViaje(@PathParam("idViaje") Integer idViaje) {
-        String consulta = "SELECT p.detalle, p.cliente FROM Pedido p"
-                + " WHERE p.viaje.id = :idViaje";
+        String consulta = "SELECT p FROM Pedido p"
+                + " WHERE p.pedidoPK.viaje = :idViaje";
+       
         TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);     
         query.setParameter("idViaje", idViaje);
         
         List<Pedido> results = query.getResultList();
-        
-        return results;
+
+        return results;    
     }
 
     @Override

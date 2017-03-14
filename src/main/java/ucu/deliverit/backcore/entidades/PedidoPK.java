@@ -21,6 +21,7 @@ public class PedidoPK implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private int id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "viaje")

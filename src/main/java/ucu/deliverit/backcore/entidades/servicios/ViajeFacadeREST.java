@@ -5,6 +5,7 @@
  */
 package ucu.deliverit.backcore.entidades.servicios;
 
+import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -21,11 +22,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import org.json.JSONException;
 import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.helpers.ViajeHelper;
+import ucu.deliverit.backcore.hilos.MatchearDeliveryThread;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 /**
@@ -80,14 +83,16 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         }    
         
         // Si se insertó el Viaje correctamente y el estado es Publicado
-        // Se ejecuta MatchearDelivery
+        // Se ejecuta MatchearDelivery (Thread)
         if (r.getCodigo().equals(RespuestaGeneral.CODIGO_OK)
                 && entity.getEstado().getId() == 2) {
             
-            ViajeHelper viajeHelper = new ViajeHelper(deliveryFacadeREST, configuracionFacadeREST);
-            viajeHelper.matchearDelivery(entity);
+            ViajeHelper helper = new ViajeHelper(deliveryFacadeREST, configuracionFacadeREST);
+            MatchearDeliveryThread thread = new MatchearDeliveryThread(entity, helper);          
+            thread.start();
+            System.out.println("TERMINO");
+            
         }  
-
         return r;
     }
 
