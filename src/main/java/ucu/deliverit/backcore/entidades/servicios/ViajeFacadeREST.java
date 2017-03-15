@@ -136,6 +136,19 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     public Viaje find(@PathParam("id") Integer id) {
         return super.find(id);
     }
+    
+    @GET
+    @Path("findPublicados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Viaje> findPublicados() {
+        String consulta = "SELECT v FROM Viaje v"
+                + " WHERE v.estado.id = 2";
+        TypedQuery<Viaje> query = em.createQuery(consulta, Viaje.class);     
+        
+        List<Viaje> results = query.getResultList();
+        
+        return results;
+    }
 
     @GET
     @Override
@@ -161,20 +174,6 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-    
-    @GET
-    @Path("findPedidosPorViaje/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Pedido> findPedidosPorViaje(@PathParam("id") Integer idViaje) {
-        String consulta = "SELECT p FROM Pedido p"
-                + " WHERE p.viaje.id = :idViaje";
-        TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);     
-        query.setParameter("idViaje", idViaje);
-        
-        List<Pedido> results = query.getResultList();
-        
-        return results;
     }
     
     @POST
