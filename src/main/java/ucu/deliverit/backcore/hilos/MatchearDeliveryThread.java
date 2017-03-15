@@ -6,8 +6,6 @@
 package ucu.deliverit.backcore.hilos;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.JSONException;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.helpers.ViajeHelper;
