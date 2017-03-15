@@ -142,7 +142,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Viaje> findPublicados() {
         String consulta = "SELECT v FROM Viaje v"
-                + " WHERE v.estado.id = 2";
+                + " WHERE v.estado.descripcion = " + EstadoViaje.PUBLICADO;
         TypedQuery<Viaje> query = em.createQuery(consulta, Viaje.class);     
         
         List<Viaje> results = query.getResultList();
