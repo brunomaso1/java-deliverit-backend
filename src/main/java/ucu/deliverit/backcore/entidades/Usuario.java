@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -74,30 +73,14 @@ public class Usuario implements Serializable {
     @Column(name = "cuenta_red_pagos")
     private Integer cuentaRedPagos;
     
-    @Lob
     @Column(name = "foto")
-    private byte[] foto;
+    private String foto;
     
     @OneToMany(mappedBy = "usuario")
     private Collection<Delivery> deliveryCollection;
     
     @OneToMany(mappedBy = "usuario")
     private Collection<Restaurant> restaurantCollection;
-
-    public Usuario() {
-    }
-
-    public Usuario(Integer id) {
-        this.id = id;
-    }
-
-    public Usuario(Integer id, String nombre, String password, int cuentaRedPagos, String telefono) {
-        this.id = id;
-        this.nombre = nombre;
-        this.password = password;
-        this.cuentaRedPagos = cuentaRedPagos;
-        this.telefono = telefono;
-    }
 
     public Integer getId() {
         return id;
@@ -139,11 +122,11 @@ public class Usuario implements Serializable {
         this.cuentaRedPagos = cuentaRedPagos;
     }
 
-    public byte[] getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(byte[] foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 

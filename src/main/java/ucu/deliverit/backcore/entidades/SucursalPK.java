@@ -27,14 +27,6 @@ public class SucursalPK implements Serializable {
     @Column(name = "restaurant")
     private int restaurant;
 
-    public SucursalPK() {
-    }
-
-    public SucursalPK(short id, int restaurant) {
-        this.id = id;
-        this.restaurant = restaurant;
-    }
-
     public short getId() {
         return id;
     }

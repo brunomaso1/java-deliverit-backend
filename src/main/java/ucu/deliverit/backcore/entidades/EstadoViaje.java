@@ -54,13 +54,6 @@ public class EstadoViaje implements Serializable {
     @OneToMany(mappedBy = "estado")
     private Collection<Viaje> viajeCollection;
 
-    public EstadoViaje() {
-    }
-
-    public EstadoViaje(Short id) {
-        this.id = id;
-    }
-
     public Short getId() {
         return id;
     }

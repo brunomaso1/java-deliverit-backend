@@ -54,17 +54,6 @@ public class Sucursal implements Serializable {
     @OneToMany(mappedBy = "sucursal")
     private Collection<Viaje> viajeCollection;
 
-    public Sucursal() {
-    }
-
-    public Sucursal(SucursalPK sucursalPK) {
-        this.sucursalPK = sucursalPK;
-    }
-
-    public Sucursal(short id, int restaurant) {
-        this.sucursalPK = new SucursalPK(id, restaurant);
-    }
-
     public SucursalPK getSucursalPK() {
         return sucursalPK;
     }

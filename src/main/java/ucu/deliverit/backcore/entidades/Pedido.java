@@ -9,7 +9,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -53,17 +52,6 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "cliente", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Cliente cliente;
-
-    public Pedido() {
-    }
-
-    public Pedido(PedidoPK pedidoPK) {
-        this.pedidoPK = pedidoPK;
-    }
-
-    public Pedido(int id, int viaje) {
-        this.pedidoPK = new PedidoPK(id, viaje);
-    }
 
     public PedidoPK getPedidoPK() {
         return pedidoPK;

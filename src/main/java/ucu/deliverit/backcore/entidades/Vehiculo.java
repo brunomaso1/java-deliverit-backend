@@ -49,13 +49,6 @@ public class Vehiculo implements Serializable {
     @OneToMany(mappedBy = "vehiculo")
     private Collection<Delivery> deliveryCollection;
 
-    public Vehiculo() {
-    }
-
-    public Vehiculo(Short id) {
-        this.id = id;
-    }
-
     public Short getId() {
         return id;
     }

@@ -60,19 +60,6 @@ public class Transaccion implements Serializable {
     @ManyToOne(optional = false)
     private Viaje viaje;
 
-    public Transaccion() {
-    }
-
-    public Transaccion(Integer id) {
-        this.id = id;
-    }
-
-    public Transaccion(Integer id, Date fechaHora, double monto) {
-        this.id = id;
-        this.fechaHora = fechaHora;
-        this.monto = monto;
-    }
-
     public Integer getId() {
         return id;
     }

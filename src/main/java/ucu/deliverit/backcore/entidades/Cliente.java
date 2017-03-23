@@ -62,13 +62,6 @@ public class Cliente implements Serializable {
     @Column(name = "telefono")
     private String telefono;
 
-    public Cliente() {
-    }
-
-    public Cliente(Integer id) {
-        this.id = id;
-    }
-
     public Integer getId() {
         return id;
     }

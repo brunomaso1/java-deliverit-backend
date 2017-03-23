@@ -27,14 +27,6 @@ public class PedidoPK implements Serializable {
     @Column(name = "viaje")
     private int viaje;
 
-    public PedidoPK() {
-    }
-
-    public PedidoPK(int id, int viaje) {
-        this.id = id;
-        this.viaje = viaje;
-    }
-
     public int getId() {
         return id;
     }

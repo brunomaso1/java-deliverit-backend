@@ -64,18 +64,6 @@ public class Restaurant implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
     private Collection<Sucursal> sucursalCollection;
 
-    public Restaurant() {
-    }
-
-    public Restaurant(Integer id) {
-        this.id = id;
-    }
-
-    public Restaurant(Integer id, BigInteger rut) {
-        this.id = id;
-        this.rut = rut;
-    }
-
     public Integer getId() {
         return id;
     }

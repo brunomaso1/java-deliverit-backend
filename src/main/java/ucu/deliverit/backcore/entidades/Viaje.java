@@ -76,18 +76,6 @@ public class Viaje implements Serializable {
     @ManyToOne
     private EstadoViaje estado;
 
-    public Viaje() {
-    }
-
-    public Viaje(Integer id) {
-        this.id = id;
-    }
-
-    public Viaje(Integer id, short precio) {
-        this.id = id;
-        this.precio = precio;
-    }
-
     public Integer getId() {
         return id;
     }

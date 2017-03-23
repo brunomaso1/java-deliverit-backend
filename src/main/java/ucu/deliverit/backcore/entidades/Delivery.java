@@ -69,13 +69,6 @@ public class Delivery implements Serializable {
     @OneToMany(mappedBy = "delivery")
     private Collection<Viaje> viajeCollection;
 
-    public Delivery() {
-    }
-
-    public Delivery(Integer id) {
-        this.id = id;
-    }
-
     public Integer getId() {
         return id;
     }

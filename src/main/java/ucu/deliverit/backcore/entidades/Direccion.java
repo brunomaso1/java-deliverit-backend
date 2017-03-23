@@ -78,19 +78,6 @@ public class Direccion implements Serializable {
     @OneToMany(mappedBy = "direccion")
     private Collection<Sucursal> sucursalCollection;
 
-    public Direccion() {
-    }
-
-    public Direccion(Integer id) {
-        this.id = id;
-    }
-
-    public Direccion(Integer id, String calle, short nroPuerta) {
-        this.id = id;
-        this.calle = calle;
-        this.nroPuerta = nroPuerta;
-    }
-
     public Integer getId() {
         return id;
     }

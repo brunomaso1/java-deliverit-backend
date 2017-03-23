@@ -53,18 +53,6 @@ public class Ubicacion implements Serializable {
     @Column(name = "longitud")
     private Double longitud;
 
-  /*  @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private Delivery delivery;*/
-    
-    
-    public Ubicacion() {
-    }
-
-    public Ubicacion(Integer id) {
-        this.id = id;
-    }
-
     public Integer getId() {
         return id;
     }

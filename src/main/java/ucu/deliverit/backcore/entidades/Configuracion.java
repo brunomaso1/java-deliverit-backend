@@ -46,14 +46,6 @@ public class Configuracion implements Serializable {
     @Column(name = "valor")
     private String valor;
     
-    public Configuracion() {}
-    
-    public Configuracion(Integer id, String descripcion, String valor) {
-        this.id = id;
-        this.descripcion = descripcion;
-        this.valor = valor;
-    }
-    
     @Override
     public int hashCode() {
         int hash = 0;
