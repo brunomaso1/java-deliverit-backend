@@ -49,7 +49,7 @@ create table deliverit.usuario (
     mail varchar(50),
     telefono varchar(9) not null,
     cuenta_red_pagos integer not null,
-    foto blob
+    foto longtext
 );
 
 create table deliverit.restaurant (
