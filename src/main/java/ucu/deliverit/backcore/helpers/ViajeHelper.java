@@ -60,7 +60,7 @@ public class ViajeHelper {
         if (deliverysSinViaje.size() > 0) {
 
             // Una vez que la distancia en km sea mayor a 10 debe terminar este proceso
-            while (distancia_busqueda_km <= 10) {
+            while (distancia_busqueda_km <= 20) {
                 List<Delivery> deliverys = getDeliverysDistancia(deliverysSinViaje, viaje);
                 ordenarDeliverysPorEstrella(deliverys);
                 
@@ -169,6 +169,7 @@ public class ViajeHelper {
         String to = delivery.getToken();
         
         String message_key = Utiles.KEY_IGUAL + confFacadeREST.findByDesc(Configuracion.SERVIDOR_FIREBASE).getValor();
+
 
         JSONObject message = new JSONObject();
 

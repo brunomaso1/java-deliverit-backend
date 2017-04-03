@@ -89,9 +89,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             
             ViajeHelper helper = new ViajeHelper(deliveryFacadeREST, configuracionFacadeREST);
             MatchearDeliveryThread thread = new MatchearDeliveryThread(entity, helper);          
-            thread.start();
-            System.out.println("TERMINO");
-            
+            thread.start();            
         }  
         return r;
     }
@@ -148,6 +146,19 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         List<Viaje> results = query.getResultList();
         
         return results;
+    }
+    
+    @GET
+    @Path("findDeliveryViaje/{idViaje}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Delivery findDeliveryViaje(@PathParam("idViaje") Integer idViaje) {
+        String consulta = "SELECT d FROM Viaje v JOIN v.delivery d"
+                + " WHERE v.id = :idViaje";
+        TypedQuery<Delivery> query = em.createQuery(consulta, Delivery.class);     
+        query.setParameter("idViaje", idViaje);
+        Delivery result = query.getSingleResult();
+        
+        return result;
     }
 
     @GET
