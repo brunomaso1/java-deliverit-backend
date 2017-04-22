@@ -176,7 +176,7 @@ public class ViajeHelper {
         Gson gson = new Gson();
         String viajeString = gson.toJson(viaje);
 
-        message.put("viaje", viajeString);
+        message.put("viaje", viajeString); // Sacar la foto del usuario
 
         JSONObject protocol = new JSONObject();
         protocol.put("to", to);
@@ -184,7 +184,7 @@ public class ViajeHelper {
 
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost request = new HttpPost(message_url);
-        request.addHeader("content-type", "application/json");
+        request.addHeader("Content-Type", "application/json");
         request.addHeader("Authorization", message_key);
 
         StringEntity params = new StringEntity(protocol.toString());

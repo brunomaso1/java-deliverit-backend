@@ -128,4 +128,4 @@ create table deliverit.configuracion (
 );
 
 insert into deliverit.configuracion (descripcion, valor) values ('API_KEY_GOOGLE', 'AIzaSyA2NCnQBRCbuXHbNeUY7mW-lvP-v4V3x8A');
-insert into deliverit.configuracion (descripcion, valor) values ('SERVIDOR_FIREBASE', 'cGAdEQelHgw:APA91bEeGdm8QyYE0PajHZTmkEHfQeJUZsHJL0luuzx6JD6xUtq4dOuqQd8INNr4O6J4y5ftbrQ5O3pqQSS_m2Ou_LXjyPYfvY44bx8YJqLaY-qN_Sm3JHBpNHeEHU9TnDbBx0u7tyWh');
+insert into deliverit.configuracion (descripcion, valor) values ('SERVIDOR_FIREBASE', 'AAAAXNmpFoo:APA91bFF5e1i3mZHE3APivYcHlnkS2ng7_quGr1ecuspOP68gjEnA13OIVUiPgKxVuqvCmnmDU_ZmcOl6OxJ1sEWQSjVYWB_wspNIx8lc0NjFYylx-uMPzfi-xnJhcPb2nVc852lMbZ5');
