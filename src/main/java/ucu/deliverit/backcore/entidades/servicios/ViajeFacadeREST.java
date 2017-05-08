@@ -82,15 +82,15 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             r = super.create(entity);
         }    
         
-        // Si se insertó el Viaje correctamente y el estado es Publicado
-        // Se ejecuta MatchearDelivery (Thread)
-//        if (r.getCodigo().equals(RespuestaGeneral.CODIGO_OK)
-//                && entity.getEstado().getId() == 2) {
-//            
-//            ViajeHelper helper = new ViajeHelper(deliveryFacadeREST, configuracionFacadeREST);
-//            MatchearDeliveryThread thread = new MatchearDeliveryThread(entity, helper);          
-//            thread.start();            
-//        }  
+//         Si se insertó el Viaje correctamente y el estado es Publicado
+//         Se ejecuta MatchearDelivery (Thread)
+        if (r.getCodigo().equals(RespuestaGeneral.CODIGO_OK)
+                && entity.getEstado().getId() == 2) {
+            
+            ViajeHelper helper = new ViajeHelper(deliveryFacadeREST, configuracionFacadeREST);
+            MatchearDeliveryThread thread = new MatchearDeliveryThread(entity, helper);          
+            thread.start();            
+        }  
         return r;
     }
 
