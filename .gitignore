@@ -1,1 +1,4 @@
 /target/
+*.class
+src/main/java/ucu/deliverit/backcore/entidades/servicios/ViajeFacadeREST.java
+*.war

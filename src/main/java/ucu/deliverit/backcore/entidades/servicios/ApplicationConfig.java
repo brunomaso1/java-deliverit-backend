@@ -30,18 +30,18 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ucu.deliverit.backcore.entidades.servicios.ClienteFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.ConfiguracionFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.DeliveryFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.DireccionFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.EstadoViajeFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.PedidoFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.RestaurantFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.SucursalFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.TransaccionFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.UbicacionFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.UsuarioFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.VehiculoFacadeREST.class);
-        resources.add(ucu.deliverit.backcore.entidades.servicios.ViajeFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.ConfiguracionFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.DeliveryFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.DireccionFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.EstadoViajeFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.PedidoFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.RestaurantFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.SucursalFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.TransaccionFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.UbicacionFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.UsuarioFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.VehiculoFacadeREST.class);
+		resources.add(ucu.deliverit.backcore.entidades.servicios.ViajeFacadeREST.class);
     }
     
 }
