@@ -11,13 +11,13 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,18 +25,11 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author DeliverIT
- */
 @Entity
 @Table(name = "viaje")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Viaje.findAll", query = "SELECT v FROM Viaje v"),
-    @NamedQuery(name = "Viaje.findById", query = "SELECT v FROM Viaje v WHERE v.id = :id"),
-    @NamedQuery(name = "Viaje.findByCalificacion", query = "SELECT v FROM Viaje v WHERE v.calificacion = :calificacion"),
-    @NamedQuery(name = "Viaje.findByPrecio", query = "SELECT v FROM Viaje v WHERE v.precio = :precio")})
+@NamedQuery(name = "Viaje.findAll", query = "SELECT v FROM Viaje v ")
+    
 public class Viaje implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,8 +51,8 @@ public class Viaje implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
     private Collection<Transaccion> transaccionCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
-    private Collection<Pedido> pedidoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje", fetch = FetchType.EAGER)
+    private Collection<Pedido> pedidos;
     
     @JoinColumn(name = "delivery", referencedColumnName = "id")
     @ManyToOne
@@ -111,11 +104,11 @@ public class Viaje implements Serializable {
 
     @XmlTransient
     public Collection<Pedido> getPedidoCollection() {
-        return pedidoCollection;
+        return pedidos;
     }
 
     public void setPedidoCollection(Collection<Pedido> pedidoCollection) {
-        this.pedidoCollection = pedidoCollection;
+        this.pedidos = pedidoCollection;
     }
 
     public Delivery getDelivery() {

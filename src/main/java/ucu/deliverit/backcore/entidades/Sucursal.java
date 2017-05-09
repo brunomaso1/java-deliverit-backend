@@ -1,18 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,24 +17,19 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author DeliverIT
- */
 @Entity
 @Table(name = "sucursal")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Sucursal.findAll", query = "SELECT s FROM Sucursal s"),
-    @NamedQuery(name = "Sucursal.findById", query = "SELECT s FROM Sucursal s WHERE s.sucursalPK.id = :id"),
-    @NamedQuery(name = "Sucursal.findByRestaurant", query = "SELECT s FROM Sucursal s WHERE s.sucursalPK.restaurant = :restaurant"),
-    @NamedQuery(name = "Sucursal.findByNombre", query = "SELECT s FROM Sucursal s WHERE s.nombre = :nombre")})
+@NamedQuery(name = "Sucursal.findAll", query = "SELECT s FROM Sucursal s")
 public class Sucursal implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @EmbeddedId
-    protected SucursalPK sucursalPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     
     @Size(max = 20)
     @Column(name = "nombre")
@@ -54,12 +46,12 @@ public class Sucursal implements Serializable {
     @OneToMany(mappedBy = "sucursal")
     private Collection<Viaje> viajeCollection;
 
-    public SucursalPK getSucursalPK() {
-        return sucursalPK;
+    public Integer getId() {
+        return id;
     }
 
-    public void setSucursalPK(SucursalPK sucursalPK) {
-        this.sucursalPK = sucursalPK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -98,18 +90,17 @@ public class Sucursal implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (sucursalPK != null ? sucursalPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Sucursal)) {
             return false;
         }
         Sucursal other = (Sucursal) object;
-        if ((this.sucursalPK == null && other.sucursalPK != null) || (this.sucursalPK != null && !this.sucursalPK.equals(other.sucursalPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -117,7 +108,7 @@ public class Sucursal implements Serializable {
 
     @Override
     public String toString() {
-        return "ucu.deliverit.backcore.entidades.Sucursal[ sucursalPK=" + sucursalPK + " ]";
+        return "ucu.deliverit.backcore.entidades.Sucursal[ sucursal=" + id + " ]";
     }
     
 }

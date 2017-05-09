@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades.servicios;
 
 import java.util.List;
@@ -22,40 +17,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Sucursal;
-import ucu.deliverit.backcore.entidades.SucursalPK;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
-/**
- *
- * @author DeliverIT
- */
 @Stateless
 @Path("sucursal")
 public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
 
     @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
     private EntityManager em;
-
-    private SucursalPK getPrimaryKey(PathSegment pathSegment) {
-        /*
-         * pathSemgent represents a URI path segment and any associated matrix parameters.
-         * URI path part is supposed to be in form of 'somePath;id=idValue;restaurant=restaurantValue'.
-         * Here 'somePath' is a result of getPath() method invocation and
-         * it is ignored in the following code.
-         * Matrix parameters are used as field names to build a primary key instance.
-         */
-        ucu.deliverit.backcore.entidades.SucursalPK key = new ucu.deliverit.backcore.entidades.SucursalPK();
-        javax.ws.rs.core.MultivaluedMap<String, String> map = pathSegment.getMatrixParameters();
-        java.util.List<String> id = map.get("id");
-        if (id != null && !id.isEmpty()) {
-            key.setId(new java.lang.Short(id.get(0)));
-        }
-        java.util.List<String> restaurant = map.get("restaurant");
-        if (restaurant != null && !restaurant.isEmpty()) {
-            key.setRestaurant(new java.lang.Integer(restaurant.get(0)));
-        }
-        return key;
-    }
 
     public SucursalFacadeREST() {
         super(Sucursal.class);
@@ -97,16 +66,14 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") PathSegment id) {
-        ucu.deliverit.backcore.entidades.SucursalPK key = getPrimaryKey(id);
-        super.remove(super.find(key));
+        super.remove(super.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Sucursal find(@PathParam("id") PathSegment id) {
-        ucu.deliverit.backcore.entidades.SucursalPK key = getPrimaryKey(id);
-        return super.find(key);
+        return super.find(id);
     }
 
     @GET
@@ -117,17 +84,14 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     }
     
     @GET
-    @Path("findPedidos/{restaurant}/{sucursal}")
+    @Path("findPedidos/{sucursal}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Pedido> findPedidos(@PathParam("restaurant") Integer restaurant,
-            @PathParam("sucursal") Integer sucursal) {
+    public List<Pedido> findPedidos(@PathParam("sucursal") Integer sucursal) {
         String consulta = "SELECT p FROM Pedido p"
                 + " JOIN p.viaje v"
-                + " WHERE v.sucursal.sucursalPK.id = :sucursal"
-                + " AND v.sucursal.sucursalPK.restaurant = :restaurant";
+                + " WHERE v.sucursal.id = :sucursal";
         TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);     
         query.setParameter("sucursal", sucursal);
-        query.setParameter("restaurant", restaurant);
         
         List<Pedido> results = query.getResultList();
         

@@ -1,41 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author DeliverIT
- */
 @Entity
 @Table(name = "pedido")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p"),
-    @NamedQuery(name = "Pedido.findById", query = "SELECT p FROM Pedido p WHERE p.pedidoPK.id = :id"),
-    @NamedQuery(name = "Pedido.findByViaje", query = "SELECT p FROM Pedido p WHERE p.pedidoPK.viaje = :viaje"),
-    @NamedQuery(name = "Pedido.findByDetalle", query = "SELECT p FROM Pedido p WHERE p.detalle = :detalle"),
-    @NamedQuery(name = "Pedido.findByFormaPago", query = "SELECT p FROM Pedido p WHERE p.formaPago = :formaPago")})
+@NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p")
 public class Pedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @EmbeddedId
-    protected PedidoPK pedidoPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     
     @Size(max = 100)
     @Column(name = "detalle")
@@ -43,22 +35,22 @@ public class Pedido implements Serializable {
     
     @Size(max = 1)
     @Column(name = "forma_pago")
-    private String formaPago;
-    
-    @JoinColumn(name = "viaje", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Viaje viaje;
+    private String formaPago;    
     
     @JoinColumn(name = "cliente", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Cliente cliente;
-
-    public PedidoPK getPedidoPK() {
-        return pedidoPK;
+    
+    @JoinColumn(name = "viaje", referencedColumnName = "id")
+    @ManyToOne
+    private Viaje viaje;
+    
+    public Integer getId() {
+        return id;
     }
 
-    public void setPedidoPK(PedidoPK pedidoPK) {
-        this.pedidoPK = pedidoPK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDetalle() {
@@ -77,6 +69,14 @@ public class Pedido implements Serializable {
         this.formaPago = formaPago;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
     public Viaje getViaje() {
         return viaje;
     }
@@ -85,29 +85,20 @@ public class Pedido implements Serializable {
         this.viaje = viaje;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (pedidoPK != null ? pedidoPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Pedido)) {
             return false;
         }
         Pedido other = (Pedido) object;
-        if ((this.pedidoPK == null && other.pedidoPK != null) || (this.pedidoPK != null && !this.pedidoPK.equals(other.pedidoPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -115,7 +106,7 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "ucu.deliverit.backcore.entidades.Pedido[ pedidoPK=" + pedidoPK + " ]";
+        return "ucu.deliverit.backcore.entidades.Pedido[ pedido=" + id + " ]";
     }
     
 }

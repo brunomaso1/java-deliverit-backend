@@ -8,6 +8,7 @@ package ucu.deliverit.backcore.entidades;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,7 +51,7 @@ public class Cliente implements Serializable {
     private String nombre;
     
     @JoinColumn(name = "direccion", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Direccion direccion;
     
     @OneToMany(mappedBy = "cliente")

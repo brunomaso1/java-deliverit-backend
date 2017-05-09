@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades.servicios;
 
 import java.util.List;
@@ -21,40 +16,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 import ucu.deliverit.backcore.entidades.Pedido;
-import ucu.deliverit.backcore.entidades.PedidoPK;
+import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
-/**
- *
- * @author DeliverIT
- */
 @Stateless
 @Path("pedido")
 public class PedidoFacadeREST extends AbstractFacade<Pedido> {
 
     @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
     private EntityManager em;
-
-    private PedidoPK getPrimaryKey(PathSegment pathSegment) {
-        /*
-         * pathSemgent represents a URI path segment and any associated matrix parameters.
-         * URI path part is supposed to be in form of 'somePath;id=idValue;viaje=viajeValue'.
-         * Here 'somePath' is a result of getPath() method invocation and
-         * it is ignored in the following code.
-         * Matrix parameters are used as field names to build a primary key instance.
-         */
-        ucu.deliverit.backcore.entidades.PedidoPK key = new ucu.deliverit.backcore.entidades.PedidoPK();
-        javax.ws.rs.core.MultivaluedMap<String, String> map = pathSegment.getMatrixParameters();
-        java.util.List<String> id = map.get("id");
-        if (id != null && !id.isEmpty()) {
-            key.setId(new java.lang.Integer(id.get(0)));
-        }
-        java.util.List<String> viaje = map.get("viaje");
-        if (viaje != null && !viaje.isEmpty()) {
-            key.setViaje(new java.lang.Integer(viaje.get(0)));
-        }
-        return key;
-    }
 
     public PedidoFacadeREST() {
         super(Pedido.class);
@@ -87,16 +57,14 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") PathSegment id) {
-        ucu.deliverit.backcore.entidades.PedidoPK key = getPrimaryKey(id);
-        super.remove(super.find(key));
+        super.remove(super.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Pedido find(@PathParam("id") PathSegment id) {
-        ucu.deliverit.backcore.entidades.PedidoPK key = getPrimaryKey(id);
-        return super.find(key);
+        return super.find(id);
     }
 
     @GET
@@ -104,6 +72,15 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Pedido> findAll() {
         return super.findAll();
+    }
+    
+    @GET
+    @Path("findByViaje/{viaje}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Viaje findByViaje(Integer viaje) {
+        return (Viaje)em.createNamedQuery("Pedido.findByViaje")
+            .setParameter("viaje", viaje)
+            .getSingleResult();
     }
 
     @GET

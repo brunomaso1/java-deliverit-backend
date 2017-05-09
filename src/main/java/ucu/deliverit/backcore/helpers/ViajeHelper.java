@@ -174,7 +174,7 @@ public class ViajeHelper {
         JSONObject message = new JSONObject();
 
         Gson gson = new Gson();
-        String viajeString = gson.toJson(viaje);
+        String viajeString = gson.toJson(viaje.getId());
 
         message.put("viaje", viajeString); // Sacar la foto del usuario
 
