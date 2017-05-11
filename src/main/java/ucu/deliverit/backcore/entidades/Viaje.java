@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
@@ -24,6 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.JoinFetch;
 
 @Entity
 @Table(name = "viaje")
@@ -51,7 +47,9 @@ public class Viaje implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
     private Collection<Transaccion> transaccionCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje", fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Pedido.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="viaje", referencedColumnName="viaje")
+    @JoinFetch
     private Collection<Pedido> pedidos;
     
     @JoinColumn(name = "delivery", referencedColumnName = "id")
@@ -59,10 +57,7 @@ public class Viaje implements Serializable {
     private Delivery delivery;
     
     @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name = "sucursal", referencedColumnName = "id"),
-        @JoinColumn(name = "restaurant", referencedColumnName = "restaurant")
-    })   
+    @JoinColumn(name = "sucursal", referencedColumnName = "id")
     private Sucursal sucursal;
 
     @JoinColumn(name = "estado", referencedColumnName = "id")
@@ -103,11 +98,11 @@ public class Viaje implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Pedido> getPedidoCollection() {
+    public Collection<Pedido> getPedidos() {
         return pedidos;
     }
 
-    public void setPedidoCollection(Collection<Pedido> pedidoCollection) {
+    public void setPedidos(Collection<Pedido> pedidoCollection) {
         this.pedidos = pedidoCollection;
     }
 

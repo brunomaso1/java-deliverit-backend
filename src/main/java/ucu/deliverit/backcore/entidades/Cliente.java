@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,11 +52,11 @@ public class Cliente implements Serializable {
     private String nombre;
     
     @JoinColumn(name = "direccion", referencedColumnName = "id")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Direccion direccion;
     
-    @OneToMany(mappedBy = "cliente")
-    private Collection<Pedido> pedidoCollection;
+//    @OneToMany(mappedBy = "cliente")
+//    private Collection<Pedido> pedidoCollection;
     
     @Basic(optional = false)
     @NotNull
@@ -87,14 +88,14 @@ public class Cliente implements Serializable {
         this.direccion = direccion;
     }
 
-    @XmlTransient
-    public Collection<Pedido> getPedidoCollection() {
-        return pedidoCollection;
-    }
-
-    public void setPedidoCollection(Collection<Pedido> pedidoCollection) {
-        this.pedidoCollection = pedidoCollection;
-    }
+//    @XmlTransient
+//    public Collection<Pedido> getPedidoCollection() {
+//        return pedidoCollection;
+//    }
+//
+//    public void setPedidoCollection(Collection<Pedido> pedidoCollection) {
+//        this.pedidoCollection = pedidoCollection;
+//    }
 
     public String getTelefono() {
         return telefono;

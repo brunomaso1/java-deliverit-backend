@@ -14,7 +14,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.PathSegment;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
@@ -50,20 +49,20 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void edit(@PathParam("id") PathSegment id, Pedido entity) {
+    public void edit(@PathParam("id") Integer id, Pedido entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") PathSegment id) {
+    public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Pedido find(@PathParam("id") PathSegment id) {
+    public Pedido find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 

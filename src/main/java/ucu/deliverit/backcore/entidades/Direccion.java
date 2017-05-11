@@ -72,8 +72,8 @@ public class Direccion implements Serializable {
     @Column(name = "longitud")
     private Double longitud;
     
-    @OneToMany(mappedBy = "direccion")
-    private Collection<Cliente> clienteCollection;
+//    @OneToMany(mappedBy = "direccion")
+//    private Collection<Cliente> clienteCollection;
     
     @OneToMany(mappedBy = "direccion")
     private Collection<Sucursal> sucursalCollection;
@@ -134,14 +134,14 @@ public class Direccion implements Serializable {
         this.apartamento = apartamento;
     }
 
-    @XmlTransient
-    public Collection<Cliente> getClienteCollection() {
-        return clienteCollection;
-    }
-
-    public void setClienteCollection(Collection<Cliente> clienteCollection) {
-        this.clienteCollection = clienteCollection;
-    }
+//    @XmlTransient
+//    public Collection<Cliente> getClienteCollection() {
+//        return clienteCollection;
+//    }
+//
+//    public void setClienteCollection(Collection<Cliente> clienteCollection) {
+//        this.clienteCollection = clienteCollection;
+//    }
 
     @XmlTransient
     public Collection<Sucursal> getSucursalCollection() {

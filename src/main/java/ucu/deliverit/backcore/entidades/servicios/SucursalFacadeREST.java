@@ -14,7 +14,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.PathSegment;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
@@ -59,20 +58,20 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void edit(@PathParam("id") PathSegment id, Sucursal entity) {
+    public void edit(@PathParam("id") Integer id, Sucursal entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") PathSegment id) {
+    public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Sucursal find(@PathParam("id") PathSegment id) {
+    public Sucursal find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 

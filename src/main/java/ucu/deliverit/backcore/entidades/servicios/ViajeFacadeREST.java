@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades.servicios;
 
-import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -28,10 +22,6 @@ import ucu.deliverit.backcore.helpers.ViajeHelper;
 import ucu.deliverit.backcore.hilos.MatchearDeliveryThread;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
-/**
- *
- * @author DeliverIT
- */
 @Stateless
 @Path("viaje")
 public class ViajeFacadeREST extends AbstractFacade<Viaje> {
@@ -75,7 +65,12 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("Estado de Viaje" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);
-        } else {
+        } else if (entity.getPedidos().isEmpty() || entity.getPedidos() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Pedidos" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } 
+        else {
             r = super.create(entity);
         }    
         
