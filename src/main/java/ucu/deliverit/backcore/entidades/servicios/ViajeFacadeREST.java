@@ -65,10 +65,6 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("Estado de Viaje" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);
-        } else if (entity.getPedidos().isEmpty() || entity.getPedidos() == null) {
-            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
-            r.setMensaje("Pedidos" + RespuestaGeneral.MENSAJE_VALOR_NULO);
-            r.setObjeto(null);
         } 
         else {
             r = super.create(entity);

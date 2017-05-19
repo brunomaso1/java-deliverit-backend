@@ -42,8 +42,8 @@ public class Pedido implements Serializable {
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cliente cliente;
     
-    @JoinColumn(name="viaje")
-    @ManyToOne
+    @JoinColumn(name = "viaje", referencedColumnName = "id")
+    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Viaje viaje;
     
     public Integer getId() {

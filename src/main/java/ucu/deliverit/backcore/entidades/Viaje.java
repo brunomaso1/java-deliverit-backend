@@ -47,9 +47,7 @@ public class Viaje implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
     private Collection<Transaccion> transaccionCollection;
     
-    @OneToMany(targetEntity = Pedido.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="viaje", referencedColumnName="viaje")
-    @JoinFetch
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
     private Collection<Pedido> pedidos;
     
     @JoinColumn(name = "delivery", referencedColumnName = "id")
