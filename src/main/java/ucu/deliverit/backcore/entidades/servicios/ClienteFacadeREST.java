@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades.servicios;
 
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,12 +15,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Cliente;
+import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
-/**
- *
- * @author DeliverIT
- */
 @Stateless
 @Path("cliente")
 public class ClienteFacadeREST extends AbstractFacade<Cliente> {
@@ -81,6 +74,21 @@ public class ClienteFacadeREST extends AbstractFacade<Cliente> {
     @Produces(MediaType.APPLICATION_JSON)
     public Cliente find(@PathParam("id") Integer id) {
         return super.find(id);
+    }
+    
+    @GET
+    @Path("findBySucursal/{idSucursal}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Cliente> findBySucursal(@PathParam("idSucursal") Integer idSucursal) {
+        String consulta = "SELECT c FROM Cliente c"
+                + " JOIN c.pedidoCollection p"
+                + " WHERE p.viaje.sucursal.id = :idSucursal";
+        TypedQuery<Cliente> query = em.createQuery(consulta, Cliente.class);     
+        query.setParameter("idSucursal", idSucursal);
+        
+        List<Cliente> results = query.getResultList();
+        
+        return results;
     }
 
     @GET

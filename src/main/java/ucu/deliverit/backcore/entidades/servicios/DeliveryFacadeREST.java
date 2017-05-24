@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades.servicios;
 
 import java.util.List;
@@ -22,10 +17,6 @@ import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
-/**
- *
- * @author DeliverIT
- */
 @Stateless
 @Path("delivery")
 public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
@@ -79,6 +70,21 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Delivery> findAll() {
         return super.findAll();
+    }
+    
+    @GET
+    @Path("findBySucursal/{idSucursal}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Delivery> findBySucursal(@PathParam("idSucursal") Integer idSucursal) {
+        String consulta = "SELECT d FROM Delivery d"
+                + " JOIN d.viajeCollection v"
+                + " WHERE v.sucursal.id = :idSucursal";
+        TypedQuery<Delivery> query = em.createQuery(consulta, Delivery.class);     
+        query.setParameter("idSucursal", idSucursal);
+        
+        List<Delivery> results = query.getResultList();
+        
+        return results;
     }
     
     @GET

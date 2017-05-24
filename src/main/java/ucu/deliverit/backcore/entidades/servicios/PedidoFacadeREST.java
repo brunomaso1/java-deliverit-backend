@@ -69,28 +69,19 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     }
     
     @GET
-    @Path("findWithoutViaje/{idViaje}")
+    @Path("solicitarPedidos/{idViaje}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Pedido> findWithoutViaje(@PathParam("idViaje") Integer idViaje) {
-        List<Pedido> retorno = new ArrayList<>();
         
-        String consulta = "SELECT p.id, p.cliente FROM Pedido p"
+        String consulta = "SELECT p FROM Pedido p"
                 + " WHERE p.viaje.id = :idViaje";
-        TypedQuery<Object[]> query = em.createQuery(consulta, Object[].class);  
         
+        TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);         
         query.setParameter("idViaje", idViaje);
         
-        List<Object[]> results = query.getResultList();
+        List<Pedido> pedidos = query.getResultList();
         
-        for (Object[] result : results) {
-            Pedido p = new Pedido();
-            p.setId((Integer)result[0]);
-            p.setCliente((Cliente) result[1]);        
-
-            retorno.add(p);
-        }
-        
-        return retorno;
+        return pedidos;
     }
 
     @GET
@@ -121,21 +112,6 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(super.count());
-    }
-    
-    @GET
-    @Path("findPedidosPorViaje/{idViaje}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Pedido> findPedidosPorViaje(@PathParam("idViaje") Integer idViaje) {
-        String consulta = "SELECT p FROM Pedido p"
-                + " WHERE p.pedidoPK.viaje = :idViaje";
-       
-        TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);     
-        query.setParameter("idViaje", idViaje);
-        
-        List<Pedido> results = query.getResultList();
-
-        return results;    
     }
 
     @Override

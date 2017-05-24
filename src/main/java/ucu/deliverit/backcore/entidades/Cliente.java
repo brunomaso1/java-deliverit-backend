@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
@@ -26,10 +21,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author DeliverIT
- */
 @Entity
 @Table(name = "cliente")
 @XmlRootElement
@@ -55,8 +46,8 @@ public class Cliente implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Direccion direccion;
     
-//    @OneToMany(mappedBy = "cliente")
-//    private Collection<Pedido> pedidoCollection;
+    @OneToMany(mappedBy = "cliente")
+    private Collection<Pedido> pedidoCollection;
     
     @Basic(optional = false)
     @NotNull
@@ -88,14 +79,14 @@ public class Cliente implements Serializable {
         this.direccion = direccion;
     }
 
-//    @XmlTransient
-//    public Collection<Pedido> getPedidoCollection() {
-//        return pedidoCollection;
-//    }
-//
-//    public void setPedidoCollection(Collection<Pedido> pedidoCollection) {
-//        this.pedidoCollection = pedidoCollection;
-//    }
+    @XmlTransient
+    public Collection<Pedido> getPedidoCollection() {
+        return pedidoCollection;
+    }
+
+    public void setPedidoCollection(Collection<Pedido> pedidoCollection) {
+        this.pedidoCollection = pedidoCollection;
+    }
 
     public String getTelefono() {
         return telefono;

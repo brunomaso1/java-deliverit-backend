@@ -1,5 +1,6 @@
 package ucu.deliverit.backcore.entidades.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -140,25 +141,6 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         List<Viaje> results = query.getResultList();
         
         return results;
-    }
-    
-    @GET
-    @Path("solicitarViaje/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Viaje solicitarViaje(@PathParam("id") Integer id) {
-        String consulta = "SELECT v FROM Viaje v"
-                + " WHERE v.id = :id AND v.estado.id = " + estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO);
-        
-        TypedQuery<Viaje> query = em.createQuery(consulta, Viaje.class);     
-        query.setParameter("id", id);
-        Viaje v = query.getSingleResult(); 
-        
-        if (v != null) {
-            List<Pedido> pedidos = pedidoFacade.findWithoutViaje(id);
-            v.setPedidos(pedidos);
-        }
-        
-        return v;
     }
     
     @GET
