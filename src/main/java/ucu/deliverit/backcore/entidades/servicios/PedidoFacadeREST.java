@@ -1,7 +1,7 @@
 package ucu.deliverit.backcore.entidades.servicios;
 
-import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import ucu.deliverit.backcore.entidades.Cliente;
+import ucu.deliverit.backcore.entidades.EstadoViaje;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
@@ -23,6 +23,9 @@ import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 @Stateless
 @Path("pedido")
 public class PedidoFacadeREST extends AbstractFacade<Pedido> {
+    
+    @EJB
+    private EstadoViajeFacadeREST estadoFacadeREST;
 
     @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
     private EntityManager em;
@@ -74,7 +77,7 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     public List<Pedido> findWithoutViaje(@PathParam("idViaje") Integer idViaje) {
         
         String consulta = "SELECT p FROM Pedido p"
-                + " WHERE p.viaje.id = :idViaje";
+                + " WHERE p.viaje.id = :idViaje AND p.viaje.estado.id = " + estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO);
         
         TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);         
         query.setParameter("idViaje", idViaje);

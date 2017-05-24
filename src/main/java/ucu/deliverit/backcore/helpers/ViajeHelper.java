@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.helpers;
 
 import com.google.gson.Gson;
@@ -28,10 +23,6 @@ import ucu.deliverit.backcore.entidades.servicios.ConfiguracionFacadeREST;
 import ucu.deliverit.backcore.entidades.servicios.DeliveryFacadeREST;
 import ucu.deliverit.backcore.entidades.utiles.Utiles;
 
-/**
- *
- * @author DeliverIT
- */
 public class ViajeHelper {
 
     private int distancia_busqueda_km;
@@ -159,24 +150,23 @@ public class ViajeHelper {
             
             // Si el Delivery no fue notificado se lo notifica
             if (!deliverysNotificados.contains(d)) {
-                notificarDelivery(d, viaje);
+                notificarDelivery(d, viaje.getId());
             }            
         }
     }
 
-    private void notificarDelivery(Delivery delivery, Viaje viaje) throws IOException {
+    private void notificarDelivery(Delivery delivery, Integer idViaje) throws IOException {
         String message_url = Utiles.URL_FIREBASE;
         String to = delivery.getToken();
         
         String message_key = Utiles.KEY_IGUAL + confFacadeREST.findByDesc(Configuracion.SERVIDOR_FIREBASE).getValor();
 
-
         JSONObject message = new JSONObject();
 
         Gson gson = new Gson();
-        String viajeString = gson.toJson(viaje.getId());
+        String viajeString = gson.toJson(idViaje);
 
-        message.put("viaje", viajeString); // Sacar la foto del usuario
+        message.put("viaje", viajeString); 
 
         JSONObject protocol = new JSONObject();
         protocol.put("to", to);
@@ -220,16 +210,10 @@ public class ViajeHelper {
         }
     }*/
 
-    /**
-     * @return the distancia_busqueda_km
-     */
     public int getDistancia_busqueda_km() {
         return distancia_busqueda_km;
     }
 
-    /**
-     * @param distancia_busqueda_km the distancia_busqueda_km to set
-     */
     public void setDistancia_busqueda_km(int distancia_busqueda_km) {
         this.distancia_busqueda_km = distancia_busqueda_km;
     }

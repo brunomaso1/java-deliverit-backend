@@ -18,7 +18,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
-import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.helpers.ViajeHelper;
 import ucu.deliverit.backcore.hilos.MatchearDeliveryThread;
@@ -36,9 +35,6 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     
     @EJB
     private ConfiguracionFacadeREST configuracionFacadeREST;
-    
-    @EJB
-    private PedidoFacadeREST pedidoFacade;
 
     @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
     private EntityManager em;
@@ -93,7 +89,6 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     public void edit(@PathParam("id") Integer id, Viaje entity) {
         super.edit(entity);
     }
-    
     
     
     @POST
