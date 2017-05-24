@@ -1,6 +1,7 @@
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,6 +35,10 @@ public class Pedido implements Serializable {
     @Column(name = "detalle")
     private String detalle;
     
+    @Basic(optional = false)
+    @Column(name = "fecha_creacion")
+    private Timestamp fecha;
+    
     @Size(max = 1)
     @Column(name = "forma_pago")
     private String formaPago;    
@@ -43,7 +48,7 @@ public class Pedido implements Serializable {
     private Cliente cliente;
     
     @JoinColumn(name = "viaje", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne
     private Viaje viaje;
     
     public Integer getId() {
@@ -84,6 +89,14 @@ public class Pedido implements Serializable {
 
     public void setViaje(Viaje viaje) {
         this.viaje = viaje;
+    }
+    
+    public Timestamp getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Timestamp fecha) {
+        this.fecha = fecha;
     }
 
     @Override

@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
+import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.helpers.ViajeHelper;
 import ucu.deliverit.backcore.hilos.MatchearDeliveryThread;
@@ -34,6 +35,9 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     
     @EJB
     private ConfiguracionFacadeREST configuracionFacadeREST;
+    
+    @EJB
+    private PedidoFacadeREST pedidoFacade;
 
     @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
     private EntityManager em;
@@ -89,6 +93,8 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         super.edit(entity);
     }
     
+    
+    
     @POST
     @Path("aceptarViaje/{idViaje}/{idDelivery}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -134,6 +140,25 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         List<Viaje> results = query.getResultList();
         
         return results;
+    }
+    
+    @GET
+    @Path("solicitarViaje/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Viaje solicitarViaje(@PathParam("id") Integer id) {
+        String consulta = "SELECT v FROM Viaje v"
+                + " WHERE v.id = :id AND v.estado.id = " + estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO);
+        
+        TypedQuery<Viaje> query = em.createQuery(consulta, Viaje.class);     
+        query.setParameter("id", id);
+        Viaje v = query.getSingleResult(); 
+        
+        if (v != null) {
+            List<Pedido> pedidos = pedidoFacade.findWithoutViaje(id);
+            v.setPedidos(pedidos);
+        }
+        
+        return v;
     }
     
     @GET

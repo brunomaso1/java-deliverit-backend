@@ -1,5 +1,6 @@
 package ucu.deliverit.backcore.entidades.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import ucu.deliverit.backcore.entidades.Cliente;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
@@ -64,6 +66,31 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @Produces(MediaType.APPLICATION_JSON)
     public Pedido find(@PathParam("id") Integer id) {
         return super.find(id);
+    }
+    
+    @GET
+    @Path("findWithoutViaje/{idViaje}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Pedido> findWithoutViaje(@PathParam("idViaje") Integer idViaje) {
+        List<Pedido> retorno = new ArrayList<>();
+        
+        String consulta = "SELECT p.id, p.cliente FROM Pedido p"
+                + " WHERE p.viaje.id = :idViaje";
+        TypedQuery<Object[]> query = em.createQuery(consulta, Object[].class);  
+        
+        query.setParameter("idViaje", idViaje);
+        
+        List<Object[]> results = query.getResultList();
+        
+        for (Object[] result : results) {
+            Pedido p = new Pedido();
+            p.setId((Integer)result[0]);
+            p.setCliente((Cliente) result[1]);        
+
+            retorno.add(p);
+        }
+        
+        return retorno;
     }
 
     @GET

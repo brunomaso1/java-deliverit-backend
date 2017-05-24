@@ -1,31 +1,27 @@
 package ucu.deliverit.backcore.entidades;
 
+import java.sql.Timestamp;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.eclipse.persistence.annotations.JoinFetch;
 
 @Entity
 @Table(name = "viaje")
 @XmlRootElement
-@NamedQuery(name = "Viaje.findAll", query = "SELECT v FROM Viaje v ")
-    
+@NamedQuery(name = "Viaje.findAll", query = "SELECT v FROM Viaje v")    
 public class Viaje implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,11 +32,14 @@ public class Viaje implements Serializable {
     @Column(name = "id")
     private Integer id;
     
+    @Basic(optional = false)
+    @Column(name = "fecha_creacion")
+    private Timestamp fecha;
+    
     @Column(name = "calificacion")
     private Short calificacion;
     
     @Basic(optional = false)
-    @NotNull
     @Column(name = "precio")
     private Short precio;
     
@@ -127,6 +126,14 @@ public class Viaje implements Serializable {
     public void setEstado(EstadoViaje estado) {
         this.estado = estado;
     }
+    
+    public Timestamp getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Timestamp fecha) {
+        this.fecha = fecha;
+    }
 
     @Override
     public int hashCode() {
@@ -137,7 +144,6 @@ public class Viaje implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Viaje)) {
             return false;
         }
