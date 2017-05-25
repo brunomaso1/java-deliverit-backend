@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -147,6 +148,19 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         TypedQuery<Delivery> query = em.createQuery(consulta, Delivery.class);     
         query.setParameter("idViaje", idViaje);
         Delivery result = query.getSingleResult();
+        
+        return result;
+    }
+	
+	@GET
+    @Path("countPedidos/{idViaje}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Long countPedidosViaje(@PathParam("idViaje") Integer idViaje) {
+        String consulta = "SELECT COUNT (p) FROM Viaje v JOIN v.pedidos p"
+                + " WHERE p.viaje.id = :idViaje";
+        Query query = em.createQuery(consulta);     
+        query.setParameter("idViaje", idViaje);
+        Long result = (Long)query.getSingleResult();
         
         return result;
     }

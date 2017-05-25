@@ -2,3 +2,4 @@
 *.class
 src/main/java/ucu/deliverit/backcore/entidades/servicios/ViajeFacadeREST.java
 *.war
+target/BackCore-1.0.war

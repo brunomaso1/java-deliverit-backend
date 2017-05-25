@@ -80,7 +80,7 @@ public class ClienteFacadeREST extends AbstractFacade<Cliente> {
     @Path("findBySucursal/{idSucursal}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Cliente> findBySucursal(@PathParam("idSucursal") Integer idSucursal) {
-        String consulta = "SELECT c FROM Cliente c"
+        String consulta = "SELECT DISTINCT c FROM Cliente c"
                 + " JOIN c.pedidoCollection p"
                 + " WHERE p.viaje.sucursal.id = :idSucursal";
         TypedQuery<Cliente> query = em.createQuery(consulta, Cliente.class);     
