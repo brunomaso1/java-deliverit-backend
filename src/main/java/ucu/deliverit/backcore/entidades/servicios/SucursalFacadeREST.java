@@ -95,52 +95,29 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     public List<Pedido> findPedidos(@PathParam("sucursal") Integer sucursal) {
         List<Pedido> retorno = new ArrayList<>();
         
-        String consulta = "SELECT p.id, p.cliente, p.detalle, p.fecha, p.formaPago FROM Pedido p"
+        String consulta = "SELECT p FROM Pedido p"
                 + " JOIN p.viaje v"
                 + " WHERE v.sucursal.id = :sucursal";
-        TypedQuery<Object[]> query = em.createQuery(consulta, Object[].class);     
+        TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);     
         query.setParameter("sucursal", sucursal);
         
-        List<Object[]> results = query.getResultList();
+        List<Pedido> results = query.getResultList();
         
-        for (Object[] result : results) {
-            Pedido p = new Pedido();
-            p.setId((Integer)result[0]);
-            p.setCliente((Cliente) result[1]);
-            p.setDetalle((String) result[2]);
-            p.setFecha((Timestamp) result[3]);
-            p.setFormaPago((String) result[4]);           
-
-            retorno.add(p);
-        }
-        
-        return retorno;
+        return results;
     }
     
     @GET
     @Path("findViajes/{sucursal}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Viaje> findViajes(@PathParam("sucursal") Integer sucursal) {
-        List<Viaje> retorno = new ArrayList<>();
         
-        String consulta = "SELECT v.id, v.delivery, v.estado, v.precio, v.fecha FROM Viaje v"
+        String consulta = "SELECT v FROM Viaje v"
                 + " WHERE v.sucursal.id = :sucursal";
-        TypedQuery<Object[]> query = em.createQuery(consulta, Object[].class);     
+        TypedQuery<Viaje> query = em.createQuery(consulta, Viaje.class);     
         query.setParameter("sucursal", sucursal);
         
-        List<Object[]> results = query.getResultList();
-        
-        for (Object[] result : results) {
-            Viaje v = new Viaje();
-            v.setId((Integer)result[0]);
-            v.setDelivery((Delivery) result[1]);
-            v.setEstado((EstadoViaje) result[2]);
-            v.setPrecio((Short) result[3]);
-            v.setFecha((Timestamp) result[4]);
-            retorno.add(v);
-        }
-        
-        return retorno;
+        List<Viaje> results = query.getResultList();
+        return results;
     }
     
     @GET
@@ -175,6 +152,7 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
             vAuxiliar.setDelivery(v.getDelivery());
             vAuxiliar.setPrecio(v.getPrecio());
             vAuxiliar.setEstado(v.getEstado());
+            vAuxiliar.setFecha(v.getFecha());
             p.setViaje(vAuxiliar);         
 
             retorno.add(p);

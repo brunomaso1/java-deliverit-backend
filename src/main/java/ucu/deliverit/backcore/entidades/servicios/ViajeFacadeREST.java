@@ -1,6 +1,5 @@
 package ucu.deliverit.backcore.entidades.servicios;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
