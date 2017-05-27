@@ -74,17 +74,12 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
     @GET
     @Path("solicitarPedidos/{idViaje}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Pedido> findWithoutViaje(@PathParam("idViaje") Integer idViaje) {
-        
-        String consulta = "SELECT p FROM Pedido p"
-                + " WHERE p.viaje.id = :idViaje AND p.viaje.estado.id = " + estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO);
-        
-        TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);         
-        query.setParameter("idViaje", idViaje);
-        
-        List<Pedido> pedidos = query.getResultList();
-        
-        return pedidos;
+    public List<Pedido> solicitarPedidos(@PathParam("idViaje") Integer idViaje) {
+        List<Pedido> results = em.createNamedQuery("Pedido.solicitarPedidos")
+            .setParameter("idViaje", idViaje)
+            .setParameter("idEstadoViaje", estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO))
+            .getResultList();
+        return results;
     }
 
     @GET

@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,7 +21,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "sucursal")
 @XmlRootElement
-@NamedQuery(name = "Sucursal.findAll", query = "SELECT s FROM Sucursal s")
+@NamedQueries({
+    @NamedQuery(name = "Sucursal.findAll", query = "SELECT s FROM Sucursal s"),
+    @NamedQuery(name = "Sucursal.findPedidos", query = "SELECT p FROM Pedido p JOIN p.viaje v WHERE v.sucursal.id = :sucursal"),
+    @NamedQuery(name = "Sucursal.findViajes", query = "SELECT v FROM Viaje v WHERE v.sucursal.id = :sucursal"),
+    @NamedQuery(name = "Sucursal.findPedidosToday", query = "SELECT p.id, p.cliente, p.viaje FROM Pedido p JOIN p.viaje v WHERE v.sucursal.id = :sucursal AND (p.fecha >= :today)")})
 public class Sucursal implements Serializable {
 
     private static final long serialVersionUID = 1L;

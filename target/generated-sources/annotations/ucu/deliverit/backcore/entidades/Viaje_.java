@@ -11,7 +11,7 @@ import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.Transaccion;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-05-26T00:43:00")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-05-27T15:30:25")
 @StaticMetamodel(Viaje.class)
 public class Viaje_ { 
 

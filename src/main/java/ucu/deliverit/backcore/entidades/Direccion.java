@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
@@ -22,10 +17,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author DeliverIT
- */
 @Entity
 @Table(name = "direccion")
 @XmlRootElement
@@ -65,15 +56,11 @@ public class Direccion implements Serializable {
     @Column(name = "esquina")
     private String esquina;
     
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "latitud")
     private Double latitud;
     
     @Column(name = "longitud")
     private Double longitud;
-    
-//    @OneToMany(mappedBy = "direccion")
-//    private Collection<Cliente> clienteCollection;
     
     @OneToMany(mappedBy = "direccion")
     private Collection<Sucursal> sucursalCollection;
@@ -133,15 +120,6 @@ public class Direccion implements Serializable {
     public void setApartamento(Short apartamento) {
         this.apartamento = apartamento;
     }
-
-//    @XmlTransient
-//    public Collection<Cliente> getClienteCollection() {
-//        return clienteCollection;
-//    }
-//
-//    public void setClienteCollection(Collection<Cliente> clienteCollection) {
-//        this.clienteCollection = clienteCollection;
-//    }
 
     @XmlTransient
     public Collection<Sucursal> getSucursalCollection() {

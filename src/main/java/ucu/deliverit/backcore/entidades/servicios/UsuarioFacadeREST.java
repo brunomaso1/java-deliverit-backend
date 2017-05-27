@@ -84,37 +84,21 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Produces(MediaType.APPLICATION_JSON)
     public Usuario login(@PathParam("nombreUsuario") String nombreUsuario,
                     @PathParam("password") String password) {
-        String consulta = "SELECT u FROM Usuario u"
-                        + " WHERE u.nombre = :usuario AND u.password = :password";
-        TypedQuery<Usuario> query = em.createQuery(consulta, Usuario.class);
-        query.setParameter("usuario", nombreUsuario);
-        query.setParameter("password", password);
-
-        Usuario usuario = null;
-        try {
-                usuario = query.getSingleResult();
-        } catch (Exception e) {
-        }
-
-        return usuario;
+        Usuario result = (Usuario)em.createNamedQuery("Usuario.login")
+            .setParameter("usuario", nombreUsuario)
+            .setParameter("password", password)
+            .getSingleResult();
+        return result;
     }
 
     @GET
     @Path("findUserByName/{nombreUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
     public Usuario findUserByName(@PathParam("nombreUsuario") String nombreUsuario) {
-        String consulta = "SELECT u FROM Usuario u"
-                            + " WHERE u.nombre = :usuario";
-        TypedQuery<Usuario> query = em.createQuery(consulta, Usuario.class);
-        query.setParameter("usuario", nombreUsuario);
-
-        Usuario usuario = null;
-        try {
-            usuario = query.getSingleResult();
-        } catch (Exception e) {
-        }
-
-        return usuario;
+        Usuario result = (Usuario)em.createNamedQuery("Usuario.findByNombre")
+            .setParameter("nombre", nombreUsuario)
+            .getSingleResult();
+        return result;
     }
 
     @GET

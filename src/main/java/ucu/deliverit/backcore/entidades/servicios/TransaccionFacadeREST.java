@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades.servicios;
 
 import java.util.List;
@@ -21,10 +16,6 @@ import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Transaccion;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
-/**
- *
- * @author DeliverIT
- */
 @Stateless
 @Path("transaccion")
 public class TransaccionFacadeREST extends AbstractFacade<Transaccion> {

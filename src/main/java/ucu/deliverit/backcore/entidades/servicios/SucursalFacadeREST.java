@@ -18,8 +18,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Cliente;
-import ucu.deliverit.backcore.entidades.Delivery;
-import ucu.deliverit.backcore.entidades.EstadoViaje;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.Viaje;
@@ -93,16 +91,9 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     @Path("findPedidos/{sucursal}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Pedido> findPedidos(@PathParam("sucursal") Integer sucursal) {
-        List<Pedido> retorno = new ArrayList<>();
-        
-        String consulta = "SELECT p FROM Pedido p"
-                + " JOIN p.viaje v"
-                + " WHERE v.sucursal.id = :sucursal";
-        TypedQuery<Pedido> query = em.createQuery(consulta, Pedido.class);     
-        query.setParameter("sucursal", sucursal);
-        
-        List<Pedido> results = query.getResultList();
-        
+        List<Pedido> results = em.createNamedQuery("Sucursal.findPedidos")
+            .setParameter("sucursal", sucursal)
+            .getResultList();
         return results;
     }
     
@@ -110,13 +101,9 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     @Path("findViajes/{sucursal}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Viaje> findViajes(@PathParam("sucursal") Integer sucursal) {
-        
-        String consulta = "SELECT v FROM Viaje v"
-                + " WHERE v.sucursal.id = :sucursal";
-        TypedQuery<Viaje> query = em.createQuery(consulta, Viaje.class);     
-        query.setParameter("sucursal", sucursal);
-        
-        List<Viaje> results = query.getResultList();
+        List<Viaje> results = em.createNamedQuery("Sucursal.findViajes")
+            .setParameter("sucursal", sucursal)
+            .getResultList();
         return results;
     }
     
@@ -124,41 +111,38 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     @Path("findPedidosToday/{sucursal}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Pedido> findPedidosToday(@PathParam("sucursal") Integer sucursal) {
-        List<Pedido> retorno = new ArrayList<>();
-        
-        String consulta = "SELECT p.id, p.cliente, p.viaje FROM Pedido p"
-                + " JOIN p.viaje v"
-                + " WHERE v.sucursal.id = :sucursal AND (p.fecha >= :today)";
-        TypedQuery<Object[]> query = em.createQuery(consulta, Object[].class);  
+        List<Pedido> pedidos = new ArrayList<>();
         
         Timestamp today = Timestamp.valueOf(LocalDateTime.now());
         today.setHours(0);
         today.setMinutes(0);
         today.setSeconds(0);
+        today.setDate(26);
         
-        query.setParameter("sucursal", sucursal);
-        query.setParameter("today", today);
+        List results = em.createNamedQuery("Sucursal.findPedidosToday")
+            .setParameter("sucursal", sucursal)
+            .setParameter("today", today)
+            .getResultList();
         
-        List<Object[]> results = query.getResultList();
-        
-        for (Object[] result : results) {
+        for (int i = 0; i < results.size(); i++) {
             Pedido p = new Pedido();
-            p.setId((Integer)result[0]);
-            p.setCliente((Cliente) result[1]);
-          
-            Viaje v = (Viaje) result[2];
-            Viaje vAuxiliar = new Viaje();
-            vAuxiliar.setId(v.getId());
-            vAuxiliar.setDelivery(v.getDelivery());
-            vAuxiliar.setPrecio(v.getPrecio());
-            vAuxiliar.setEstado(v.getEstado());
-            vAuxiliar.setFecha(v.getFecha());
-            p.setViaje(vAuxiliar);         
-
-            retorno.add(p);
+            Object[] obj = (Object[])results.get(i);
+            for (int j = 0; j < obj.length; j++) {
+                p.setId((Integer)obj[0]);
+                p.setCliente((Cliente) obj[1]);
+                Viaje v = (Viaje) obj[2];
+                Viaje vAuxiliar = new Viaje();
+                vAuxiliar.setId(v.getId());
+                vAuxiliar.setDelivery(v.getDelivery());
+                vAuxiliar.setPrecio(v.getPrecio());
+                vAuxiliar.setEstado(v.getEstado());
+                vAuxiliar.setFecha(v.getFecha());
+                p.setViaje(vAuxiliar); 
+                pedidos.add(p);
+            }           
         }
         
-        return retorno;
+        return pedidos;
     }
 
     @GET

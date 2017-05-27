@@ -76,13 +76,9 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
     @Path("findBySucursal/{idSucursal}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Delivery> findBySucursal(@PathParam("idSucursal") Integer idSucursal) {
-        String consulta = "SELECT d FROM Delivery d"
-                + " JOIN d.viajeCollection v"
-                + " WHERE v.sucursal.id = :idSucursal";
-        TypedQuery<Delivery> query = em.createQuery(consulta, Delivery.class);     
-        query.setParameter("idSucursal", idSucursal);
-        
-        List<Delivery> results = query.getResultList();
+        List<Delivery> results = em.createNamedQuery("Delivery.findBySucursal")
+            .setParameter("idSucursal", idSucursal)
+            .getResultList();
         
         return results;
     }
@@ -91,12 +87,8 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
     @Path("findAllSinViajesEnProceso")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Delivery> findAllSinViajesEnProceso() {
-        
-        String consulta = "SELECT d FROM Delivery d"
-                + " WHERE d.id NOT IN (SELECT v.delivery.id FROM Viaje v WHERE v.estado.id = 3)";
-        TypedQuery<Delivery> query = em.createQuery(consulta, Delivery.class);     
-        
-        List<Delivery> results = query.getResultList();
+        List<Delivery> results = em.createNamedQuery("Delivery.findBySucursal")
+            .getResultList();
         
         return results;
     }
