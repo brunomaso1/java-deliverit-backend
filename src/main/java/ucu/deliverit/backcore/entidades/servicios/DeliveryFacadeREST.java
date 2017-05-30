@@ -78,8 +78,7 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
     public List<Delivery> findBySucursal(@PathParam("idSucursal") Integer idSucursal) {
         String consulta = "SELECT DISTINCT d FROM Delivery d"
                 + " JOIN d.viajeCollection v"
-                + " WHERE v.sucursal.id = :idSucursal";
-        TypedQuery<Delivery> query = em.createQuery(consulta, Delivery.class);     
+                + " WHERE v.sucursal.id = :idSucursal";     
         List<Delivery> results = em.createNamedQuery("Delivery.findBySucursal")
             .setParameter("idSucursal", idSucursal)
             .getResultList();
