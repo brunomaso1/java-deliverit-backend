@@ -130,7 +130,8 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         List<Viaje> results = em.createNamedQuery("Viaje.findPublicados")
             .setParameter("idEstadoViaje", estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO))
             .getResultList();
-        return results;
+        ViajeHelper vHelper = new ViajeHelper();
+        return vHelper.limpiarViajeParaMobile(results);
     }
     
     @GET

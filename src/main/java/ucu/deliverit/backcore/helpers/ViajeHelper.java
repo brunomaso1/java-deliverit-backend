@@ -16,8 +16,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import ucu.deliverit.backcore.entidades.Cliente;
 import ucu.deliverit.backcore.entidades.Configuracion;
 import ucu.deliverit.backcore.entidades.Delivery;
+import ucu.deliverit.backcore.entidades.Direccion;
+import ucu.deliverit.backcore.entidades.Pedido;
+import ucu.deliverit.backcore.entidades.Restaurant;
+import ucu.deliverit.backcore.entidades.Sucursal;
+import ucu.deliverit.backcore.entidades.Usuario;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.entidades.servicios.ConfiguracionFacadeREST;
 import ucu.deliverit.backcore.entidades.servicios.DeliveryFacadeREST;
@@ -35,9 +41,35 @@ public class ViajeHelper {
     private DeliveryFacadeREST deliveryFacadeREST;
     private ConfiguracionFacadeREST confFacadeREST;
     
+    public ViajeHelper() {}
+    
     public ViajeHelper(DeliveryFacadeREST deliveryFacadeREST, ConfiguracionFacadeREST configuracionFacadeREST) {
         this.deliveryFacadeREST = deliveryFacadeREST;
         this.confFacadeREST = configuracionFacadeREST;
+    }
+    
+    public List<Viaje> limpiarViajeParaMobile (List<Viaje> viajes) {
+        List<Viaje> resultado = new ArrayList<>();
+        for (Viaje v : viajes) {
+            Viaje auxiliar = new Viaje();
+            auxiliar.setId(v.getId());
+            auxiliar.setPrecio(v.getPrecio());
+            
+            Sucursal sucAux = new Sucursal();
+            sucAux.setDireccion(v.getSucursal().getDireccion());
+            
+            Restaurant restAux = new Restaurant();
+            restAux.setRazonSocial(v.getSucursal().getRestaurant().getRazonSocial());
+            
+            Usuario uAux = new Usuario();
+            uAux.setFoto(v.getSucursal().getRestaurant().getUsuario().getFoto());
+            restAux.setUsuario(uAux);
+            
+            sucAux.setRestaurant(restAux);
+            auxiliar.setSucursal(sucAux);
+            resultado.add(auxiliar);            
+        }
+        return resultado;
     }
 
     public void matchearDelivery(Viaje viaje) throws IOException, JSONException, Exception {

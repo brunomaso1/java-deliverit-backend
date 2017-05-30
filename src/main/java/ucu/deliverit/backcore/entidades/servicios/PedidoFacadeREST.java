@@ -18,6 +18,8 @@ import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Viaje;
+import ucu.deliverit.backcore.helpers.PedidoHelper;
+import ucu.deliverit.backcore.helpers.ViajeHelper;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 @Stateless
@@ -79,7 +81,8 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
             .setParameter("idViaje", idViaje)
             .setParameter("idEstadoViaje", estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO))
             .getResultList();
-        return results;
+        PedidoHelper ph = new PedidoHelper();
+        return ph.limpiarPedidosMobile(results);
     }
 
     @GET
