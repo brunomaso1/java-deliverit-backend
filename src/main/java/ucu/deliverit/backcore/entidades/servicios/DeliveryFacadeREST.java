@@ -76,7 +76,7 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
     @Path("findBySucursal/{idSucursal}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Delivery> findBySucursal(@PathParam("idSucursal") Integer idSucursal) {
-        String consulta = "SELECT d FROM Delivery d"
+        String consulta = "SELECT DISTINCT d FROM Delivery d"
                 + " JOIN d.viajeCollection v"
                 + " WHERE v.sucursal.id = :idSucursal";
         TypedQuery<Delivery> query = em.createQuery(consulta, Delivery.class);     
