@@ -5,8 +5,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -129,38 +127,29 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @Path("findPublicados")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Viaje> findPublicados() {
-        String consulta = "SELECT v FROM Viaje v"
-                + " WHERE v.estado.descripcion = " + EstadoViaje.PUBLICADO;
-        TypedQuery<Viaje> query = em.createQuery(consulta, Viaje.class);     
-        
-        List<Viaje> results = query.getResultList();
-        
+        List<Viaje> results = em.createNamedQuery("Viaje.findPublicados")
+            .setParameter("idEstadoViaje", estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO))
+            .getResultList();
         return results;
     }
     
     @GET
     @Path("findDeliveryViaje/{idViaje}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Delivery findDeliveryViaje(@PathParam("idViaje") Integer idViaje) {
-        String consulta = "SELECT d FROM Viaje v JOIN v.delivery d"
-                + " WHERE v.id = :idViaje";
-        TypedQuery<Delivery> query = em.createQuery(consulta, Delivery.class);     
-        query.setParameter("idViaje", idViaje);
-        Delivery result = query.getSingleResult();
-        
+    public Delivery findDelivery(@PathParam("idViaje") Integer idViaje) {
+        Delivery result = (Delivery)em.createNamedQuery("Viaje.findDelivery")
+            .setParameter("idViaje", idViaje)
+            .getSingleResult();
         return result;
     }
 	
-	@GET
+    @GET
     @Path("countPedidos/{idViaje}")
     @Produces(MediaType.TEXT_PLAIN)
     public Long countPedidosViaje(@PathParam("idViaje") Integer idViaje) {
-        String consulta = "SELECT COUNT (p) FROM Viaje v JOIN v.pedidos p"
-                + " WHERE p.viaje.id = :idViaje";
-        Query query = em.createQuery(consulta);     
-        query.setParameter("idViaje", idViaje);
-        Long result = (Long)query.getSingleResult();
-        
+        Long result = (Long)em.createNamedQuery("Viaje.countPedidos")
+            .setParameter("idViaje", idViaje)
+            .getSingleResult();
         return result;
     }
 

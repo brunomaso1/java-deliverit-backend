@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,7 +22,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "viaje")
 @XmlRootElement
-@NamedQuery(name = "Viaje.findAll", query = "SELECT v FROM Viaje v")    
+@NamedQueries({
+    @NamedQuery(name = "Viaje.findAll", query = "SELECT v FROM Viaje v"),
+    @NamedQuery(name = "Viaje.findPublicados", query = "SELECT v FROM Viaje v WHERE v.estado.id = :idEstadoViaje"),
+    @NamedQuery(name = "Viaje.findDelivery", query = "SELECT d FROM Viaje v JOIN v.delivery d WHERE v.id = :idViaje"),
+    @NamedQuery(name = "Viaje.countPedidos", query = "SELECT COUNT (p) FROM Viaje v JOIN v.pedidos p WHERE p.viaje.id = :idViaje")})  
 public class Viaje implements Serializable {
 
     private static final long serialVersionUID = 1L;

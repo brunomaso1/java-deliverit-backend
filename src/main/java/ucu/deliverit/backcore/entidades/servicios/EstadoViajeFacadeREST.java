@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades.servicios;
 
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,10 +16,6 @@ import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
-/**
- *
- * @author DeliverIT
- */
 @Stateless
 @Path("estadoviaje")
 public class EstadoViajeFacadeREST extends AbstractFacade<EstadoViaje> {
@@ -78,14 +68,10 @@ public class EstadoViajeFacadeREST extends AbstractFacade<EstadoViaje> {
     @Path("findIdByDescripcion/{descripcion}")
     @Produces(MediaType.TEXT_PLAIN)
     public Short findIdByDescripcion(@PathParam("descripcion") String descripcion) {
-        String consulta = "SELECT e.id FROM EstadoViaje e WHERE e.descripcion = :descripcion";
-
-        TypedQuery<Short> query = em.createQuery(consulta, Short.class);     
-        query.setParameter("descripcion", descripcion);
-        
-        Short result = query.getSingleResult();
-        
-        return result;
+        EstadoViaje estado = (EstadoViaje)em.createNamedQuery("EstadoViaje.findByDescripcion")
+            .setParameter("descripcion", descripcion)
+            .getSingleResult();
+        return estado.getId();
     }
 
     @GET

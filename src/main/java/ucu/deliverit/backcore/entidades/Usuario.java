@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
@@ -22,10 +17,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author DeliverIT
- */
 @Entity
 @Table(name = "usuario")
 @XmlRootElement
@@ -35,7 +26,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
     @NamedQuery(name = "Usuario.findByMail", query = "SELECT u FROM Usuario u WHERE u.mail = :mail"),
-    @NamedQuery(name = "Usuario.findByCuentaRedPagos", query = "SELECT u FROM Usuario u WHERE u.cuentaRedPagos = :cuentaRedPagos")})
+    @NamedQuery(name = "Usuario.findByCuentaRedPagos", query = "SELECT u FROM Usuario u WHERE u.cuentaRedPagos = :cuentaRedPagos"),
+    @NamedQuery(name = "Usuario.login", query = "SELECT u FROM Usuario u WHERE u.nombre = :usuario AND u.password = :password")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
