@@ -25,10 +25,12 @@ public class PedidoHelper {
                 uAux.setFoto(pedidos.get(i).getViaje().getSucursal().getRestaurant().getUsuario().getFoto());
                 
                 Restaurant rAux = new Restaurant();
+                rAux.setId(pedidos.get(i).getViaje().getSucursal().getRestaurant().getId());
                 rAux.setRazonSocial(pedidos.get(i).getViaje().getSucursal().getRestaurant().getRazonSocial());
                 rAux.setUsuario(uAux);
                 
                 Sucursal sAux = new Sucursal();
+                sAux.setId(pedidos.get(i).getViaje().getSucursal().getId());
                 sAux.setDireccion(pedidos.get(i).getViaje().getSucursal().getDireccion());
                 sAux.setRestaurant(rAux);
                 
@@ -37,6 +39,7 @@ public class PedidoHelper {
             }
             Direccion dAux = pedidos.get(i).getCliente().getDireccion();
             Cliente cAux = new Cliente();
+            cAux.setId(pedidos.get(i).getCliente().getId());
             cAux.setNombre(pedidos.get(i).getCliente().getNombre());
             cAux.setTelefono(pedidos.get(i).getCliente().getTelefono());
             cAux.setDireccion(dAux);

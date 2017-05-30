@@ -16,11 +16,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import ucu.deliverit.backcore.entidades.Cliente;
 import ucu.deliverit.backcore.entidades.Configuracion;
 import ucu.deliverit.backcore.entidades.Delivery;
-import ucu.deliverit.backcore.entidades.Direccion;
-import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Restaurant;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.Usuario;
@@ -56,9 +53,11 @@ public class ViajeHelper {
             auxiliar.setPrecio(v.getPrecio());
             
             Sucursal sucAux = new Sucursal();
+            sucAux.setId(v.getSucursal().getId());
             sucAux.setDireccion(v.getSucursal().getDireccion());
             
             Restaurant restAux = new Restaurant();
+            restAux.setId(v.getSucursal().getRestaurant().getId());
             restAux.setRazonSocial(v.getSucursal().getRestaurant().getRazonSocial());
             
             Usuario uAux = new Usuario();
