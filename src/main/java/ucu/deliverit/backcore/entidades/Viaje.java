@@ -26,6 +26,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Viaje.findAll", query = "SELECT v FROM Viaje v"),
     @NamedQuery(name = "Viaje.findPublicados", query = "SELECT v FROM Viaje v WHERE v.estado.id = :idEstadoViaje"),
     @NamedQuery(name = "Viaje.findDelivery", query = "SELECT d FROM Viaje v JOIN v.delivery d WHERE v.id = :idViaje"),
+    @NamedQuery(name = "Viaje.findDeliveryEnProceso", query = "SELECT DISTINCT d FROM Viaje v JOIN v.delivery d WHERE v.estado.id = :estado AND v.sucursal.id = :idSucursal"),
+    @NamedQuery(name = "Viaje.findSucursales", query = "SELECT DISTINCT s FROM Viaje v JOIN v.sucursal s WHERE v.estado.id = :idEstado"),
     @NamedQuery(name = "Viaje.countPedidos", query = "SELECT COUNT (p) FROM Viaje v JOIN v.pedidos p WHERE p.viaje.id = :idViaje")})  
 public class Viaje implements Serializable {
 

@@ -5,7 +5,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,7 +18,6 @@ import ucu.deliverit.backcore.entidades.EstadoViaje;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.helpers.PedidoHelper;
-import ucu.deliverit.backcore.helpers.ViajeHelper;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 @Stateless

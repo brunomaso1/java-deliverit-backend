@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
+import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.helpers.ViajeHelper;
 import ucu.deliverit.backcore.hilos.MatchearDeliveryThread;
@@ -135,6 +136,17 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     }
     
     @GET
+    @Path("findSucursales")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Sucursal> findSucursales() {
+        List<Sucursal> results = em.createNamedQuery("Viaje.findSucursales")
+            .setParameter("idEstado", estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO))
+            .getResultList();
+        ViajeHelper vh = new ViajeHelper();
+        return vh.limpiarSucursalParaMobile(results);
+    }
+    
+    @GET
     @Path("findDeliveryViaje/{idViaje}")
     @Produces(MediaType.APPLICATION_JSON)
     public Delivery findDelivery(@PathParam("idViaje") Integer idViaje) {
@@ -142,6 +154,18 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             .setParameter("idViaje", idViaje)
             .getSingleResult();
         return result;
+    }
+    
+    @GET
+    @Path("findDeliverysEnProceso/{idSucursal}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Delivery> findDeliverysEnProceso(@PathParam("idSucursal") Integer idSucursal) {
+        List<Delivery> result = em.createNamedQuery("Viaje.findDeliveryEnProceso")
+            .setParameter("idSucursal", idSucursal)
+            .setParameter("estado", estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO))
+            .getResultList();
+        ViajeHelper vh = new ViajeHelper();
+        return vh.limpiarDeliverysEnProceso(result);
     }
 	
     @GET

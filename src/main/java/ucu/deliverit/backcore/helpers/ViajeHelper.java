@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ucu.deliverit.backcore.entidades.Configuracion;
 import ucu.deliverit.backcore.entidades.Delivery;
+import ucu.deliverit.backcore.entidades.Direccion;
 import ucu.deliverit.backcore.entidades.Restaurant;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.Usuario;
@@ -45,6 +46,21 @@ public class ViajeHelper {
         this.confFacadeREST = configuracionFacadeREST;
     }
     
+    public List<Delivery> limpiarDeliverysEnProceso (List<Delivery> deliverys) {
+        List<Delivery> resultado = new ArrayList<>();
+        for (Delivery d : deliverys) {
+            Delivery auxiliar = new Delivery();
+            auxiliar.setId(d.getId());
+            auxiliar.setUbicacion(d.getUbicacion());
+            
+            Usuario uAux = new Usuario();
+            uAux.setTelefono(d.getUsuario().getTelefono());
+            auxiliar.setUsuario(uAux);
+            resultado.add(auxiliar);            
+        }
+        return resultado;
+    }
+    
     public List<Viaje> limpiarViajeParaMobile (List<Viaje> viajes) {
         List<Viaje> resultado = new ArrayList<>();
         for (Viaje v : viajes) {
@@ -66,6 +82,25 @@ public class ViajeHelper {
             
             sucAux.setRestaurant(restAux);
             auxiliar.setSucursal(sucAux);
+            resultado.add(auxiliar);            
+        }
+        return resultado;
+    }
+    
+    public List<Sucursal> limpiarSucursalParaMobile (List<Sucursal> sucursales) {
+        List<Sucursal> resultado = new ArrayList<>();
+        for (Sucursal s : sucursales) {
+            Sucursal auxiliar = new Sucursal();
+            
+            Restaurant rAux = new Restaurant();
+            rAux.setRazonSocial(s.getRestaurant().getRazonSocial());
+            
+            auxiliar.setRestaurant(rAux);
+            
+            Direccion dAux = new Direccion();
+            dAux.setLatitud(s.getDireccion().getLatitud());
+            dAux.setLongitud(s.getDireccion().getLongitud());
+            auxiliar.setDireccion(dAux);
             resultado.add(auxiliar);            
         }
         return resultado;

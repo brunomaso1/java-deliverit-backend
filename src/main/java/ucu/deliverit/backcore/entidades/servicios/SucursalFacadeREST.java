@@ -7,7 +7,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +20,7 @@ import ucu.deliverit.backcore.entidades.Cliente;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.Viaje;
+import ucu.deliverit.backcore.helpers.PedidoHelper;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 @Stateless
@@ -111,38 +111,19 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     @Path("findPedidosToday/{sucursal}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Pedido> findPedidosToday(@PathParam("sucursal") Integer sucursal) {
-        List<Pedido> pedidos = new ArrayList<>();
         
         Timestamp today = Timestamp.valueOf(LocalDateTime.now());
         today.setHours(0);
         today.setMinutes(0);
         today.setSeconds(0);
-        today.setDate(26);
         
-        List results = em.createNamedQuery("Sucursal.findPedidosToday")
+        List<Pedido> pedidos = em.createNamedQuery("Sucursal.findPedidosToday")
             .setParameter("sucursal", sucursal)
             .setParameter("today", today)
             .getResultList();
         
-        for (int i = 0; i < results.size(); i++) {
-            Pedido p = new Pedido();
-            Object[] obj = (Object[])results.get(i);
-            for (int j = 0; j < obj.length; j++) {
-                p.setId((Integer)obj[0]);
-                p.setCliente((Cliente) obj[1]);
-                Viaje v = (Viaje) obj[2];
-                Viaje vAuxiliar = new Viaje();
-                vAuxiliar.setId(v.getId());
-                vAuxiliar.setDelivery(v.getDelivery());
-                vAuxiliar.setPrecio(v.getPrecio());
-                vAuxiliar.setEstado(v.getEstado());
-                vAuxiliar.setFecha(v.getFecha());
-                p.setViaje(vAuxiliar); 
-                pedidos.add(p);
-            }           
-        }
-        
-        return pedidos;
+        PedidoHelper ph = new PedidoHelper();
+        return ph.limpiarPedidosToday(pedidos);
     }
 
     @GET

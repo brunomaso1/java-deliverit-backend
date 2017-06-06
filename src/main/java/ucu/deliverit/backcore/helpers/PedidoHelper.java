@@ -16,27 +16,27 @@ public class PedidoHelper {
         List<Pedido> resultado = new ArrayList<>();
         for (int i = 0; i < pedidos.size(); i++) {
             Pedido pAux = new Pedido();
-            if (i == 0) {
-                Viaje vAux = new Viaje();
-                vAux.setId(pedidos.get(i).getViaje().getId());
-                vAux.setPrecio(pedidos.get(i).getViaje().getPrecio());
+            Viaje vAux = new Viaje();
+            vAux.setId(pedidos.get(i).getViaje().getId());   
+            vAux.setPrecio(pedidos.get(i).getViaje().getPrecio());
+            vAux.setEstado(pedidos.get(i).getViaje().getEstado());
+
+            Usuario uAux = new Usuario();
+            uAux.setFoto(pedidos.get(i).getViaje().getSucursal().getRestaurant().getUsuario().getFoto());
+
+            Restaurant rAux = new Restaurant();
+            rAux.setId(pedidos.get(i).getViaje().getSucursal().getRestaurant().getId());
+            rAux.setRazonSocial(pedidos.get(i).getViaje().getSucursal().getRestaurant().getRazonSocial());
+            rAux.setUsuario(uAux);
+
+            Sucursal sAux = new Sucursal();
+            sAux.setId(pedidos.get(i).getViaje().getSucursal().getId());
+            sAux.setDireccion(pedidos.get(i).getViaje().getSucursal().getDireccion());
+            sAux.setRestaurant(rAux);
+
+            vAux.setSucursal(sAux);   
                 
-                Usuario uAux = new Usuario();
-                uAux.setFoto(pedidos.get(i).getViaje().getSucursal().getRestaurant().getUsuario().getFoto());
-                
-                Restaurant rAux = new Restaurant();
-                rAux.setId(pedidos.get(i).getViaje().getSucursal().getRestaurant().getId());
-                rAux.setRazonSocial(pedidos.get(i).getViaje().getSucursal().getRestaurant().getRazonSocial());
-                rAux.setUsuario(uAux);
-                
-                Sucursal sAux = new Sucursal();
-                sAux.setId(pedidos.get(i).getViaje().getSucursal().getId());
-                sAux.setDireccion(pedidos.get(i).getViaje().getSucursal().getDireccion());
-                sAux.setRestaurant(rAux);
-                
-                vAux.setSucursal(sAux);
-                pAux.setViaje(vAux);
-            }
+            pAux.setViaje(vAux);
             Direccion dAux = pedidos.get(i).getCliente().getDireccion();
             Cliente cAux = new Cliente();
             cAux.setId(pedidos.get(i).getCliente().getId());
@@ -45,6 +45,25 @@ public class PedidoHelper {
             cAux.setDireccion(dAux);
             pAux.setDetalle(pedidos.get(i).getDetalle());
             pAux.setCliente(cAux);
+            pAux.setId(pedidos.get(i).getId());
+            resultado.add(pAux);
+        }
+        return resultado;
+    }
+    
+    public List<Pedido> limpiarPedidosToday (List<Pedido> pedidos) {
+        List<Pedido> resultado = new ArrayList<>();
+        for (int i = 0; i < pedidos.size(); i++) {
+            Pedido pAux = new Pedido();
+            pAux.setId(pedidos.get(i).getId());            
+            Cliente cAux = pedidos.get(i).getCliente();            
+            Viaje vAux = pedidos.get(i).getViaje();
+            Usuario uAux = new Usuario();
+            uAux.setId(vAux.getSucursal().getRestaurant().getUsuario().getId());
+            uAux.setTelefono(vAux.getSucursal().getRestaurant().getUsuario().getTelefono());
+            vAux.getSucursal().getRestaurant().setUsuario(uAux);
+            pAux.setCliente(cAux);
+            pAux.setViaje(vAux);
             resultado.add(pAux);
         }
         return resultado;

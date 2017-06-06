@@ -4,7 +4,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -77,23 +76,19 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
 	@Path("findBySucursal/{idSucursal}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Delivery> findBySucursal(@PathParam("idSucursal") Integer idSucursal) {
-		String consulta = "SELECT DISTINCT d FROM Delivery d"
-				+ " JOIN d.viajeCollection v"
-				+ " WHERE v.sucursal.id = :idSucursal";
-		List<Delivery> results = em.createQuery(consulta, Delivery.class)
-				.setParameter("idSucursal", idSucursal)
-				.getResultList();
-		return results;
+            List<Delivery> results = em.createNamedQuery("Delivery.findBySucursal")
+                    .setParameter("idSucursal", idSucursal)
+                    .getResultList();
+            return results;
 	}
 
 	@GET
 	@Path("findAllSinViajesEnProceso")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Delivery> findAllSinViajesEnProceso() {
-		List<Delivery> results = em.createNamedQuery("Delivery.findBySucursal")
-				.getResultList();
-
-		return results;
+            List<Delivery> results = em.createNamedQuery("Delivery.findAllSinViajesEnProceso")
+                    .getResultList();
+            return results;
 	}
 	
 	@GET
