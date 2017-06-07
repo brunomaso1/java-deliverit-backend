@@ -6,10 +6,10 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.ws.rs.PathParam;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -88,28 +88,42 @@ public class ViajeHelper {
         }        
     }
     
-    public List<Viaje> limpiarViajeParaMobile (List<Viaje> viajes) {
+    public List<Viaje> limpiarViajeParaMobile (List<Viaje> viajes, Timestamp fechaMobile) {
         List<Viaje> resultado = new ArrayList<>();
+        
+        // Se toma las 3:00 AM de cada día como el punto de partida de viajes
+        Timestamp today = Timestamp.valueOf(LocalDateTime.now());
+        today.setHours(3);
+        today.setMinutes(0);
+        today.setSeconds(0);
+        today.setDate(fechaMobile.getDate());
+        today.setMonth(fechaMobile.getMonth());
+        today.setYear(fechaMobile.getYear());
+        
         for (Viaje v : viajes) {
-            Viaje auxiliar = new Viaje();
-            auxiliar.setId(v.getId());
-            auxiliar.setPrecio(v.getPrecio());
+            if (v.getFecha().after(today)) {
+                Viaje auxiliar = new Viaje();
+                auxiliar.setId(v.getId());
+                auxiliar.setPrecio(v.getPrecio());
+                auxiliar.setFecha(v.getFecha());
+
+                Sucursal sucAux = new Sucursal();
+                sucAux.setId(v.getSucursal().getId());
+                sucAux.setDireccion(v.getSucursal().getDireccion());
+
+                Restaurant restAux = new Restaurant();
+                restAux.setId(v.getSucursal().getRestaurant().getId());
+                restAux.setRazonSocial(v.getSucursal().getRestaurant().getRazonSocial());
+
+                Usuario uAux = new Usuario();
+                uAux.setFoto(v.getSucursal().getRestaurant().getUsuario().getFoto());
+                restAux.setUsuario(uAux);
+
+                sucAux.setRestaurant(restAux);
+                auxiliar.setSucursal(sucAux);
+                resultado.add(auxiliar);            
+            }
             
-            Sucursal sucAux = new Sucursal();
-            sucAux.setId(v.getSucursal().getId());
-            sucAux.setDireccion(v.getSucursal().getDireccion());
-            
-            Restaurant restAux = new Restaurant();
-            restAux.setId(v.getSucursal().getRestaurant().getId());
-            restAux.setRazonSocial(v.getSucursal().getRestaurant().getRazonSocial());
-            
-            Usuario uAux = new Usuario();
-            uAux.setFoto(v.getSucursal().getRestaurant().getUsuario().getFoto());
-            restAux.setUsuario(uAux);
-            
-            sucAux.setRestaurant(restAux);
-            auxiliar.setSucursal(sucAux);
-            resultado.add(auxiliar);            
         }
         return resultado;
     }

@@ -1,5 +1,6 @@
 package ucu.deliverit.backcore.entidades.servicios;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -155,14 +156,15 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     }
     
     @GET
-    @Path("findPublicados")
+    @Path("findPublicados/{fechaMobile}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Viaje> findPublicados() {
+    public List<Viaje> findPublicados(@PathParam("fechaMobile") Timestamp fechaMobile) { 
         List<Viaje> results = em.createNamedQuery("Viaje.findPublicados")
             .setParameter("idEstadoViaje", estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO))
+            .setParameter("fechaMobile", fechaMobile)
             .getResultList();
         ViajeHelper vHelper = new ViajeHelper();
-        return vHelper.limpiarViajeParaMobile(results);
+        return vHelper.limpiarViajeParaMobile(results, fechaMobile);
     }
     
     @GET

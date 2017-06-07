@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Viaje.findAll", query = "SELECT v FROM Viaje v"),
-    @NamedQuery(name = "Viaje.findPublicados", query = "SELECT v FROM Viaje v WHERE v.estado.id = :idEstadoViaje"),
+    @NamedQuery(name = "Viaje.findPublicados", query = "SELECT v FROM Viaje v WHERE v.estado.id = :idEstadoViaje AND v.fecha <= :fechaMobile"),
     @NamedQuery(name = "Viaje.findDelivery", query = "SELECT d FROM Viaje v JOIN v.delivery d WHERE v.id = :idViaje"),
     @NamedQuery(name = "Viaje.findCalifByDelivery", query = "SELECT v.calificacion FROM Viaje v WHERE v.delivery.id = :idDelivery AND v.calificacion != null"),
     @NamedQuery(name = "Viaje.findDeliveryEnProceso", query = "SELECT DISTINCT d FROM Viaje v JOIN v.delivery d WHERE v.estado.id = :estado AND v.sucursal.id = :idSucursal"),
