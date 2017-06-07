@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades.servicios;
 
 import com.google.gson.Gson;
@@ -10,11 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
-
-/**
- *
- * @author DeliverIT
- */
 public abstract class AbstractFacade<T> {
 
     private Class<T> entityClass;

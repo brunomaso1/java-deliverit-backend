@@ -89,6 +89,12 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         super.edit(entity);
     }
     
+    @PUT
+    @Path("calificar/{id}/{calificacion}")
+    public void calificar(@PathParam("id") Integer id, @PathParam("calificacion") Short calificacion) {
+        Viaje v = find(id);
+        v.setCalificacion(calificacion);
+    }    
     
     @POST
     @Path("aceptarViaje/{idViaje}/{idDelivery}")

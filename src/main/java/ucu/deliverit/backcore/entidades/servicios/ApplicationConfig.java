@@ -35,8 +35,8 @@ public class ApplicationConfig extends Application {
         resources.add(ucu.deliverit.backcore.entidades.servicios.TransaccionFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.UbicacionFacadeREST.class);
         resources.add(ucu.deliverit.backcore.entidades.servicios.UsuarioFacadeREST.class);
-		resources.add(ucu.deliverit.backcore.entidades.servicios.VehiculoFacadeREST.class);
-		resources.add(ucu.deliverit.backcore.entidades.servicios.ViajeFacadeREST.class);
+        resources.add(ucu.deliverit.backcore.entidades.servicios.VehiculoFacadeREST.class);
+        resources.add(ucu.deliverit.backcore.entidades.servicios.ViajeFacadeREST.class);
     }
     
 }
