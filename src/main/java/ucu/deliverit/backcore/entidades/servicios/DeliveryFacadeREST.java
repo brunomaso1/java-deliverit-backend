@@ -21,106 +21,110 @@ import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 @Path("delivery")
 public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
 
-	@PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
-	private EntityManager em;
+    @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
+    private EntityManager em;
 
-	public DeliveryFacadeREST() {
-		super(Delivery.class);
-	}
+    public DeliveryFacadeREST() {
+        super(Delivery.class);
+    }
 
-	@POST
-	@Override
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public RespuestaGeneral create(Delivery entity) {
-		RespuestaGeneral r = new RespuestaGeneral();
+    @POST
+    @Override
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public RespuestaGeneral create(Delivery entity) {
+            RespuestaGeneral r = new RespuestaGeneral();
 
-		if (entity == null) {
-			r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
-			r.setMensaje("Delivery" + RespuestaGeneral.MENSAJE_VALOR_NULO);
-			r.setObjeto(null);
-		} else {
-			r = super.create(entity);
-		}
-		return r;
-	}
+            if (entity == null) {
+                    r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+                    r.setMensaje("Delivery" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+                    r.setObjeto(null);
+            } else {
+                    r = super.create(entity);
+            }
+            return r;
+    }
 
-	@PUT
-	@Path("{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void edit(@PathParam("id") Integer id, Delivery entity) {
-		super.edit(entity);
-	}
+    @PUT
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void edit(@PathParam("id") Integer id, Delivery entity) {
+            super.edit(entity);
+    }
 
-	@DELETE
-	@Path("{id}")
-	public void remove(@PathParam("id") Integer id) {
-		super.remove(super.find(id));
-	}
+    @DELETE
+    @Path("{id}")
+    public void remove(@PathParam("id") Integer id) {
+        super.remove(super.find(id));
+    }
 
-	@GET
-	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Delivery find(@PathParam("id") Integer id) {
-		return super.find(id);
-	}
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Delivery find(@PathParam("id") Integer id) {
+        return super.find(id);
+    }
 
-	@GET
-	@Override
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Delivery> findAll() {
-		return super.findAll();
-	}
+    @GET
+    @Override
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Delivery> findAll() {
+        return super.findAll();
+    }
 
-	@GET
-	@Path("findBySucursal/{idSucursal}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Delivery> findBySucursal(@PathParam("idSucursal") Integer idSucursal) {
-            List<Delivery> results = em.createNamedQuery("Delivery.findBySucursal")
-                    .setParameter("idSucursal", idSucursal)
-                    .getResultList();
-            return results;
-	}
+    @GET
+    @Path("findBySucursal/{idSucursal}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Delivery> findBySucursal(@PathParam("idSucursal") Integer idSucursal) {
+        List<Delivery> results = em.createNamedQuery("Delivery.findBySucursal")
+                .setParameter("idSucursal", idSucursal)
+                .getResultList();
+        return results;
+    }
 
-	@GET
-	@Path("findAllSinViajesEnProceso")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Delivery> findAllSinViajesEnProceso() {
-            List<Delivery> results = em.createNamedQuery("Delivery.findAllSinViajesEnProceso")
-                    .getResultList();
-            return results;
-	}
-	
-	@GET
-	@Path("getUbicacion/{idDelivery}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Ubicacion getUbicacion(@PathParam("idDelivery") Integer idSucursal) {
-		String consulta = "SELECT u FROM Ubicacion u "
-				+ " JOIN u.delivery d"
-				+ " WHERE d.id = :idDelivery";
-		Ubicacion result = em.createQuery(consulta, Ubicacion.class)
-				.setParameter("idDelivery", idSucursal)
-				.getSingleResult();
-		return result;
-	}
+    @GET
+    @Path("findAllSinViajesEnProceso")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Delivery> findAllSinViajesEnProceso() {
+        List<Delivery> results = em.createNamedQuery("Delivery.findAllSinViajesEnProceso")
+                .getResultList();
+        return results;
+    }
 
-	@GET
-	@Path("{from}/{to}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Delivery> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-		return super.findRange(new int[]{from, to});
-	}
+    @GET
+    @Path("getUbicacion/{idDelivery}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Ubicacion getUbicacion(@PathParam("idDelivery") Integer idSucursal) {
+        String consulta = "SELECT u FROM Ubicacion u "
+                        + " JOIN u.delivery d"
+                        + " WHERE d.id = :idDelivery";
+        Ubicacion result = em.createQuery(consulta, Ubicacion.class)
+                        .setParameter("idDelivery", idSucursal)
+                        .getSingleResult();
+        return result;
+    }
 
-	@GET
-	@Path("count")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String countREST() {
-		return String.valueOf(super.count());
-	}
+    @GET
+    @Path("{from}/{to}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Delivery> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+        return super.findRange(new int[]{from, to});
+    }
 
-	@Override
-	protected EntityManager getEntityManager() {
-		return em;
-	}
+    @GET
+    @Path("count")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String countREST() {
+        return String.valueOf(super.count());
+    }
 
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public void actualizarCalificacion(Integer id, Short calificacion) {
+        Delivery d = find(id);
+        d.setCalificacion(calificacion);
+    }
 }

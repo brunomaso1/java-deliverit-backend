@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
+import javax.ws.rs.PathParam;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -25,6 +27,7 @@ import ucu.deliverit.backcore.entidades.Usuario;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.entidades.servicios.ConfiguracionFacadeREST;
 import ucu.deliverit.backcore.entidades.servicios.DeliveryFacadeREST;
+import ucu.deliverit.backcore.entidades.servicios.ViajeFacadeREST;
 import ucu.deliverit.backcore.entidades.utiles.Utiles;
 
 public class ViajeHelper {
@@ -36,14 +39,20 @@ public class ViajeHelper {
     private List<Delivery> deliverys3Estrellas;
     private static boolean VIAJE_ASIGNADO;
 
-    private DeliveryFacadeREST deliveryFacadeREST;
-    private ConfiguracionFacadeREST confFacadeREST;
+    private ViajeFacadeREST viajeFacade;    
+    private DeliveryFacadeREST deliveryFacade;
+    private ConfiguracionFacadeREST confFacade;
     
     public ViajeHelper() {}
     
-    public ViajeHelper(DeliveryFacadeREST deliveryFacadeREST, ConfiguracionFacadeREST configuracionFacadeREST) {
-        this.deliveryFacadeREST = deliveryFacadeREST;
-        this.confFacadeREST = configuracionFacadeREST;
+    public ViajeHelper(ViajeFacadeREST viajeFacade, DeliveryFacadeREST deliveryFacade) {
+        this.viajeFacade = viajeFacade;
+        this.deliveryFacade = deliveryFacade;
+    }
+    
+    public ViajeHelper(DeliveryFacadeREST deliveryFacade, ConfiguracionFacadeREST configuracionFacade) {
+        this.deliveryFacade = deliveryFacade;
+        this.confFacade = configuracionFacade;
     }
     
     public List<Delivery> limpiarDeliverysEnProceso (List<Delivery> deliverys) {
@@ -59,6 +68,24 @@ public class ViajeHelper {
             resultado.add(auxiliar);            
         }
         return resultado;
+    }
+    
+    public void actualizarCalifDelivery(Integer idViaje) {
+        Delivery d = viajeFacade.findDelivery(idViaje);
+        
+        List<Short> calificaciones = viajeFacade.findCalifByDelivery(d.getId());
+        Integer cantidadCalif = calificaciones.size();
+        
+        Integer promedio = 0;
+        if (cantidadCalif > 0) {            
+            for (int i = 0; i < calificaciones.size(); i++) {
+                promedio += calificaciones.get(i);
+            }
+            promedio = promedio / cantidadCalif;
+        }
+        if (promedio != 0) {
+            deliveryFacade.actualizarCalificacion(d.getId(), Short.parseShort(promedio.toString()));
+        }        
     }
     
     public List<Viaje> limpiarViajeParaMobile (List<Viaje> viajes) {
@@ -112,7 +139,7 @@ public class ViajeHelper {
         // El rango inicial de búsqueda de Deliverys es de 2 km
         distancia_busqueda_km = 2;
 
-        List<Delivery> deliverysSinViaje = deliveryFacadeREST.findAllSinViajesEnProceso();
+        List<Delivery> deliverysSinViaje = deliveryFacade.findAllSinViajesEnProceso();
 
         if (deliverysSinViaje.size() > 0) {
 
@@ -168,7 +195,7 @@ public class ViajeHelper {
                 + coordenadasDestino[0] + "," + coordenadasDestino[1];
 
         url = url + Utiles.AND + Utiles.KEY_IGUAL
-                + confFacadeREST.findByDesc(Configuracion.API_KEY_GOOGLE).getValor();
+                + confFacade.findByDesc(Configuracion.API_KEY_GOOGLE).getValor();
 
         Double distancia = null;
 
@@ -225,7 +252,7 @@ public class ViajeHelper {
         String message_url = Utiles.URL_FIREBASE;
         String to = delivery.getToken();
         
-        String message_key = Utiles.KEY_IGUAL + confFacadeREST.findByDesc(Configuracion.SERVIDOR_FIREBASE).getValor();
+        String message_key = Utiles.KEY_IGUAL + confFacade.findByDesc(Configuracion.SERVIDOR_FIREBASE).getValor();
 
         JSONObject message = new JSONObject();
 

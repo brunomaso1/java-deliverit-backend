@@ -1,4 +1,6 @@
+C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\hilos\MatchearDelivery.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\Configuracion.java
+C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\hilos\ActualizarCalifDelivery.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\DeliveryFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\Transaccion.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\EstadoViajeFacadeREST.java
@@ -12,7 +14,6 @@ C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\ConfiguracionFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\helpers\PedidoHelper.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\RestaurantFacadeREST.java
-C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\hilos\MatchearDeliveryThread.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\Vehiculo.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\Cliente.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\DireccionFacadeREST.java

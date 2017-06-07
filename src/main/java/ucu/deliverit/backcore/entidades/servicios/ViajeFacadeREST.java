@@ -1,5 +1,6 @@
 package ucu.deliverit.backcore.entidades.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -19,13 +20,17 @@ import ucu.deliverit.backcore.entidades.EstadoViaje;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.helpers.ViajeHelper;
-import ucu.deliverit.backcore.hilos.MatchearDeliveryThread;
+import ucu.deliverit.backcore.hilos.ActualizarCalifDelivery;
+import ucu.deliverit.backcore.hilos.MatchearDelivery;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 @Stateless
 @Path("viaje")
 public class ViajeFacadeREST extends AbstractFacade<Viaje> {
 
+    @EJB
+    private ViajeFacadeREST viajeFacade;
+    
     @EJB
     private DeliveryFacadeREST deliveryFacadeREST;
     
@@ -76,11 +81,24 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
                 && entity.getEstado().getId() == 2) {
             
             ViajeHelper helper = new ViajeHelper(deliveryFacadeREST, configuracionFacadeREST);
-            MatchearDeliveryThread thread = new MatchearDeliveryThread(entity, helper);          
+            MatchearDelivery thread = new MatchearDelivery(entity, helper);          
             thread.start();            
         }  
         return r;
     }
+    
+    public List<Short> findCalifByDelivery(Integer idDelivery) {
+        List<Short> result = new ArrayList<>();
+        List<Object> calificaciones = em.createNamedQuery("Viaje.findCalifByDelivery")
+            .setParameter("idDelivery", idDelivery)
+            .getResultList();
+        
+        for (int i = 0; i < calificaciones.size(); i++) {
+            result.add((Short)calificaciones.get(i));
+        }
+        return result;
+    }
+    
 
     @PUT
     @Path("{id}")
@@ -94,6 +112,12 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     public void calificar(@PathParam("id") Integer id, @PathParam("calificacion") Short calificacion) {
         Viaje v = find(id);
         v.setCalificacion(calificacion);
+        
+        // Una vez seteado el valor de calificación en el viaje
+        // Se actualiza el promedio de calificaciones del Delivery
+        ViajeHelper helper = new ViajeHelper(viajeFacade, deliveryFacadeREST);
+        ActualizarCalifDelivery thread = new ActualizarCalifDelivery(helper, id);
+        thread.start();
     }    
     
     @POST
@@ -155,10 +179,10 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @GET
     @Path("findDeliveryViaje/{idViaje}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Delivery findDelivery(@PathParam("idViaje") Integer idViaje) {
+    public Delivery findDelivery(@PathParam("idViaje") Integer idViaje) {        
         Delivery result = (Delivery)em.createNamedQuery("Viaje.findDelivery")
-            .setParameter("idViaje", idViaje)
-            .getSingleResult();
+                .setParameter("idViaje", idViaje)
+                .getSingleResult();
         return result;
     }
     
