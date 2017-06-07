@@ -67,11 +67,12 @@ create table deliverit.ubicacion (
 );
 
 create table deliverit.delivery (
-	id integer auto_increment primary key,
-	usuario integer,
+    id integer auto_increment primary key,
+    usuario integer,
     calificacion smallint,
     vehiculo smallint,
-	token varchar(200),
+    nombre varchar(50) NOT NULL,
+    token varchar(200),
     ubicacion integer,
     foreign key (vehiculo) references deliverit.vehiculo (id),
     foreign key (usuario) references deliverit.usuario (id),
