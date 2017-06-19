@@ -72,6 +72,7 @@ create table deliverit.delivery (
     calificacion smallint,
     vehiculo smallint,
     nombre varchar(50) NOT NULL,
+    ingresos integer,
     token varchar(200),
     ubicacion integer,
     foreign key (vehiculo) references deliverit.vehiculo (id),

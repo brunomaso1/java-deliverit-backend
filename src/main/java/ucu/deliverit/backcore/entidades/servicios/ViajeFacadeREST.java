@@ -128,7 +128,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             @PathParam("idDelivery") Integer idDelivery) {
         Viaje viaje = find(idViaje);   
         
-        if (viaje.getEstado().getId() != estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO)) {
+        if (viaje.getEstado().getId() == estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO)) {
             Delivery delivery = deliveryFacadeREST.find(idDelivery);
             EstadoViaje estado = estadoFacadeREST
                     .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO));

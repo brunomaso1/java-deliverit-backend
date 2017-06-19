@@ -14,9 +14,11 @@ public class RespuestaGeneral {
     public static final int CODIGO_ERROR = -1;
     public static final int CODIGO_ERROR_VALOR_NULO = -2;
     public static final int CODIGO_ERROR_VALOR_INCORRECTO = -3;
+    public static final int CODIGO_ERROR_YA_EXISTE = -4;
     public static final String MENSAJE_OK = "ok";
     public static final String MENSAJE_VALOR_NULO = " no puede ser nulo.";
     public static final String MENSAJE_VALOR_INCORRECTO = " incorrecto.";
+    public static final String MENSAJE_VALOR_YA_EXISTE = " ya existe.";
     
     private Integer codigo;
     private String mensaje;

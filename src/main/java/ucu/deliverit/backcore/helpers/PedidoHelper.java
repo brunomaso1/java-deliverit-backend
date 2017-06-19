@@ -20,6 +20,7 @@ public class PedidoHelper {
             vAux.setId(pedidos.get(i).getViaje().getId());   
             vAux.setPrecio(pedidos.get(i).getViaje().getPrecio());
             vAux.setEstado(pedidos.get(i).getViaje().getEstado());
+            vAux.setFecha(pedidos.get(i).getViaje().getFecha());
 
             Usuario uAux = new Usuario();
             uAux.setFoto(pedidos.get(i).getViaje().getSucursal().getRestaurant().getUsuario().getFoto());

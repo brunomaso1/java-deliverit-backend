@@ -56,6 +56,8 @@ public class Delivery implements Serializable {
     @ManyToOne
     private Usuario usuario;
     
+    private String nombre;
+    
     @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "ubicacion")
     private Ubicacion ubicacion;
@@ -101,6 +103,14 @@ public class Delivery implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+    
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
     
     public Ubicacion getUbicacion() {

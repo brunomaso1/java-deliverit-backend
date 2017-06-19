@@ -3,6 +3,7 @@ package ucu.deliverit.backcore.entidades.servicios;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
@@ -33,37 +34,44 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaGeneral create(Usuario entity) {
-            RespuestaGeneral r = new RespuestaGeneral();
+        RespuestaGeneral r = new RespuestaGeneral();
 
-            if (entity == null) {
-                    r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
-                    r.setMensaje("Usuario" + RespuestaGeneral.MENSAJE_VALOR_NULO);
-                    r.setObjeto(null);
-            } else if (entity.getNombre() == null) {
-                    r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
-                    r.setMensaje("Nombre usuario" + RespuestaGeneral.MENSAJE_VALOR_NULO);
-                    r.setObjeto(null);
-            } else if (entity.getPassword() == null) {
-                    r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
-                    r.setMensaje("Contraseña" + RespuestaGeneral.MENSAJE_VALOR_NULO);
-                    r.setObjeto(null);
-            } else if (entity.getTelefono() == null) {
-                    r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
-                    r.setMensaje("Teléfono" + RespuestaGeneral.MENSAJE_VALOR_NULO);
-                    r.setObjeto(null);
-            } else if (entity.getTelefono().length() > 9 || entity.getTelefono().length() < 8) {
-                    r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_INCORRECTO);
-                    r.setMensaje("Teléfono" + RespuestaGeneral.MENSAJE_VALOR_INCORRECTO);
-                    r.setObjeto(null);
-            } else if (entity.getCuentaRedPagos() == null) {
-                    r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
-                    r.setMensaje("Cuenta de RedPagos" + RespuestaGeneral.MENSAJE_VALOR_NULO);
-                    r.setObjeto(null);
+        if (entity == null) {
+                r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+                r.setMensaje("Usuario" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+                r.setObjeto(null);
+        } else if (entity.getNombre() == null) {
+                r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+                r.setMensaje("Nombre usuario" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+                r.setObjeto(null);
+        } else if (entity.getPassword() == null) {
+                r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+                r.setMensaje("Contraseña" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+                r.setObjeto(null);
+        } else if (entity.getTelefono() == null) {
+                r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+                r.setMensaje("Teléfono" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+                r.setObjeto(null);
+        } else if (entity.getTelefono().length() > 9 || entity.getTelefono().length() < 8) {
+                r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_INCORRECTO);
+                r.setMensaje("Teléfono" + RespuestaGeneral.MENSAJE_VALOR_INCORRECTO);
+                r.setObjeto(null);
+        } else if (entity.getCuentaRedPagos() == null) {
+                r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+                r.setMensaje("Cuenta de RedPagos" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+                r.setObjeto(null);
+        } else {
+            Usuario u = findUserByName(entity.getNombre());
+            if (u.getId() != null) {
+                r.setCodigo(RespuestaGeneral.CODIGO_ERROR_YA_EXISTE);
+                r.setMensaje(entity.getNombre() + RespuestaGeneral.MENSAJE_VALOR_YA_EXISTE);
+                r.setObjeto(null);
             } else {
-                    r = super.create(entity);
-            }
+                r = super.create(entity);
+            }            
+        }
 
-            return r;
+        return r;
     }
 
     @PUT
@@ -95,9 +103,15 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Path("findUserByName/{nombreUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
     public Usuario findUserByName(@PathParam("nombreUsuario") String nombreUsuario) {
-        Usuario result = (Usuario)em.createNamedQuery("Usuario.findByNombre")
-            .setParameter("nombre", nombreUsuario)
-            .getSingleResult();
+        Usuario result = new Usuario();
+        try {
+            result = (Usuario)em.createNamedQuery("Usuario.findByNombre")
+                .setParameter("nombre", nombreUsuario)
+                .getSingleResult();
+        } catch (NoResultException e) {
+            e.printStackTrace();
+        }
+        
         return result;
     }
 

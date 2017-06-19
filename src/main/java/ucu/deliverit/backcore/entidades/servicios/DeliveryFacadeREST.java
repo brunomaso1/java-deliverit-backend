@@ -33,16 +33,16 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RespuestaGeneral create(Delivery entity) {
-            RespuestaGeneral r = new RespuestaGeneral();
+        RespuestaGeneral r = new RespuestaGeneral();
 
-            if (entity == null) {
-                    r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
-                    r.setMensaje("Delivery" + RespuestaGeneral.MENSAJE_VALOR_NULO);
-                    r.setObjeto(null);
-            } else {
-                    r = super.create(entity);
-            }
-            return r;
+        if (entity == null) {
+                r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+                r.setMensaje("Delivery" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+                r.setObjeto(null);
+        } else {
+                r = super.create(entity);
+        }
+        return r;
     }
 
     @PUT
