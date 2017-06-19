@@ -1,6 +1,8 @@
 package ucu.deliverit.backcore.entidades.servicios;
 
+import com.google.gson.Gson;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,11 +17,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.entidades.Ubicacion;
+import ucu.deliverit.backcore.entidades.Usuario;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 @Stateless
 @Path("delivery")
 public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
+    
+    @EJB
+    private UsuarioFacadeREST usuarioFacade;
 
     @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
     private EntityManager em;
@@ -101,6 +107,46 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
         Ubicacion result = em.createQuery(consulta, Ubicacion.class)
                         .setParameter("idDelivery", idSucursal)
                         .getSingleResult();
+        return result;
+    }
+    
+    @GET
+    @Path("findByUsuario/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Delivery findByUsuario(@PathParam("idUsuario") Integer idUsuario) {
+        Delivery result = (Delivery)em.createNamedQuery("Delviery.findByUsuario")
+                        .setParameter("idUsuario", idUsuario)
+                        .getSingleResult();
+        return result;
+    }
+    
+    @GET
+    @Path("login/{nombreUsuario}/{password}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public RespuestaGeneral login(@PathParam("nombreUsuario") String nombreUsuario,
+                    @PathParam("password") String password) {
+        RespuestaGeneral result = new RespuestaGeneral();
+        
+        Usuario usuario = usuarioFacade.findUserByName(nombreUsuario);
+        
+        if (usuario != null) {
+            if (usuario.getPassword().equals(password)) {
+                result.setCodigo(RespuestaGeneral.CODIGO_OK);
+                result.setMensaje(RespuestaGeneral.MENSAJE_OK);
+                
+                Delivery d = findByUsuario(usuario.getId());
+                Gson gson = new Gson();
+                String jsonObject = gson.toJson(d.getId());
+                result.setObjeto(jsonObject);
+            } else {
+                result.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_INCORRECTO);
+                result.setMensaje(RespuestaGeneral.MENSAJE_USUARIO_INCORRECTO);
+            }
+        } else {
+            result.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_INCORRECTO);
+            result.setMensaje(RespuestaGeneral.MENSAJE_USUARIO_INCORRECTO);
+        }
+
         return result;
     }
 

@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Delivery.findAllSinViajesEnProceso", query = "SELECT d FROM Delivery d WHERE d.id NOT IN (SELECT v.delivery.id FROM Viaje v WHERE v.estado.id = 3)"),
     @NamedQuery(name = "Delivery.findByCalificacion", query = "SELECT d FROM Delivery d WHERE d.calificacion = :calificacion"),
     @NamedQuery(name = "Delivery.findByToken", query = "SELECT d FROM Delivery d WHERE d.token = :token"),
-    @NamedQuery(name = "Delviery.findAllSinViajesEnProceso", query = "SELECT d FROM Delivery d WHERE d.id NOT IN (SELECT v.delivery.id FROM Viaje v WHERE v.estado.id = 3)")})
+    @NamedQuery(name = "Delviery.findAllSinViajesEnProceso", query = "SELECT d FROM Delivery d WHERE d.id NOT IN (SELECT v.delivery.id FROM Viaje v WHERE v.estado.id = 3)"),
+    @NamedQuery(name = "Delviery.findByUsuario", query = "SELECT d FROM Delivery d WHERE d.usuario.id = :idUsuario")})
 public class Delivery implements Serializable {
 
     private static final long serialVersionUID = 1L;

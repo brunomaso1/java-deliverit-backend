@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import ucu.deliverit.backcore.entidades.Viaje;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-19T13:41:20")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-19T17:53:52")
 @StaticMetamodel(Transaccion.class)
 public class Transaccion_ { 
 

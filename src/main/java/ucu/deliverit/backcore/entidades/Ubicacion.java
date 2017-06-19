@@ -7,9 +7,6 @@ package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.OneToOne;
-import javax.persistence.FetchType;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

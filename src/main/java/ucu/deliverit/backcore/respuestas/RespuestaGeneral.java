@@ -19,6 +19,7 @@ public class RespuestaGeneral {
     public static final String MENSAJE_VALOR_NULO = " no puede ser nulo.";
     public static final String MENSAJE_VALOR_INCORRECTO = " incorrecto.";
     public static final String MENSAJE_VALOR_YA_EXISTE = " ya existe.";
+    public static final String MENSAJE_USUARIO_INCORRECTO = "Usuario y/o contraseña incorrectos.";
     
     private Integer codigo;
     private String mensaje;

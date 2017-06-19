@@ -26,7 +26,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     private EntityManager em;
 
     public UsuarioFacadeREST() {
-            super(Usuario.class);
+        super(Usuario.class);
     }
 
     @POST
@@ -90,12 +90,25 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @GET
     @Path("login/{nombreUsuario}/{password}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario login(@PathParam("nombreUsuario") String nombreUsuario,
+    public RespuestaGeneral login(@PathParam("nombreUsuario") String nombreUsuario,
                     @PathParam("password") String password) {
-        Usuario result = (Usuario)em.createNamedQuery("Usuario.login")
-            .setParameter("usuario", nombreUsuario)
-            .setParameter("password", password)
-            .getSingleResult();
+        RespuestaGeneral result = new RespuestaGeneral();
+        
+        Usuario usuario = findUserByName(nombreUsuario);
+        
+        if (usuario != null) {
+            if (usuario.getPassword().equals(password)) {
+                result.setCodigo(RespuestaGeneral.CODIGO_OK);
+                result.setMensaje(RespuestaGeneral.MENSAJE_OK);
+            } else {
+                result.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_INCORRECTO);
+                result.setMensaje(RespuestaGeneral.MENSAJE_USUARIO_INCORRECTO);
+            }
+        } else {
+            result.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_INCORRECTO);
+            result.setMensaje(RespuestaGeneral.MENSAJE_USUARIO_INCORRECTO);
+        }
+
         return result;
     }
 
