@@ -88,42 +88,30 @@ public class ViajeHelper {
         }        
     }
     
-    public List<Viaje> limpiarViajeParaMobile (List<Viaje> viajes, Timestamp fechaMobile) {
+    public List<Viaje> limpiarViajeParaMobile (List<Viaje> viajes) {
         List<Viaje> resultado = new ArrayList<>();
         
-        // Se toma las 3:00 AM de cada día como el punto de partida de viajes
-        Timestamp today = Timestamp.valueOf(LocalDateTime.now());
-        today.setHours(3);
-        today.setMinutes(0);
-        today.setSeconds(0);
-        today.setDate(fechaMobile.getDate());
-        today.setMonth(fechaMobile.getMonth());
-        today.setYear(fechaMobile.getYear());
-        
         for (Viaje v : viajes) {
-            if (v.getFecha().after(today)) {
-                Viaje auxiliar = new Viaje();
-                auxiliar.setId(v.getId());
-                auxiliar.setPrecio(v.getPrecio());
-                auxiliar.setFecha(v.getFecha());
+            Viaje auxiliar = new Viaje();
+            auxiliar.setId(v.getId());
+            auxiliar.setPrecio(v.getPrecio());
+            auxiliar.setFecha(v.getFecha());
 
-                Sucursal sucAux = new Sucursal();
-                sucAux.setId(v.getSucursal().getId());
-                sucAux.setDireccion(v.getSucursal().getDireccion());
+            Sucursal sucAux = new Sucursal();
+            sucAux.setId(v.getSucursal().getId());
+            sucAux.setDireccion(v.getSucursal().getDireccion());
 
-                Restaurant restAux = new Restaurant();
-                restAux.setId(v.getSucursal().getRestaurant().getId());
-                restAux.setRazonSocial(v.getSucursal().getRestaurant().getRazonSocial());
+            Restaurant restAux = new Restaurant();
+            restAux.setId(v.getSucursal().getRestaurant().getId());
+            restAux.setRazonSocial(v.getSucursal().getRestaurant().getRazonSocial());
 
-                Usuario uAux = new Usuario();
-                uAux.setFoto(v.getSucursal().getRestaurant().getUsuario().getFoto());
-                restAux.setUsuario(uAux);
+            Usuario uAux = new Usuario();
+            uAux.setFoto(v.getSucursal().getRestaurant().getUsuario().getFoto());
+            restAux.setUsuario(uAux);
 
-                sucAux.setRestaurant(restAux);
-                auxiliar.setSucursal(sucAux);
-                resultado.add(auxiliar);            
-            }
-            
+            sucAux.setRestaurant(restAux);
+            auxiliar.setSucursal(sucAux);
+            resultado.add(auxiliar);              
         }
         return resultado;
     }

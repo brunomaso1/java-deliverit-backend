@@ -519,16 +519,16 @@ COMMIT;
 -- PEDIDO
 BEGIN;
 -- CUSTOM DATA
-INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente, fecha_creacion) VALUES (1, 1, 'Perro', 'E', 1, sysdate());
-INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente, fecha_creacion) VALUES (2, 2, 'Perro1', 'E', 1, sysdate());
-INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente, fecha_creacion) VALUES (3, 3, 'Perro2', 'E', 1, sysdate());
-INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente, fecha_creacion) VALUES (4, 4, 'Perro3', 'E', 1, sysdate());
-INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente, fecha_creacion) VALUES (5, 5, 'Perro4', 'E', 1, sysdate());
-INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente, fecha_creacion) VALUES (6, 6, "", 'E', 1, sysdate());
-INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente, fecha_creacion) VALUES (7, 7, "", 'E', 1, sysdate());
-INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente, fecha_creacion) VALUES (8, 8, 'Gato', 'E', 1, sysdate());
-INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente, fecha_creacion) VALUES (9, 9, 'Perro5', 'E', 1, sysdate());
-INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente, fecha_creacion) VALUES (10, 10, 'Perro', 'E', 1, sysdate());
+INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente) VALUES (1, 1, 'Perro', 'E', 1);
+INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente) VALUES (2, 2, 'Perro1', 'E', 1);
+INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente) VALUES (3, 3, 'Perro2', 'E', 1);
+INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente) VALUES (4, 4, 'Perro3', 'E', 1);
+INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente) VALUES (5, 5, 'Perro4', 'E', 1);
+INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente) VALUES (6, 6, "", 'E', 1);
+INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente) VALUES (7, 7, "", 'E', 1);
+INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente) VALUES (8, 8, 'Gato', 'E', 1);
+INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente) VALUES (9, 9, 'Perro5', 'E', 1);
+INSERT INTO pedido (id, viaje, detalle, forma_pago, cliente) VALUES (10, 10, 'Perro', 'E', 1);
 -- GENERATED DATA
 
 COMMIT;

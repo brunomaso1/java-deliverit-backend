@@ -38,10 +38,6 @@ public class Pedido implements Serializable {
     @Column(name = "detalle")
     private String detalle;
     
-    @Basic(optional = false)
-    @Column(name = "fecha_creacion")
-    private Timestamp fecha;
-    
     @Size(max = 1)
     @Column(name = "forma_pago")
     private String formaPago;    
@@ -92,14 +88,6 @@ public class Pedido implements Serializable {
 
     public void setViaje(Viaje viaje) {
         this.viaje = viaje;
-    }
-    
-    public Timestamp getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Timestamp fecha) {
-        this.fecha = fecha;
     }
 
     @Override

@@ -97,7 +97,6 @@ CREATE TABLE pedido (
     detalle VARCHAR(100),
     forma_pago VARCHAR(1),
     cliente INTEGER NOT NULL,
-    fecha_creacion TIMESTAMP NOT NULL,
     FOREIGN KEY (viaje) REFERENCES viaje(id),
     FOREIGN KEY (cliente) REFERENCES cliente(id)
 );

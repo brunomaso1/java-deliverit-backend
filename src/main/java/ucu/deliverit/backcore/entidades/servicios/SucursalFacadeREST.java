@@ -111,10 +111,10 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     public List<Pedido> findPedidosToday(@PathParam("sucursal") Integer sucursal) {
         
         Timestamp today = Timestamp.valueOf(LocalDateTime.now());
-        today.setHours(0);
+        today.setHours(3);
         today.setMinutes(0);
         today.setSeconds(0);
-        
+
         List<Pedido> pedidos = em.createNamedQuery("Sucursal.findPedidosToday")
             .setParameter("sucursal", sucursal)
             .setParameter("today", today)

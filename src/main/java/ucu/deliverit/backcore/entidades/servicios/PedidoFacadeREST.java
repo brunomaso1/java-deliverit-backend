@@ -45,6 +45,14 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("Pedido" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);
+        } else if (entity.getCliente() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Cliente" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
+        } else if (entity.getCliente().getDireccion() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Dirección cliente" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
         } else {
             r = super.create(entity);
         }

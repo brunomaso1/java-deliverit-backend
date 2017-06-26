@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.Usuario;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-21T17:47:04")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-26T17:57:06")
 @StaticMetamodel(Restaurant.class)
 public class Restaurant_ { 
 

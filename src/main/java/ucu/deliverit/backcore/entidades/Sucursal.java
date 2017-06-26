@@ -23,9 +23,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Sucursal.findAll", query = "SELECT s FROM Sucursal s"),
-    @NamedQuery(name = "Sucursal.findPedidos", query = "SELECT p FROM Pedido p JOIN p.viaje v WHERE v.sucursal.id = :sucursal"),
+    @NamedQuery(name = "Sucursal.findPedidos", query = "SELECT p FROM Pedido p WHERE p.viaje.sucursal.id = :sucursal"),
     @NamedQuery(name = "Sucursal.findViajes", query = "SELECT v FROM Viaje v WHERE v.sucursal.id = :sucursal"),
-    @NamedQuery(name = "Sucursal.findPedidosToday", query = "SELECT p FROM Pedido p JOIN p.viaje v WHERE v.sucursal.id = :sucursal AND (p.fecha >= :today)")})
+    @NamedQuery(name = "Sucursal.findPedidosToday", query = "SELECT p FROM Pedido p WHERE p.viaje.sucursal.id = :sucursal AND p.viaje.fecha >= :today")})
 public class Sucursal implements Serializable {
 
     private static final long serialVersionUID = 1L;

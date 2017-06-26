@@ -1,6 +1,7 @@
 package ucu.deliverit.backcore.entidades.servicios;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -156,15 +157,22 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     }
     
     @GET
-    @Path("findPublicados/{fechaMobile}")
+    @Path("findPublicados")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Viaje> findPublicados(@PathParam("fechaMobile") Timestamp fechaMobile) { 
+    public List<Viaje> findPublicados() { 
+        Timestamp today = Timestamp.valueOf(LocalDateTime.now());
+        today.setHours(3);
+        today.setMinutes(0);
+        today.setSeconds(0);
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+        
         List<Viaje> results = em.createNamedQuery("Viaje.findPublicados")
             .setParameter("idEstadoViaje", estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO))
-            .setParameter("fechaMobile", fechaMobile)
+            .setParameter("today", today)
+            .setParameter("now", now)
             .getResultList();
         ViajeHelper vHelper = new ViajeHelper();
-        return vHelper.limpiarViajeParaMobile(results, fechaMobile);
+        return vHelper.limpiarViajeParaMobile(results);
     }
     
     @GET
