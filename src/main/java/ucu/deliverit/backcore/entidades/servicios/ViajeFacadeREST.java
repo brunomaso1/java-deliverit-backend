@@ -72,8 +72,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("Estado de Viaje" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);
-        } 
-        else {
+        } else {
             r = super.create(entity);
         }    
         
@@ -125,21 +124,25 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @POST
     @Path("aceptarViaje/{idViaje}/{idDelivery}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Integer aceptarViaje(@PathParam("idViaje") Integer idViaje, 
+    public Boolean aceptarViaje(@PathParam("idViaje") Integer idViaje, 
             @PathParam("idDelivery") Integer idDelivery) {
-        Viaje viaje = find(idViaje);   
         
-        if (viaje.getEstado().getId() == estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO)) {
-            Delivery delivery = deliveryFacadeREST.find(idDelivery);
-            EstadoViaje estado = estadoFacadeREST
-                    .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO));
-            viaje.setEstado(estado);
-            viaje.setDelivery(delivery);
-            em.persist(viaje);
-            
-            return 0;
+        if ((idViaje != null && idViaje != 0) && (idDelivery != null && idDelivery != 0)) {
+            Viaje viaje = find(idViaje);   
+        
+            if (viaje.getEstado().getId() == estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO)) {
+                Delivery delivery = deliveryFacadeREST.find(idDelivery);
+                EstadoViaje estado = estadoFacadeREST
+                        .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO));
+                viaje.setEstado(estado);
+                viaje.setDelivery(delivery);
+
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return -1;
+            return false;
         }
     }
 
@@ -254,9 +257,6 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             EstadoViaje estado = estadoFacadeREST
                     .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.FINALIZADO));
             viaje.setEstado(estado);
-            em.persist(viaje);
-        } else {
-            return;
-        }
+        } 
     }
 }
