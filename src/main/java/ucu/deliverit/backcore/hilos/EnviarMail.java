@@ -1,5 +1,6 @@
 package ucu.deliverit.backcore.hilos;
 
+import java.net.ConnectException;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import ucu.deliverit.backcore.entidades.Mail;
@@ -22,6 +23,8 @@ public class EnviarMail extends Thread {
         } catch (AddressException e) {
             e.printStackTrace();
         } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (ConnectException e) {
             e.printStackTrace();
         } catch (Throwable ex) {
             ex.printStackTrace();
