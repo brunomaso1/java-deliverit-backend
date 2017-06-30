@@ -17,12 +17,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import ucu.deliverit.backcore.entidades.Configuracion;
 import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
+import ucu.deliverit.backcore.entidades.Mail;
 import ucu.deliverit.backcore.entidades.Sucursal;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.helpers.ViajeHelper;
 import ucu.deliverit.backcore.hilos.ActualizarCalifDelivery;
+import ucu.deliverit.backcore.hilos.EnviarMail;
 import ucu.deliverit.backcore.hilos.MatchearDelivery;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
@@ -137,6 +140,12 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
                 viaje.setEstado(estado);
                 viaje.setDelivery(delivery);
 
+                String cuentaMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT).getValor();
+                String usuarioMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_USER).getValor();
+                String passMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_PASS).getValor();
+                Mail mail = new Mail(cuentaMail, usuarioMail, passMail);
+                EnviarMail thread = new EnviarMail(mail, viaje);
+                thread.start();
                 return true;
             } else {
                 return false;

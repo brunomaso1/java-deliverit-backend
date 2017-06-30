@@ -2,6 +2,7 @@ ucu\deliverit\backcore\entidades\servicios\ApplicationConfig.class
 ucu\deliverit\backcore\entidades\Delivery.class
 ucu\deliverit\backcore\entidades\Sucursal.class
 ucu\deliverit\backcore\entidades\Direccion_.class
+ucu\deliverit\backcore\entidades\Mail$1.class
 ucu\deliverit\backcore\entidades\Restaurant_.class
 ucu\deliverit\backcore\entidades\Cliente_.class
 ucu\deliverit\backcore\helpers\PedidoHelper.class
@@ -21,6 +22,7 @@ ucu\deliverit\backcore\entidades\Pedido.class
 ucu\deliverit\backcore\entidades\Restaurant.class
 ucu\deliverit\backcore\hilos\ActualizarCalifDelivery.class
 ucu\deliverit\backcore\entidades\servicios\UbicacionFacadeREST.class
+ucu\deliverit\backcore\entidades\Mail.class
 ucu\deliverit\backcore\entidades\Configuracion_.class
 ucu\deliverit\backcore\entidades\Delivery_.class
 ucu\deliverit\backcore\entidades\EstadoViaje_.class
@@ -42,6 +44,7 @@ ucu\deliverit\backcore\entidades\servicios\ClienteFacadeREST.class
 ucu\deliverit\backcore\entidades\Pedido_.class
 ucu\deliverit\backcore\entidades\EstadoViaje.class
 ucu\deliverit\backcore\entidades\servicios\PedidoFacadeREST.class
+ucu\deliverit\backcore\hilos\EnviarMail.class
 ucu\deliverit\backcore\entidades\Direccion.class
 ucu\deliverit\backcore\respuestas\RespuestaGeneral.class
 ucu\deliverit\backcore\entidades\Vehiculo_.class
