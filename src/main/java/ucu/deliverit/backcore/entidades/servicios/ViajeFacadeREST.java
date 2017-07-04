@@ -144,7 +144,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
                 String usuarioMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_USER).getValor();
                 String passMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_PASS).getValor();
                 Mail mail = new Mail(cuentaMail, usuarioMail, passMail);
-                EnviarMail thread = new EnviarMail(mail, viaje);
+                EnviarMail thread = new EnviarMail(mail, viaje, true);
                 thread.start();
                 return true;
             } else {
@@ -153,6 +153,26 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
         } else {
             return false;
         }
+    }
+    
+    @POST
+    @Path("finalizarViaje/{idViaje}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public void finalizarViaje(@PathParam("idViaje") Integer idViaje) {
+        Viaje viaje = find(idViaje);   
+        
+        if (viaje.getEstado().getId() == estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO)) {
+            EstadoViaje estado = estadoFacadeREST
+                    .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.FINALIZADO));
+            viaje.setEstado(estado);
+            
+            String cuentaMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT).getValor();
+            String usuarioMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_USER).getValor();
+            String passMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_PASS).getValor();
+            Mail mail = new Mail(cuentaMail, usuarioMail, passMail);
+            EnviarMail thread = new EnviarMail(mail, viaje, false);
+            thread.start();
+        } 
     }
 
     @DELETE
@@ -254,18 +274,5 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-    
-    @POST
-    @Path("finalizarViaje/{idViaje}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public void finalizarViaje(@PathParam("idViaje") Integer idViaje) {
-        Viaje viaje = find(idViaje);   
-        
-        if (viaje.getEstado().getId() == estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO)) {
-            EstadoViaje estado = estadoFacadeREST
-                    .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.FINALIZADO));
-            viaje.setEstado(estado);
-        } 
     }
 }

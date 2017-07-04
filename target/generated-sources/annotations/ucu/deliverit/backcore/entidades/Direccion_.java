@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import ucu.deliverit.backcore.entidades.Sucursal;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-30T15:16:23")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-07-04T16:11:20")
 @StaticMetamodel(Direccion.class)
 public class Direccion_ { 
 

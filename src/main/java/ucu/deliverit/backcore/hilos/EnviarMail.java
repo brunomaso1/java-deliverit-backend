@@ -9,16 +9,18 @@ import ucu.deliverit.backcore.entidades.Viaje;
 public class EnviarMail extends Thread {
     private Mail mail;
     private Viaje viaje;
+    private boolean aceptarFinalizar;
     
-    public EnviarMail(Mail mail, Viaje viaje) {
+    public EnviarMail(Mail mail, Viaje viaje, boolean aceptarFinalizar) {
         this.mail = mail;
         this.viaje = viaje;
+        this.aceptarFinalizar = aceptarFinalizar;
     }
     
     @Override
     public void run() { 
         try {
-            mail.enviarMail(viaje);
+            mail.enviarMail(viaje, aceptarFinalizar);
             this.finalize();
         } catch (AddressException e) {
             e.printStackTrace();

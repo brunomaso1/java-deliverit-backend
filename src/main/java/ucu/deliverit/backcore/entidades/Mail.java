@@ -50,7 +50,7 @@ public class Mail {
         this.mailPass = mailPass;
     }
     
-    public void enviarMail(Viaje viaje) throws AddressException, MessagingException, ConnectException {	    
+    public void enviarMail(Viaje viaje, boolean aceptarFinalizar) throws AddressException, MessagingException, ConnectException {	    
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true");
@@ -73,15 +73,20 @@ public class Mail {
         message.setRecipients(Message.RecipientType.TO,
             InternetAddress.parse(viaje.getSucursal().getRestaurant().getUsuario().getMail()));
 
-        message.setSubject("Han aceptado uno de tus viajes!");
-        message.setText(crear(viaje), "utf-8", "html");
+        if (aceptarFinalizar) {
+            message.setSubject("Han aceptado uno de tus viajes!");
+        } else {
+            message.setSubject("Han finalizado uno de tus viajes!");
+        }
+        
+        message.setText(crear(viaje, aceptarFinalizar), "utf-8", "html");
 
         Transport.send(message);      
 
-        System.out.println("***** Mail enviado correctamente .... *****");		
+        System.out.println("***** Mail enviado correctamente *****");		
     }
     
-    private String crear(Viaje viaje) {
+    private String crear(Viaje viaje, boolean aceptarFinalizar) {
         String texto = "<html>";
         texto += "<div>";
         
@@ -99,22 +104,25 @@ public class Mail {
         texto += "<h3>Datos de Viaje</h3>";
         texto += "<h4>Fecha: " + viaje.getFecha() + "</h4>";
         texto += "<h4>Id de Viaje: " + viaje.getId() + "</h4>";
-        texto += "<h4>Precio: $" + viaje.getPrecio() + "</h4><br>";
-        texto += "<hr>";
-        texto += "<p>Los pedidos que deberá entregar son los siguientes:</p>";
-        for (Pedido p : viaje.getPedidos()) {
-            texto += "<p style=\"margin-left: 20px\">Id: " + p.getId() + "</p>";
-            texto += "<p style=\"margin-left: 20px\">Cliente: " + p.getCliente().getNombre() + "</p>";
-            texto += "<p style=\"margin-left: 20px\">Tel.: " + p.getCliente().getTelefono() + "</p>";
-            texto += "<p style=\"margin-left: 20px\">Dir.: " + p.getCliente().getDireccion().getCalle() 
-                    + " "
-                    + p.getCliente().getDireccion().getNroPuerta();
-            
-            if (p.getCliente().getDireccion().getEsquina() != null && !p.getCliente().getDireccion().getEsquina().isEmpty()) {
-                texto += " esq. " + p.getCliente().getDireccion().getEsquina();
-            }
-            texto += "</p><br>";            
-        }        
+        texto += "<h4>Precio: $" + viaje.getPrecio() + "</h4><br>";        
+        
+        if (aceptarFinalizar) {
+            texto += "<hr>";
+            texto += "<p>Los pedidos que deberá entregar son los siguientes:</p>";
+            for (Pedido p : viaje.getPedidos()) {
+                texto += "<p style=\"margin-left: 20px\">Id: " + p.getId() + "</p>";
+                texto += "<p style=\"margin-left: 20px\">Cliente: " + p.getCliente().getNombre() + "</p>";
+                texto += "<p style=\"margin-left: 20px\">Tel.: " + p.getCliente().getTelefono() + "</p>";
+                texto += "<p style=\"margin-left: 20px\">Dir.: " + p.getCliente().getDireccion().getCalle() 
+                        + " "
+                        + p.getCliente().getDireccion().getNroPuerta();
+
+                if (p.getCliente().getDireccion().getEsquina() != null && !p.getCliente().getDireccion().getEsquina().isEmpty()) {
+                    texto += " esq. " + p.getCliente().getDireccion().getEsquina();
+                }
+                texto += "</p><br>";            
+            }     
+        }           
         
         texto += "</div>";
         texto += "</div>";
