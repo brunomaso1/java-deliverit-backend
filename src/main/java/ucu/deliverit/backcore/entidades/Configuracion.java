@@ -27,6 +27,7 @@ public class Configuracion implements Serializable {
     public static final String MAIL_DELIVERIT = "MAIL_DELIVERIT";
     public static final String MAIL_DELIVERIT_PASS = "MAIL_DELIVERIT_PASS";
     public static final String MAIL_DELIVERIT_USER = "MAIL_DELIVERIT_USER";
+    public static final String PORCENTAJE = "PORCENTAJE";
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -549,6 +549,7 @@ INSERT INTO configuracion (id, descripcion, valor) VALUES (2,'SERVIDOR_FIREBASE'
 INSERT INTO configuracion (id, descripcion, valor) VALUES (3,'MAIL_DELIVERIT', 'deliverituy@gmail.com');
 INSERT INTO configuracion (id, descripcion, valor) VALUES (4,'MAIL_DELIVERIT_PASS', 'deliveritadmin');
 INSERT INTO configuracion (id, descripcion, valor) VALUES (5,'MAIL_DELIVERIT_USER', 'deliverituy');
+INSERT INTO configuracion (id, descripcion, valor) VALUES (6, 'PORCENTAJE', '20');
 -- GENERATED DATA
 
 COMMIT;

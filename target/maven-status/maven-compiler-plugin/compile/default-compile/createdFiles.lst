@@ -12,7 +12,9 @@ ucu\deliverit\backcore\entidades\servicios\VehiculoFacadeREST.class
 ucu\deliverit\backcore\entidades\servicios\TransaccionFacadeREST.class
 ucu\deliverit\backcore\entidades\Usuario_.class
 ucu\deliverit\backcore\helpers\ViajeHelper.class
+ucu\deliverit\backcore\hilos\PagarThread.class
 ucu\deliverit\backcore\hilos\MatchearDelivery.class
+ucu\deliverit\backcore\helpers\TransaccionHelper.class
 ucu\deliverit\backcore\entidades\Vehiculo.class
 ucu\deliverit\backcore\entidades\Transaccion.class
 ucu\deliverit\backcore\entidades\Cliente.class

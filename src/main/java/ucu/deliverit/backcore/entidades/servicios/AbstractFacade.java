@@ -1,6 +1,7 @@
 package ucu.deliverit.backcore.entidades.servicios;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
@@ -23,7 +24,7 @@ public abstract class AbstractFacade<T> {
            
             // Se utiliza flush para obtener el Id del nuevo objeto en la base de datos.
             getEntityManager().flush();
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
             
             String jsonObject = gson.toJson(entity);
            

@@ -119,6 +119,5 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "ucu.deliverit.backcore.entidades.Cliente[ id=" + id + " ]";
-    }
-    
+    }    
 }

@@ -10,6 +10,7 @@ C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\UbicacionFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\ClienteFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\hilos\EnviarMail.java
+C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\hilos\PagarThread.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\helpers\ViajeHelper.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\Sucursal.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\ConfiguracionFacadeREST.java
@@ -20,6 +21,7 @@ C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\DireccionFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\Restaurant.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\TransaccionFacadeREST.java
+C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\helpers\TransaccionHelper.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\AbstractFacade.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\servicios\UsuarioFacadeREST.java
 C:\Users\JMArtegoytia\Desktop\Juan\backcore\src\main\java\ucu\deliverit\backcore\entidades\Mail.java

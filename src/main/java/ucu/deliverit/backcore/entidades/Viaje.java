@@ -52,9 +52,6 @@ public class Viaje implements Serializable {
     private Short precio;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
-    private Collection<Transaccion> transaccionCollection;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
     private Collection<Pedido> pedidos;
     
     @JoinColumn(name = "delivery", referencedColumnName = "id")
@@ -91,15 +88,6 @@ public class Viaje implements Serializable {
 
     public void setPrecio(Short precio) {
         this.precio = precio;
-    }
-
-    @XmlTransient
-    public Collection<Transaccion> getTransaccionCollection() {
-        return transaccionCollection;
-    }
-
-    public void setTransaccionCollection(Collection<Transaccion> transaccionCollection) {
-        this.transaccionCollection = transaccionCollection;
     }
 
     @XmlTransient

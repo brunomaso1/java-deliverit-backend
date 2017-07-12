@@ -87,6 +87,5 @@ public class TransaccionFacadeREST extends AbstractFacade<Transaccion> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-    
+    }    
 }
