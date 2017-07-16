@@ -17,13 +17,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import ucu.deliverit.backcore.entidades.Configuracion;
 import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
+import ucu.deliverit.backcore.entidades.Mail;
 import ucu.deliverit.backcore.entidades.Sucursal;
+import ucu.deliverit.backcore.entidades.Transaccion;
 import ucu.deliverit.backcore.entidades.Viaje;
+import ucu.deliverit.backcore.helpers.TransaccionHelper;
 import ucu.deliverit.backcore.helpers.ViajeHelper;
 import ucu.deliverit.backcore.hilos.ActualizarCalifDelivery;
+import ucu.deliverit.backcore.hilos.EnviarMail;
 import ucu.deliverit.backcore.hilos.MatchearDelivery;
+import ucu.deliverit.backcore.hilos.PagarThread;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 @Stateless
@@ -35,6 +41,9 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     
     @EJB
     private DeliveryFacadeREST deliveryFacadeREST;
+    
+    @EJB
+    private TransaccionFacadeREST transaccionFacade;
     
     @EJB
     private EstadoViajeFacadeREST estadoFacadeREST;
@@ -72,8 +81,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("Estado de Viaje" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);
-        } 
-        else {
+        } else {
             r = super.create(entity);
         }    
         
@@ -125,22 +133,56 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @POST
     @Path("aceptarViaje/{idViaje}/{idDelivery}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Integer aceptarViaje(@PathParam("idViaje") Integer idViaje, 
+    public Boolean aceptarViaje(@PathParam("idViaje") Integer idViaje, 
             @PathParam("idDelivery") Integer idDelivery) {
+        
+        if ((idViaje != null && idViaje != 0) && (idDelivery != null && idDelivery != 0)) {
+            Viaje viaje = find(idViaje);   
+        
+            if (viaje.getEstado().getDescripcion().equals(EstadoViaje.PUBLICADO)) {
+                Delivery delivery = deliveryFacadeREST.find(idDelivery);
+                EstadoViaje estado = estadoFacadeREST
+                        .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO));
+                viaje.setEstado(estado);
+                viaje.setDelivery(delivery);
+
+                String cuentaMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT).getValor();
+                String usuarioMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_USER).getValor();
+                String passMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_PASS).getValor();
+                Mail mail = new Mail(cuentaMail, usuarioMail, passMail);
+                EnviarMail thread = new EnviarMail(mail, viaje, true);
+                thread.start();
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    
+    @POST
+    @Path("finalizarViaje/{idViaje}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public void finalizarViaje(@PathParam("idViaje") Integer idViaje) {
         Viaje viaje = find(idViaje);   
         
-        if (viaje.getEstado().getId() == estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO)) {
-            Delivery delivery = deliveryFacadeREST.find(idDelivery);
+        if (viaje.getEstado().getDescripcion().equals(EstadoViaje.EN_PROCESO)) {
             EstadoViaje estado = estadoFacadeREST
-                    .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO));
-            viaje.setEstado(estado);
-            viaje.setDelivery(delivery);
-            em.persist(viaje);
+                    .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.FINALIZADO));
+            viaje.setEstado(estado);   
             
-            return 0;
-        } else {
-            return -1;
-        }
+            TransaccionHelper th = new TransaccionHelper(transaccionFacade, configuracionFacadeREST);
+            PagarThread thread = new PagarThread(th, viaje);
+            thread.start();
+            
+            String cuentaMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT).getValor();
+            String usuarioMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_USER).getValor();
+            String passMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_PASS).getValor();
+            Mail mail = new Mail(cuentaMail, usuarioMail, passMail);
+            EnviarMail thread2 = new EnviarMail(mail, viaje, false);
+            thread2.start();
+        } 
     }
 
     @DELETE
@@ -242,21 +284,5 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-    
-    @POST
-    @Path("finalizarViaje/{idViaje}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public void finalizarViaje(@PathParam("idViaje") Integer idViaje) {
-        Viaje viaje = find(idViaje);   
-        
-        if (viaje.getEstado().getId() == estadoFacadeREST.findIdByDescripcion(EstadoViaje.EN_PROCESO)) {
-            EstadoViaje estado = estadoFacadeREST
-                    .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.FINALIZADO));
-            viaje.setEstado(estado);
-            em.persist(viaje);
-        } else {
-            return;
-        }
     }
 }

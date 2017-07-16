@@ -9,9 +9,8 @@ import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
 import ucu.deliverit.backcore.entidades.Pedido;
 import ucu.deliverit.backcore.entidades.Sucursal;
-import ucu.deliverit.backcore.entidades.Transaccion;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-26T17:57:06")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-07-11T21:18:56")
 @StaticMetamodel(Viaje.class)
 public class Viaje_ { 
 
@@ -23,6 +22,5 @@ public class Viaje_ {
     public static volatile SingularAttribute<Viaje, Sucursal> sucursal;
     public static volatile SingularAttribute<Viaje, Integer> id;
     public static volatile CollectionAttribute<Viaje, Pedido> pedidos;
-    public static volatile CollectionAttribute<Viaje, Transaccion> transaccionCollection;
 
 }

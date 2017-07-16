@@ -53,6 +53,10 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
             r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
             r.setMensaje("Dirección cliente" + RespuestaGeneral.MENSAJE_VALOR_NULO);
             r.setObjeto(null);
+        } else if (entity.getViaje() == null) {
+            r.setCodigo(RespuestaGeneral.CODIGO_ERROR_VALOR_NULO);
+            r.setMensaje("Viaje" + RespuestaGeneral.MENSAJE_VALOR_NULO);
+            r.setObjeto(null);
         } else {
             r = super.create(entity);
         }

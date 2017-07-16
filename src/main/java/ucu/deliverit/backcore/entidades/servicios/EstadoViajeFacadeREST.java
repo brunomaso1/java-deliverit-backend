@@ -98,6 +98,5 @@ public class EstadoViajeFacadeREST extends AbstractFacade<EstadoViaje> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-    
+    }    
 }

@@ -6,8 +6,6 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.HttpResponse;
@@ -73,16 +71,20 @@ public class ViajeHelper {
     public void actualizarCalifDelivery(Integer idViaje) {
         Delivery d = viajeFacade.findDelivery(idViaje);
         
+        // Esta lista ya incluye la reciente calificación
         List<Short> calificaciones = viajeFacade.findCalifByDelivery(d.getId());
         Integer cantidadCalif = calificaciones.size();
         
-        Integer promedio = 0;
+        Integer promedio = Integer.parseInt(d.getCalificacion().toString());
         if (cantidadCalif > 0) {            
             for (int i = 0; i < calificaciones.size(); i++) {
                 promedio += calificaciones.get(i);
             }
-            promedio = promedio / (cantidadCalif + 1);
-        }
+            
+            // A la cantidad de calificaciones NO se le suma 1 porque antes de realizar el cálculo
+            // ya se agregó la calificación
+            promedio = promedio / cantidadCalif; 
+        } 
         if (promedio != 0) {
             deliveryFacade.actualizarCalificacion(d.getId(), Short.parseShort(promedio.toString()));
         }        

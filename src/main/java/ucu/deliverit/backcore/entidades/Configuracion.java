@@ -24,6 +24,10 @@ public class Configuracion implements Serializable {
     
     public static final String API_KEY_GOOGLE = "API_KEY_GOOGLE";
     public static final String SERVIDOR_FIREBASE = "SERVIDOR_FIREBASE";
+    public static final String MAIL_DELIVERIT = "MAIL_DELIVERIT";
+    public static final String MAIL_DELIVERIT_PASS = "MAIL_DELIVERIT_PASS";
+    public static final String MAIL_DELIVERIT_USER = "MAIL_DELIVERIT_USER";
+    public static final String PORCENTAJE = "PORCENTAJE";
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,6 +92,5 @@ public class Configuracion implements Serializable {
 
     public void setValor(String valor) {
         this.valor = valor;
-    }
-    
+    }    
 }

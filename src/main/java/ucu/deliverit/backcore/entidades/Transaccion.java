@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
@@ -23,18 +18,13 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author DeliverIT
- */
 @Entity
 @Table(name = "transaccion")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Transaccion.findAll", query = "SELECT t FROM Transaccion t"),
     @NamedQuery(name = "Transaccion.findById", query = "SELECT t FROM Transaccion t WHERE t.id = :id"),
-    @NamedQuery(name = "Transaccion.findByFechaHora", query = "SELECT t FROM Transaccion t WHERE t.fechaHora = :fechaHora"),
-    @NamedQuery(name = "Transaccion.findByMonto", query = "SELECT t FROM Transaccion t WHERE t.monto = :monto")})
+    @NamedQuery(name = "Transaccion.findByFechaHora", query = "SELECT t FROM Transaccion t WHERE t.fechaHora = :fechaHora")})
 public class Transaccion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -115,6 +105,5 @@ public class Transaccion implements Serializable {
     @Override
     public String toString() {
         return "ucu.deliverit.backcore.entidades.Transaccion[ id=" + id + " ]";
-    }
-    
+    }    
 }
