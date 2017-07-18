@@ -22,7 +22,6 @@ import ucu.deliverit.backcore.entidades.Delivery;
 import ucu.deliverit.backcore.entidades.EstadoViaje;
 import ucu.deliverit.backcore.entidades.Mail;
 import ucu.deliverit.backcore.entidades.Sucursal;
-import ucu.deliverit.backcore.entidades.Transaccion;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.helpers.TransaccionHelper;
 import ucu.deliverit.backcore.helpers.ViajeHelper;
@@ -199,22 +198,28 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     }
     
     @GET
-    @Path("findPublicados")
+    @Path("findPublicados/{idDelivery}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Viaje> findPublicados() { 
-        Timestamp today = Timestamp.valueOf(LocalDateTime.now());
-        today.setHours(3);
-        today.setMinutes(0);
-        today.setSeconds(0);
-        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+    public List<Viaje> findPublicados(@PathParam("idDelivery") Integer idDelivery) { 
+        Delivery d = deliveryFacadeREST.find(idDelivery);
         
-        List<Viaje> results = em.createNamedQuery("Viaje.findPublicados")
-            .setParameter("idEstadoViaje", estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO))
-            .setParameter("today", today)
-            .setParameter("now", now)
-            .getResultList();
-        ViajeHelper vHelper = new ViajeHelper();
-        return vHelper.limpiarViajeParaMobile(results);
+        if (d != null && d.getCalificacion() >= 3) {
+            Timestamp today = Timestamp.valueOf(LocalDateTime.now());
+            today.setHours(3);
+            today.setMinutes(0);
+            today.setSeconds(0);
+            Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+
+            List<Viaje> results = em.createNamedQuery("Viaje.findPublicados")
+                .setParameter("idEstadoViaje", estadoFacadeREST.findIdByDescripcion(EstadoViaje.PUBLICADO))
+                .setParameter("today", today)
+                .setParameter("now", now)
+                .getResultList();
+            ViajeHelper vHelper = new ViajeHelper();
+            return vHelper.limpiarViajeParaMobile(results);
+        } else {
+            return new ArrayList<Viaje>();
+        }
     }
     
     @GET
