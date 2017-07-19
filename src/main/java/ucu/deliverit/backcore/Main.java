@@ -1,5 +1,14 @@
 package ucu.deliverit.backcore;
 
+import org.glassfish.api.ActionReport;
+import org.glassfish.api.admin.ParameterMap;
+import org.glassfish.embeddable.CommandResult;
+import org.glassfish.embeddable.CommandRunner;
+import org.glassfish.embeddable.Deployer;
+import org.glassfish.embeddable.GlassFish;
+import org.glassfish.embeddable.GlassFishProperties;
+import org.glassfish.embeddable.GlassFishRuntime;
+
 /**
  *
  * This class launches the web application in an embedded Jetty container.
