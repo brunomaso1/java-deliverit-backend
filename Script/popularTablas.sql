@@ -1,4 +1,3 @@
---http://www.generatedata.com/#generator
 USE deliverit;
 
 -- ESTADOS
@@ -55,6 +54,8 @@ COMMIT;
 -- SUCURSAL
 BEGIN;
 -- CUSTOM DATA
+INSERT INTO restaurant (id, usuario, rut, razon_social) VALUES (1, 1, 213162250011, 'Pancho Va S.S.R.L');
+INSERT INTO restaurant (id, usuario, rut, razon_social) VALUES (2, 2, 22265432100, 'La Pasiva');
 INSERT INTO sucursal (id, restaurant, nombre, direccion) VALUES (1, 1, 'Pancho Va', 1);
 INSERT INTO sucursal (id, restaurant, nombre, direccion) VALUES (2, 2, 'La Pasiva Rivera', 2);
 -- GENERATED DATA
@@ -136,6 +137,3 @@ INSERT INTO configuracion (id, descripcion, valor) VALUES (6, 'PORCENTAJE', '20'
 -- GENERATED DATA
 
 COMMIT;
-
-
-
