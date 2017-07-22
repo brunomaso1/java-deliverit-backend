@@ -81,9 +81,7 @@ public class ViajeHelper {
                 promedio += calificaciones.get(i);
             }
             
-            // A la cantidad de calificaciones NO se le suma 1 porque antes de realizar el cálculo
-            // ya se agregó la calificación
-            promedio = promedio / cantidadCalif; 
+            promedio = (promedio / cantidadCalif) + 1; 
         } 
         if (promedio != 0) {
             deliveryFacade.actualizarCalificacion(d.getId(), Short.parseShort(promedio.toString()));

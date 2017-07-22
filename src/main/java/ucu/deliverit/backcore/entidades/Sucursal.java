@@ -1,6 +1,7 @@
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,12 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "sucursal")
@@ -21,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Sucursal.findAll", query = "SELECT s FROM Sucursal s"),
     @NamedQuery(name = "Sucursal.findPedidos", query = "SELECT p FROM Pedido p WHERE p.viaje.sucursal.id = :sucursal"),
-    //@NamedQuery(name = "Sucursal.findViajes", query = "SELECT v FROM Viaje v WHERE v.sucursal.id = :sucursal"),
+    @NamedQuery(name = "Sucursal.findViajes", query = "SELECT v FROM Viaje v WHERE v.sucursal.id = :sucursal"),
     @NamedQuery(name = "Sucursal.findPedidosToday", query = "SELECT p FROM Pedido p WHERE p.viaje.sucursal.id = :sucursal AND p.viaje.fecha >= :today")})
 public class Sucursal implements Serializable {
 
@@ -45,8 +48,8 @@ public class Sucursal implements Serializable {
     @ManyToOne
     private Direccion direccion;
     
-//    @OneToMany(mappedBy = "sucursal")
-//    private Collection<Viaje> viajeCollection;
+    @OneToMany(mappedBy = "sucursal")
+    private Collection<Viaje> viajeCollection;
 
     public Integer getId() {
         return id;
@@ -80,14 +83,14 @@ public class Sucursal implements Serializable {
         this.direccion = direccion;
     }
 
-//    @XmlTransient
-//    public Collection<Viaje> getViajeCollection() {
-//        return viajeCollection;
-//    }
-//
-//    public void setViajeCollection(Collection<Viaje> viajeCollection) {
-//        this.viajeCollection = viajeCollection;
-//    }
+    @XmlTransient
+    public Collection<Viaje> getViajeCollection() {
+        return viajeCollection;
+    }
+
+    public void setViajeCollection(Collection<Viaje> viajeCollection) {
+        this.viajeCollection = viajeCollection;
+    }
 
     @Override
     public int hashCode() {
@@ -111,6 +114,5 @@ public class Sucursal implements Serializable {
     @Override
     public String toString() {
         return "ucu.deliverit.backcore.entidades.Sucursal[ sucursal=" + id + " ]";
-    }
-    
+    }    
 }

@@ -70,7 +70,6 @@ CREATE TABLE delivery (
     calificacion SMALLINT,
     vehiculo SMALLINT,
     nombre VARCHAR(50) NOT NULL,
-    ingresos INTEGER,
     token VARCHAR(200),
     ubicacion INTEGER,
     FOREIGN KEY (vehiculo) REFERENCES vehiculo (id),

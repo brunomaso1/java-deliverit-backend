@@ -55,7 +55,15 @@ public class DeliveryFacadeREST extends AbstractFacade<Delivery> {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void edit(@PathParam("id") Integer id, Delivery entity) {
-            super.edit(entity);
+        super.edit(entity);
+    }
+    
+    @PUT
+    @Path("actualizarToken/{id}/{token}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void actualizarToken(@PathParam("id") Integer id, @PathParam("token") String token) {
+        Delivery d = find(id);
+        d.setToken(token);
     }
 
     @DELETE

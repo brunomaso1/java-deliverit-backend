@@ -141,6 +141,5 @@ public class SucursalFacadeREST extends AbstractFacade<Sucursal> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-    
+    }    
 }
