@@ -1,7 +1,6 @@
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p"),
+    @NamedQuery(name = "Pedido.findByViaje", query = "SELECT p FROM Pedido p WHERE p.viaje.id = :idViaje"),
     @NamedQuery(name = "Pedido.solicitarPedidos", query = "SELECT p FROM Pedido p WHERE p.viaje.id = :idViaje AND p.viaje.estado.id = :idEstadoViaje")})
 public class Pedido implements Serializable {
 

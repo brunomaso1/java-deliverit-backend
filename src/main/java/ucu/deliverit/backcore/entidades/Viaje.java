@@ -2,9 +2,7 @@ package ucu.deliverit.backcore.entidades;
 
 import java.sql.Timestamp;
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,10 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "viaje")
@@ -28,10 +24,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Viaje.findDelivery", query = "SELECT d FROM Viaje v JOIN v.delivery d WHERE v.id = :idViaje"),
     @NamedQuery(name = "Viaje.findCalifByDelivery", query = "SELECT v.calificacion FROM Viaje v WHERE v.delivery.id = :idDelivery AND v.calificacion != null"),
     @NamedQuery(name = "Viaje.findDeliveryEnProceso", query = "SELECT DISTINCT d FROM Viaje v JOIN v.delivery d WHERE v.estado.id = :estado AND v.sucursal.id = :idSucursal"),
-    @NamedQuery(name = "Viaje.findSucursales", query = "SELECT DISTINCT s FROM Viaje v JOIN v.sucursal s WHERE v.estado.id = :idEstado"),
-    @NamedQuery(name = "Viaje.countPedidos", query = "SELECT COUNT (p) FROM Viaje v JOIN v.pedidos p WHERE p.viaje.id = :idViaje")})  
+    @NamedQuery(name = "Viaje.findSucursales", query = "SELECT DISTINCT s FROM Viaje v JOIN v.sucursal s WHERE v.estado.id = :idEstado")}) 
+   // @NamedQuery(name = "Viaje.countPedidos", query = "SELECT COUNT (p) FROM Viaje v JOIN v.pedidos p WHERE p.viaje.id = :idViaje") 
 public class Viaje implements Serializable {
-
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -51,8 +46,8 @@ public class Viaje implements Serializable {
     @Column(name = "precio")
     private Short precio;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
-    private Collection<Pedido> pedidos;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viaje")
+//    private Collection<Pedido> pedidos;
     
     @JoinColumn(name = "delivery", referencedColumnName = "id")
     @ManyToOne
@@ -90,14 +85,14 @@ public class Viaje implements Serializable {
         this.precio = precio;
     }
 
-    @XmlTransient
-    public Collection<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(Collection<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
+//    @XmlTransient
+//    public Collection<Pedido> getPedidos() {
+//        return pedidos;
+//    }
+//
+//    public void setPedidos(Collection<Pedido> pedidos) {
+//        this.pedidos = pedidos;
+//    }
 
     public Delivery getDelivery() {
         return delivery;
@@ -153,6 +148,5 @@ public class Viaje implements Serializable {
     @Override
     public String toString() {
         return "ucu.deliverit.backcore.entidades.Viaje[ id=" + id + " ]";
-    }
-    
+    }    
 }

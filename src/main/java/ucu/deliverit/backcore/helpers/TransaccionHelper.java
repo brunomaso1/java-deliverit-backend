@@ -5,15 +5,18 @@ import ucu.deliverit.backcore.entidades.Configuracion;
 import ucu.deliverit.backcore.entidades.Transaccion;
 import ucu.deliverit.backcore.entidades.Viaje;
 import ucu.deliverit.backcore.entidades.servicios.ConfiguracionFacadeREST;
+import ucu.deliverit.backcore.entidades.servicios.PedidoFacadeREST;
 import ucu.deliverit.backcore.entidades.servicios.TransaccionFacadeREST;
 
 public class TransaccionHelper {
     private TransaccionFacadeREST transaccionFacade;
     private ConfiguracionFacadeREST configFacade;
+    private PedidoFacadeREST pedidoFacade;
     
-    public TransaccionHelper(TransaccionFacadeREST transaccionFacade, ConfiguracionFacadeREST configFacade) {
+    public TransaccionHelper(TransaccionFacadeREST transaccionFacade, ConfiguracionFacadeREST configFacade, PedidoFacadeREST pedidoFacade) {
         this.transaccionFacade = transaccionFacade;
         this.configFacade = configFacade;
+        this.pedidoFacade = pedidoFacade;
     }
     
     public void pagar(Viaje viaje) {

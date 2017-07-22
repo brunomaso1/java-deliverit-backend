@@ -49,6 +49,9 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     
     @EJB
     private ConfiguracionFacadeREST configuracionFacadeREST;
+    
+    @EJB 
+    private PedidoFacadeREST pedidoFacadeREST;
 
     @PersistenceContext(unitName = "ucu.deliverit_BackCore_war_1.0PU")
     private EntityManager em;
@@ -149,7 +152,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
                 String usuarioMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_USER).getValor();
                 String passMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_PASS).getValor();
                 Mail mail = new Mail(cuentaMail, usuarioMail, passMail);
-                EnviarMail thread = new EnviarMail(mail, viaje, true);
+                EnviarMail thread = new EnviarMail(mail, viaje, true, pedidoFacadeREST);
                 thread.start();
                 return true;
             } else {
@@ -171,7 +174,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
                     .find(estadoFacadeREST.findIdByDescripcion(EstadoViaje.FINALIZADO));
             viaje.setEstado(estado);   
             
-            TransaccionHelper th = new TransaccionHelper(transaccionFacade, configuracionFacadeREST);
+            TransaccionHelper th = new TransaccionHelper(transaccionFacade, configuracionFacadeREST, pedidoFacadeREST);
             PagarThread thread = new PagarThread(th, viaje);
             thread.start();
             
@@ -179,7 +182,7 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
             String usuarioMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_USER).getValor();
             String passMail = configuracionFacadeREST.findByDesc(Configuracion.MAIL_DELIVERIT_PASS).getValor();
             Mail mail = new Mail(cuentaMail, usuarioMail, passMail);
-            EnviarMail thread2 = new EnviarMail(mail, viaje, false);
+            EnviarMail thread2 = new EnviarMail(mail, viaje, false, pedidoFacadeREST);
             thread2.start();
         } 
     }

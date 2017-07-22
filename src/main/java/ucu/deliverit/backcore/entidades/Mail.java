@@ -1,9 +1,10 @@
 package ucu.deliverit.backcore.entidades;
 
 import java.net.ConnectException;
+import java.util.List;
 import java.util.Properties;
+import javax.ejb.EJB;
 import javax.mail.Address;
-import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -11,9 +12,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import ucu.deliverit.backcore.entidades.servicios.PedidoFacadeREST;
 
 public class Mail {    
     private String mail;
@@ -50,7 +50,7 @@ public class Mail {
         this.mailPass = mailPass;
     }
     
-    public void enviarMail(Viaje viaje, boolean aceptarFinalizar) throws AddressException, MessagingException, ConnectException {	    
+    public void enviarMail(Viaje viaje, boolean aceptarFinalizar, PedidoFacadeREST pedidoFacade) throws AddressException, MessagingException, ConnectException {	    
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true");
@@ -79,14 +79,14 @@ public class Mail {
             message.setSubject("Han finalizado uno de tus viajes!");
         }
         
-        message.setText(crear(viaje, aceptarFinalizar), "utf-8", "html");
+        message.setText(crear(viaje, aceptarFinalizar, pedidoFacade), "utf-8", "html");
 
         Transport.send(message);      
 
         System.out.println("***** Mail enviado correctamente *****");		
     }
     
-    private String crear(Viaje viaje, boolean aceptarFinalizar) {
+    private String crear(Viaje viaje, boolean aceptarFinalizar, PedidoFacadeREST pedidoFacade) {
         String texto = "<html>";
         texto += "<div>";
         
@@ -109,7 +109,8 @@ public class Mail {
         if (aceptarFinalizar) {
             texto += "<hr>";
             texto += "<p>Los pedidos que deberá entregar son los siguientes:</p>";
-            for (Pedido p : viaje.getPedidos()) {
+            List<Pedido> pedidos = pedidoFacade.findByViaje(viaje.getId());
+            for (Pedido p : pedidos) {
                 texto += "<p style=\"margin-left: 20px\">Id: " + p.getId() + "</p>";
                 texto += "<p style=\"margin-left: 20px\">Cliente: " + p.getCliente().getNombre() + "</p>";
                 texto += "<p style=\"margin-left: 20px\">Tel.: " + p.getCliente().getTelefono() + "</p>";

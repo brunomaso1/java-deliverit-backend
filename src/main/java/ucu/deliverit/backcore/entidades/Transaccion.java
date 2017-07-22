@@ -9,9 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,8 +46,8 @@ public class Transaccion implements Serializable {
     @Column(name = "monto")
     private double monto;
     
-    @JoinColumn(name = "viaje", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "viaje")
+    @OneToOne(optional = false)
     private Viaje viaje;
 
     public Integer getId() {

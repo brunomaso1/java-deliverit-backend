@@ -7,7 +7,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,9 +53,9 @@ public class Restaurant implements Serializable {
     @ManyToOne
     private Usuario usuario;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
-    @JoinFetch
-    private Collection<Sucursal> sucursalCollection;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
+//    @JoinFetch
+//    private Collection<Sucursal> sucursalCollection;
 
     public Integer getId() {
         return id;
@@ -90,14 +89,14 @@ public class Restaurant implements Serializable {
         this.usuario = usuario;
     }
 
-    @XmlTransient
-    public Collection<Sucursal> getSucursalCollection() {
-        return sucursalCollection;
-    }
-
-    public void setSucursalCollection(Collection<Sucursal> sucursalCollection) {
-        this.sucursalCollection = sucursalCollection;
-    }
+//    @XmlTransient
+//    public Collection<Sucursal> getSucursalCollection() {
+//        return sucursalCollection;
+//    }
+//
+//    public void setSucursalCollection(Collection<Sucursal> sucursalCollection) {
+//        this.sucursalCollection = sucursalCollection;
+//    }
 
     @Override
     public int hashCode() {

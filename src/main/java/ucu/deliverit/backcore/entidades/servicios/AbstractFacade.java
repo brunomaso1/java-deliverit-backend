@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import ucu.deliverit.backcore.entidades.Transaccion;
 import ucu.deliverit.backcore.respuestas.RespuestaGeneral;
 
 public abstract class AbstractFacade<T> {
@@ -24,7 +25,13 @@ public abstract class AbstractFacade<T> {
            
             // Se utiliza flush para obtener el Id del nuevo objeto en la base de datos.
             getEntityManager().flush();
-            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            
+            Gson gson = null;
+            if (entity instanceof Transaccion) {
+                gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            } else {
+                gson = new Gson();
+            }
             
             String jsonObject = gson.toJson(entity);
            

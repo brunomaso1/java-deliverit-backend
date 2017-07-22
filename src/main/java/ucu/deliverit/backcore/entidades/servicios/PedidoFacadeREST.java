@@ -94,6 +94,15 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
         PedidoHelper ph = new PedidoHelper();
         return ph.limpiarPedidosMobile(results);
     }
+    
+    @GET
+    @Path("findByViaje/{idViaje}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Pedido> findByViaje(@PathParam("idViaje") Integer idViaje) {
+        return em.createNamedQuery("Pedido.findByViaje")
+            .setParameter("idViaje", idViaje)
+            .getResultList();
+    }
 
     @GET
     @Override
@@ -102,14 +111,14 @@ public class PedidoFacadeREST extends AbstractFacade<Pedido> {
         return super.findAll();
     }
     
-    @GET
-    @Path("findByViaje/{viaje}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Viaje findByViaje(Integer viaje) {
-        return (Viaje)em.createNamedQuery("Pedido.findByViaje")
-            .setParameter("viaje", viaje)
-            .getSingleResult();
-    }
+//    @GET
+//    @Path("findByViaje/{viaje}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Viaje findByViaje(Integer viaje) {
+//        return (Viaje)em.createNamedQuery("Pedido.findByViaje")
+//            .setParameter("viaje", viaje)
+//            .getSingleResult();
+//    }
 
     @GET
     @Path("{from}/{to}")

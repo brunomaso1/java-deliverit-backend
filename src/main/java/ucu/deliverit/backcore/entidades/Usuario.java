@@ -1,7 +1,6 @@
 package ucu.deliverit.backcore.entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,12 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "usuario")
@@ -67,11 +64,11 @@ public class Usuario implements Serializable {
     @Column(name = "foto")
     private String foto;
     
-    @OneToMany(mappedBy = "usuario")
-    private Collection<Delivery> deliveryCollection;
-    
-    @OneToMany(mappedBy = "usuario")
-    private Collection<Restaurant> restaurantCollection;
+//    @OneToMany(mappedBy = "usuario")
+//    private Collection<Delivery> deliveryCollection;
+//    
+//    @OneToMany(mappedBy = "usuario")
+//    private Collection<Restaurant> restaurantCollection;
 
     public Integer getId() {
         return id;
@@ -129,23 +126,23 @@ public class Usuario implements Serializable {
         this.telefono = telefono;
     }
 
-    @XmlTransient
-    public Collection<Delivery> getDeliveryCollection() {
-        return deliveryCollection;
-    }
-
-    public void setDeliveryCollection(Collection<Delivery> deliveryCollection) {
-        this.deliveryCollection = deliveryCollection;
-    }
-
-    @XmlTransient
-    public Collection<Restaurant> getRestaurantCollection() {
-        return restaurantCollection;
-    }
-
-    public void setRestaurantCollection(Collection<Restaurant> restaurantCollection) {
-        this.restaurantCollection = restaurantCollection;
-    }
+//    @XmlTransient
+//    public Collection<Delivery> getDeliveryCollection() {
+//        return deliveryCollection;
+//    }
+//
+//    public void setDeliveryCollection(Collection<Delivery> deliveryCollection) {
+//        this.deliveryCollection = deliveryCollection;
+//    }
+//
+//    @XmlTransient
+//    public Collection<Restaurant> getRestaurantCollection() {
+//        return restaurantCollection;
+//    }
+//
+//    public void setRestaurantCollection(Collection<Restaurant> restaurantCollection) {
+//        this.restaurantCollection = restaurantCollection;
+//    }
 
     @Override
     public int hashCode() {
