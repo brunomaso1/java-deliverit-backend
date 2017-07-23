@@ -75,9 +75,9 @@ COMMIT;
 -- DELIVERY
 BEGIN;
 -- CUSTOM DATA
-INSERT INTO delivery (id, usuario, calificacion, vehiculo, nombre, ingresos, token, ubicacion) VALUES (1, 3, 5, 1, "Jose Salamin", null, "", 1);
-INSERT INTO delivery (id, usuario, calificacion, vehiculo, nombre, ingresos, token, ubicacion) VALUES (2, 4, 5, 3, "Sofia Michone", null, "", 2);
-INSERT INTO delivery (id, usuario, calificacion, vehiculo, nombre, ingresos, token, ubicacion) VALUES (3, 5, 5, 2, "Rosiadme Vmajd", null, "", 3);
+INSERT INTO delivery (id, usuario, calificacion, vehiculo, nombre, token, ubicacion) VALUES (1, 3, 5, 1, "Jose Salamin", "", 1);
+INSERT INTO delivery (id, usuario, calificacion, vehiculo, nombre, token, ubicacion) VALUES (2, 4, 5, 3, "Sofia Michone", "", 2);
+INSERT INTO delivery (id, usuario, calificacion, vehiculo, nombre, token, ubicacion) VALUES (3, 5, 5, 2, "Rosiadme Vmajd", "", 3);
 -- GENERATED DATA
 
 COMMIT;
@@ -85,7 +85,7 @@ COMMIT;
 -- VIAJE
 BEGIN;
 -- CUSTOM DATA
-INSERT INTO viaje (id, calificacion, precio, delivery, sucursal, estado, fecha_creacion) VALUES (1, null, 10, 1, 1, 3, sysdate());
+INSERT INTO viaje (id, calificacion, precio, delivery, sucursal, estado, fecha_creacion) VALUES (1, null, 10, 1, 1, 2, sysdate());
 INSERT INTO viaje (id, calificacion, precio, delivery, sucursal, estado, fecha_creacion) VALUES (2, null, 20, 2, 1, 4, sysdate());
 INSERT INTO viaje (id, calificacion, precio, delivery, sucursal, estado, fecha_creacion) VALUES (3, 1, 30, 3, 1, 4, sysdate());
 INSERT INTO viaje (id, calificacion, precio, delivery, sucursal, estado, fecha_creacion) VALUES (4, null, 40, null, 1, 1, sysdate());
