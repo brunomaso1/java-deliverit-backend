@@ -57,6 +57,7 @@ public class ViajeHelper {
         List<Delivery> resultado = new ArrayList<>();
         for (Delivery d : deliverys) {
             Delivery auxiliar = new Delivery();
+			auxiliar.setNombre(d.getNombre());
             auxiliar.setId(d.getId());
             auxiliar.setUbicacion(d.getUbicacion());
             
