@@ -57,7 +57,7 @@ public class ViajeHelper {
         List<Delivery> resultado = new ArrayList<>();
         for (Delivery d : deliverys) {
             Delivery auxiliar = new Delivery();
-			auxiliar.setNombre(d.getNombre());
+            auxiliar.setNombre(d.getNombre());
             auxiliar.setId(d.getId());
             auxiliar.setUbicacion(d.getUbicacion());
             
@@ -74,19 +74,22 @@ public class ViajeHelper {
         
         // Esta lista ya incluye la reciente calificación
         List<Short> calificaciones = viajeFacade.findCalifByDelivery(d.getId());
-        Integer cantidadCalif = calificaciones.size();
         
-        Integer promedio = Integer.parseInt(d.getCalificacion().toString());
-        if (cantidadCalif > 0) {            
-            for (int i = 0; i < calificaciones.size(); i++) {
-                promedio += calificaciones.get(i);
-            }
-            
-            promedio = (promedio / cantidadCalif) + 1; 
-        } 
-        if (promedio != 0) {
-            deliveryFacade.actualizarCalificacion(d.getId(), Short.parseShort(promedio.toString()));
-        }        
+        Integer promedio = null;
+        if (calificaciones.size() == 1) {
+            double p = ((double)d.getCalificacion() + (double)calificaciones.get(0)) / 2;
+            promedio = (int)Math.ceil(p);
+        } else {
+            if (calificaciones.size() > 1) { 
+                promedio = 0;
+                for (int i = 0; i < calificaciones.size(); i++) {
+                    promedio += calificaciones.get(i);
+                }
+                promedio = (int)Math.ceil((double)promedio / calificaciones.size()); 
+            } 
+        }
+
+        deliveryFacade.actualizarCalificacion(d.getId(), Short.parseShort(promedio.toString()));        
     }
     
     public List<Viaje> limpiarViajeParaMobile (List<Viaje> viajes) {

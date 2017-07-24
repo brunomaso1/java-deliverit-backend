@@ -123,13 +123,17 @@ public class ViajeFacadeREST extends AbstractFacade<Viaje> {
     @Path("calificar/{id}/{calificacion}")
     public void calificar(@PathParam("id") Integer id, @PathParam("calificacion") Short calificacion) {
         Viaje v = find(id);
-        v.setCalificacion(calificacion);
+        if (v.getEstado().getDescripcion().equals(EstadoViaje.FINALIZADO)
+                && v.getDelivery() != null
+                && v.getCalificacion() == null) {
+            v.setCalificacion(calificacion);
         
-        // Una vez seteado el valor de calificación en el viaje
-        // Se actualiza el promedio de calificaciones del Delivery
-        ViajeHelper helper = new ViajeHelper(viajeFacade, deliveryFacadeREST);
-        ActualizarCalifDelivery thread = new ActualizarCalifDelivery(helper, id);
-        thread.start();
+            // Una vez seteado el valor de calificación en el viaje
+            // Se actualiza el promedio de calificaciones del Delivery
+            ViajeHelper helper = new ViajeHelper(viajeFacade, deliveryFacadeREST);
+            ActualizarCalifDelivery thread = new ActualizarCalifDelivery(helper, id);
+            thread.start();
+        }        
     }    
     
     @POST
