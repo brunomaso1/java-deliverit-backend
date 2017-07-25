@@ -9,7 +9,7 @@ import ucu.deliverit.backcore.entidades.Usuario;
 import ucu.deliverit.backcore.entidades.Vehiculo;
 import ucu.deliverit.backcore.entidades.Viaje;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-07-24T11:11:30")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-07-25T16:15:06")
 @StaticMetamodel(Delivery.class)
 public class Delivery_ { 
 
